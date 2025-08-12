@@ -1,9 +1,10 @@
 import React from 'react';
+import HeadTeacher from './HeadTeacher';
 
 const RightAside = () => {
     return (
         <div>
-            Right Aside
+           <HeadTeacher/>
         </div>
     );
 };

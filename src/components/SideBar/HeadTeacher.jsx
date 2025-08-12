@@ -3,7 +3,7 @@ import React from 'react';
 const HeadTeacher = () => {
     return (
       <div className="flex flex-col m-4 text-center">
-        <h2 className="text-lg font-semibold text-emerald-500 dark:text-white dark:bg-gray-90/50 bg-emerald-500/10 text-center">
+        <h2 className="text-lg font-semibold text-white  bg-lime-600 text-center">
           Head Master
         </h2>
         <div className='flex justify-center p-4'>
