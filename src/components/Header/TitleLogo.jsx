@@ -3,6 +3,7 @@ import logo from '../../../public/logo.png';
 import Clock from './Clock';
 import Navbar from './Navbar';
 import NationalSong from './NationalSong';
+import TitleSlider from '../Swiper/TitleSlider';
 
 const TitleLogo = () => {
     return (
@@ -16,10 +17,9 @@ const TitleLogo = () => {
             <Clock />
           </div>
         </div>
-        <div className="flex items-center space-x-4 bg-gray-100 p-12 place-items-center place-content-center">
-          <img src={logo} className="w-20 h-20" alt="Logo" />
-          <h1 className="text-2xl font-bold text-black">চেঁচরীরামপুর বালিকা মাধ্যমিক বিদ্যালয়</h1>
-        </div>
+      
+
+        <TitleSlider/>
 
         <div>
           <Navbar />

@@ -8,7 +8,7 @@ import RightAside from '../components/SideBar/RightAside';
 
 const MainLayout = () => {
     return (
-      <div className="max-w-7xl mx-auto px-4">
+      <div className="max-w-6xl mx-auto px-4  bg-gray-100">
    
         <header>
           <TitleLogo />
@@ -21,7 +21,7 @@ const MainLayout = () => {
                 <Outlet />
               </div>
             </div>
-            <div className="col-span-3 border">
+            <div className="col-span-3">
               <RightAside />
             </div>
           </div>
