@@ -36,7 +36,7 @@ const galleryImages = [
 const ImageGallery = () => {
   return (
     <div className="w-full border border-gray-300 overflow-hidden my-6">
-      <h2 className="text-base font-bold bg-lime-600 text-white p-2">ইমেজ গ্যালারি</h2>
+      <h2 className="text-base font-bold bg-green-800 text-white p-2">ইমেজ গ্যালারি</h2>
 
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4 p-4">
         {galleryImages.map((image) => (

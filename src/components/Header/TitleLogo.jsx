@@ -8,18 +8,17 @@ import TitleSlider from '../Swiper/TitleSlider';
 const TitleLogo = () => {
     return (
       <div>
-        <div className="bg-[#683091] flex items-center text-white justify-between px-2 py-1 border-b-lime-500 border-b-3">
+        <div className="bg-[#683091] flex items-center text-white justify-between px-2 py-1 border-b-green-800 border-b-3">
           <h2>Chenchri Rampur Girls High School</h2>
-          <div className='hidden md:flex'>
+          <div className="hidden md:flex">
             <NationalSong />
           </div>
-          <div className='hidden md:flex'>
+          <div className="hidden md:flex">
             <Clock />
           </div>
         </div>
-      
 
-        <TitleSlider/>
+        <TitleSlider />
 
         <div>
           <Navbar />

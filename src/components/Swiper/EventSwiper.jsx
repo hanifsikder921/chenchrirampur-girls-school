@@ -20,7 +20,7 @@ export default function EventSwiper() {
 
   return (
     <Swiper
-      pagination={{ type: 'fraction' }}
+      // pagination={{ type: 'creative' }}
       navigation={true}
       loop={true}
       autoplay={{
@@ -32,9 +32,11 @@ export default function EventSwiper() {
     >
       {slides.map((slide, index) => (
         <SwiperSlide key={index} className="relative">
-          <img src={slide.img} alt={slide.title} className="w-full h-96 object-cover" />
-          <div className="absolute inset-0 flex items-center  justify-center bg-black/30">
-            <h2 className="text-white text-2xl font-bold absolute bottom-0 py-6 ">{slide.title}</h2>
+          <img src={slide.img} alt={slide.title} className="w-full md:h-96 h-48 object-cover" />
+          <div className="absolute inset-0 flex items-center justify-center bg-black/30">
+            <h2 className="text-white md:text-2xl text-sm text-center line-clamp-2 md:font-bold font-semibold absolute bottom-0 md:py-6 py-2 bg-black/30 w-full ">
+              {slide.title}
+            </h2>
           </div>
         </SwiperSlide>
       ))}

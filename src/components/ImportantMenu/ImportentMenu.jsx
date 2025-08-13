@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
-import menuData from '../../../public/importantMenuData.json';
+import menuData from '../../../src/assets/link/importantMenuData.json';
 import { FaPlay } from 'react-icons/fa'; 
 import campus from '../../assets/images/campus.webp';
 import admission from '../../assets/images/admission.webp';
@@ -43,9 +43,9 @@ const ImportentMenu = () => {
             key={index}
             className="border border-gray-300 shadow bg-gray-300/10 p-5 flex items-start gap-4 hover:shadow-lg transition"
           >
-            <div className='flex flex-col'>
+            <div className="flex flex-col">
               <h3 className="text-lg font-semibold mb-2">{menu.title}</h3>
-              <div className='flex gap-5 items-center'>
+              <div className="flex gap-5 items-center">
                 <div className="w-14 h-14 flex-shrink-0">
                   <img src={IconImage} alt={menu.title} className="w-full h-full object-contain" />
                 </div>
@@ -54,7 +54,9 @@ const ImportentMenu = () => {
                   <ul className="space-y-1 text-sm">
                     {menu.links.map((link, i) => (
                       <li key={i} className="flex items-center gap-2">
-                        <span className="text-lime-600"><FaPlay size={8} /></span>
+                        <span className="text-green-800">
+                          <FaPlay size={8} />
+                        </span>
                         <Link
                           to={`/${makeSlug(menu.title)}/${makeSlug(link)}`}
                           className="text-gray-700 hover:font-semibold hover:underline"

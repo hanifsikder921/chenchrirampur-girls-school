@@ -87,14 +87,14 @@ const Navbar = () => {
         <ul className="hidden md:flex items-center space-x-1 py-3">
           <NavLink
             to="/"
-            className="px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200 flex items-center"
+            className="px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-50 hover:text-green-800 transition-colors duration-200 flex items-center"
           >
             <IoHome className="text-lg text-black" />
           </NavLink>
 
           {menuItems.map((item) => (
             <li key={item.title} className="relative group">
-              <div className="flex items-center px-4 py-2 rounded-md text-sm font-semibold text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200 cursor-pointer">
+              <div className="flex items-center px-4 py-2 rounded-md text-sm font-semibold text-gray-700 hover:bg-blue-50 hover:text-green-800 transition-colors duration-200 cursor-pointer">
                 {item.title}
                 <IoChevronDown className="ml-1 text-xs opacity-70 group-hover:rotate-180 transition-transform" />
               </div>

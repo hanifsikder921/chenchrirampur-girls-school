@@ -6,14 +6,14 @@ export default function ScrollText() {
 
   return (
     <div
-      className="overflow-hidden whitespace-nowrap rounded-lg w-full  mx-auto cursor-pointer"
+      className="overflow-hidden whitespace-nowrap w-full  mx-auto cursor-pointer py-2 border border-gray-300 bg-white"
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
     >
       <motion.div
-        animate={{ x: isHover ? 0 : ['0%', '-100%'] }}
+        animate={{ x: isHover ? 0 : ['100%', '-100%'] }}
         transition={{
-          duration: 8,
+          duration: 10,
           repeat: Infinity,
           ease: 'linear',
         }}

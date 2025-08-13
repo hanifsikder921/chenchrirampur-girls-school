@@ -13,7 +13,6 @@ const notices = [
 const NoticeBord = () => {
   return (
     <div className=" mx-auto bg-gray-50 shadow   p-4 my-6">
-  
       <div className="flex items-center mb-4">
         <img
           src="https://i.ibb.co.com/DDH1K0JR/globe-removebg-preview.png"
@@ -23,11 +22,10 @@ const NoticeBord = () => {
         <h2 className="text-xl font-bold text-gray-800">নোটিশ বোর্ড</h2>
       </div>
 
-     
       <ul className="space-y-2 text-gray-500">
         {notices.map((notice, index) => (
           <li key={index} className="flex items-start">
-            <FaPlay className="text-lime-600 mt-1 mr-2 text-xs" />
+            <FaPlay className="text-green-800 mt-1 mr-2 text-xs" />
             <p className="hover:underline cursor-pointer text-sm">{notice}</p>
           </li>
         ))}

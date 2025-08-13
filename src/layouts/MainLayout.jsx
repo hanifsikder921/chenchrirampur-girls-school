@@ -15,7 +15,7 @@ const MainLayout = () => {
         </header>
 
         <main>
-          <div className="grid  grid-cols-12 gap-4 w-full my-4">
+          <div className="grid  grid-cols-12 gap-4 w-full mb-4">
             <div className="md:col-span-9 col-span-12 ">
               <div>
                 <Outlet />

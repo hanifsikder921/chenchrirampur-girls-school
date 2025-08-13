@@ -16,13 +16,12 @@ const youtubeVideos = [
 const VideoGallery = () => {
   return (
     <div className="w-full border border-gray-300 overflow-hidden">
-      <h2 className="text-base font-bold bg-lime-600 text-white p-2">ভিডিও গ্যালারি</h2>
+      <h2 className="text-base font-bold bg-green-800 text-white p-2">ভিডিও গ্যালারি</h2>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4">
         {youtubeVideos.map((video) => (
           <div key={video.id} className="w-full">
             <div className="relative pb-[56.25%] h-0 overflow-hidden">
-            
               <iframe
                 width="100%"
                 height="100%"
