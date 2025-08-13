@@ -1,8 +1,10 @@
-import React from 'react';
-import { IoHome, IoChevronDown } from 'react-icons/io5';
-import { NavLink } from 'react-router';
+import React, { useState } from 'react';
+import { IoHome, IoChevronDown, IoMenu } from 'react-icons/io5';
+import { NavLink } from 'react-router'; 
 
 const Navbar = () => {
+  const [mobileOpen, setMobileOpen] = useState(false);
+
   const menuItems = [
     {
       title: 'ক্যাম্পাস',
@@ -81,11 +83,11 @@ const Navbar = () => {
   return (
     <nav className="bg-white shadow-lg">
       <div className="max-w-7xl mx-auto px-4">
-        <ul className="flex items-center space-x-1 py-3">
+        {/* Desktop Menu */}
+        <ul className="hidden md:flex items-center space-x-1 py-3">
           <NavLink
             to="/"
             className="px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200 flex items-center"
-            activeClassName="text-blue-600 bg-blue-50"
           >
             <IoHome className="text-lg text-black" />
           </NavLink>
@@ -97,7 +99,7 @@ const Navbar = () => {
                 <IoChevronDown className="ml-1 text-xs opacity-70 group-hover:rotate-180 transition-transform" />
               </div>
 
-              <ul className="absolute left-0 mt-1 w-56 origin-top-left rounded-md shadow-xl bg-white  ring-black  invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all duration-200 z-20">
+              <ul className="absolute left-0 mt-1 w-56 origin-top-left rounded-md shadow-xl bg-white invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all duration-200 z-20">
                 {item.submenu.map((subItem, index) => (
                   <li key={index}>
                     <NavLink
@@ -114,6 +116,51 @@ const Navbar = () => {
             </li>
           ))}
         </ul>
+
+        {/* Mobile Menu Button */}
+        <div className="flex md:hidden justify-between items-center py-3">
+          <button
+            onClick={() => setMobileOpen(!mobileOpen)}
+            className="flex items-center space-x-2 text-gray-700 font-medium"
+          >
+            <IoMenu className="text-2xl" />
+            <span>মেনু সিলেক্ট করুন</span>
+          </button>
+        </div>
+
+        {/* Mobile Menu List */}
+        <div
+          className={`md:hidden transition-all duration-300 overflow-hidden ${
+            mobileOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'
+          }`}
+        >
+          <ul className="space-y-2 pb-4">
+            {menuItems.map((item) => (
+              <li key={item.title} className="  border-b border-gray-200">
+                <details>
+                  <summary className="cursor-pointer px-4 py-2 bg-gray-50 font-semibold flex justify-between items-center">
+                    {item.title}
+                    <IoChevronDown className="text-sm" />
+                  </summary>
+                  <ul>
+                    {item.submenu.map((subItem, index) => (
+                      <li key={index}>
+                        <NavLink
+                          to={`/${item.title.toLowerCase().replace(/\s+/g, '-')}/${subItem.title
+                            .toLowerCase()
+                            .replace(/\s+/g, '-')}`}
+                          className={`${subItem.bg} block px-6 py-2 text-sm text-gray-700 hover:bg-opacity-90 hover:text-blue-600`}
+                        >
+                          {subItem.title}
+                        </NavLink>
+                      </li>
+                    ))}
+                  </ul>
+                </details>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </nav>
   );
