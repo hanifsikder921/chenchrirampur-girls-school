@@ -5,6 +5,7 @@ import ScrollNotice from '../../components/ScrollNotice/ScrollNotice';
 import EventSwiper from '../../components/Swiper/EventSwiper';
 import NoticeBord from '../../components/NoticeBord/NoticeBord';
 import VideoGallery from './../../components/Video/VideoGallery';
+import ImageGallery from '../../components/ImageGallery/ImageGallery';
 
 const Home = () => {
   return (
@@ -14,6 +15,7 @@ const Home = () => {
         <EventSwiper />
         <NoticeBord/>
         <VideoGallery />
+        <ImageGallery/>
       </div>
     </div>
   );
