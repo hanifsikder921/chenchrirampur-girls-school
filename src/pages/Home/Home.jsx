@@ -3,6 +3,7 @@ import HeadTeacher from '../../components/SideBar/HeadTeacher';
 import { Outlet } from 'react-router';
 import ScrollNotice from '../../components/ScrollNotice/ScrollNotice';
 import EventSwiper from '../../components/Swiper/EventSwiper';
+import NoticeBord from '../../components/NoticeBord/NoticeBord';
 
 const Home = () => {
   return (
@@ -10,6 +11,7 @@ const Home = () => {
       <div>
         <ScrollNotice />
         <EventSwiper />
+        <NoticeBord/>
       </div>
     </div>
   );
