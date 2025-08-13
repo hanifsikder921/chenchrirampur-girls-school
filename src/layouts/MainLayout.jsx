@@ -15,13 +15,13 @@ const MainLayout = () => {
         </header>
 
         <main>
-          <div className="grid grid-cols-12 gap-4 w-full my-4">
-            <div className="col-span-9 ">
+          <div className="grid  grid-cols-12 gap-4 w-full my-4">
+            <div className="md:col-span-9 col-span-12 ">
               <div>
                 <Outlet />
               </div>
             </div>
-            <div className="col-span-3">
+            <div className="md:col-span-3 col-span-12">
               <RightAside />
             </div>
           </div>
