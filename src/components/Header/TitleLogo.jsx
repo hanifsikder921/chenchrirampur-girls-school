@@ -10,10 +10,10 @@ const TitleLogo = () => {
       <div>
         <div className="bg-[#683091] flex items-center text-white justify-between px-2 py-1 border-b-lime-500 border-b-3">
           <h2>Chenchri Rampur Girls High School</h2>
-          <div>
+          <div className='hidden md:flex'>
             <NationalSong />
           </div>
-          <div>
+          <div className='hidden md:flex'>
             <Clock />
           </div>
         </div>

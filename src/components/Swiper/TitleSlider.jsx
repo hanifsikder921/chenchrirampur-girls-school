@@ -33,10 +33,10 @@ const TitleSlider = () => {
       </Swiper>
 
       <div className="absolute inset-0 flex items-center  z-50">
-        <div className="flex items-center space-x-4  p-6 rounded-r-box bg-black/40">
+        <div className="flex items-center flex-col md:flex-row space-x-4  p-6 rounded-r-box bg-black/40">
           <img src={logo} className="w-20 h-20" alt="Logo" />
           <div>
-            <h1 className="text-2xl md:text-2xl font-bold text-white ">
+            <h1 className="text-lg md:text-2xl font-bold text-white ">
               চেঁচরীরামপুর বালিকা মাধ্যমিক বিদ্যালয়
             </h1>
             <p className="text-white mt-2">কাঠালিয়া, ঝালকাঠি। ইআইআইএন: ১০১৭৩৬</p>
