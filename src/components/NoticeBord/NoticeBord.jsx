@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaPlay } from 'react-icons/fa'; // For bullet icons
+import { FaPlay } from 'react-icons/fa'; 
 
 const notices = [
   '২০২৫ শিক্ষাবর্ষের ক্লাস ৬-১০ এর শিক্ষার্থীদের জন্য নতুন বই বিতরণ আগামী সোমবার শুরু হবে।',

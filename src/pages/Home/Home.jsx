@@ -6,6 +6,7 @@ import EventSwiper from '../../components/Swiper/EventSwiper';
 import NoticeBord from '../../components/NoticeBord/NoticeBord';
 import VideoGallery from './../../components/Video/VideoGallery';
 import ImageGallery from '../../components/ImageGallery/ImageGallery';
+import ImportentMenu from '../../components/ImportantMenu/ImportentMenu';
 
 const Home = () => {
   return (
@@ -16,6 +17,7 @@ const Home = () => {
         <NoticeBord/>
         <VideoGallery />
         <ImageGallery/>
+        <ImportentMenu/>
       </div>
     </div>
   );
