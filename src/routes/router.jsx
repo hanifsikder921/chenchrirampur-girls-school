@@ -10,6 +10,7 @@ import MaintenancePage from '../pages/Maintenance/MaintenancePage';
 import PrivateRoute from './../provider/PrivateRoute';
 import DashboardLayout from '../layouts/DashboardLayout';
 import AddStudents from '../pages/Dashboard/Students/AddStudents';
+import ViewStudents from '../pages/Dashboard/Students/ViewStudents';
 
 const router = createBrowserRouter([
   {
@@ -56,6 +57,10 @@ const router = createBrowserRouter([
       {
         path: 'add-student',
         Component: AddStudents,
+      },
+      {
+        path: 'manage-students',
+        Component: ViewStudents,
       },
     ],
   },
