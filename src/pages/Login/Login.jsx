@@ -1,31 +1,50 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import Swal from 'sweetalert2';
 import { FaUser, FaLock, FaEye, FaEyeSlash, FaSpinner } from 'react-icons/fa';
-
+import { useLocation, useNavigate } from 'react-router';
+import { AuthContext } from '../../assets/context/AuthContext';
 
 const Login = () => {
-  const [formData, setFormData] = useState({
-    username: '',
-    password: '',
-    rememberMe: false,
-  });
+  
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const location = useLocation();
+  const { signIn } = useContext(AuthContext);
+  const navigate = useNavigate();
 
-  const handleInputChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: type === 'checkbox' ? checked : value,
-    }));
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const from = location.state?.from?.pathname || '/';
+  const onSubmit = async (data) => {
     setIsLoading(true);
     setTimeout(() => {
       setIsLoading(false);
-      console.log('Login attempt:', formData);
+      console.log('Login attempt:', data);
     }, 2000);
+
+    const { email, password } = data;
+
+    Swal.fire({
+      title: 'Logging In...',
+      text: 'Please wait.',
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    });
+
+    try {
+      await signIn(email, password);
+      Swal.fire('Success', 'Login successfully', 'success').then(() => {
+        navigate(from, { replace: true });
+      });
+    } catch (error) {
+      Swal.fire('Error', error.message, 'error');
+    }
   };
 
   return (
@@ -39,7 +58,7 @@ const Login = () => {
             <h1 className="md:text-3xl text-2xl font-bold text-green-800">Login To Your Account</h1>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             {/* Username Field */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
@@ -49,14 +68,12 @@ const Login = () => {
                 </div>
                 <input
                   type="text"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleInputChange}
+                  {...register('email', { required: true })}
                   className="w-full pl-10 pr-4 py-3 border focus:outline outline-green-800 border-gray-300 rounded-xl "
                   placeholder="Enter your institution email"
-                  required
                 />
               </div>
+              {errors.email && <p className="text-red-500 text-xs mt-1">Email is required.</p>}
             </div>
 
             {/* Password Field */}
@@ -68,12 +85,9 @@ const Login = () => {
                 </div>
                 <input
                   type={showPassword ? 'text' : 'password'}
-                  name="password"
-                  value={formData.password}
-                  onChange={handleInputChange}
+                  {...register('password', { required: true })}
                   className="w-full pl-10 pr-10 py-3 border focus:outline outline-green-800 border-gray-300 rounded-xl"
                   placeholder="Enter your password"
-                  required
                 />
                 <button
                   type="button"
@@ -83,6 +97,9 @@ const Login = () => {
                   {showPassword ? <FaEyeSlash /> : <FaEye />}
                 </button>
               </div>
+              {errors.password && (
+                <p className="text-red-500 text-xs mt-1">Password is required.</p>
+              )}
             </div>
 
             <button
