@@ -16,7 +16,7 @@ const DashboardLayout = () => {
     `flex items-center gap-2 px-4 py-2 mt-1 rounded-lg font-medium transition-colors ${
       isActive
         ? 'bg-primary text-white'
-        : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white'
+        : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
     }`;
 
   return (
@@ -26,7 +26,7 @@ const DashboardLayout = () => {
       {/* Main Content */}
       <div className="drawer-content flex flex-col">
         {/* Mobile Navbar */}
-        <div className="navbar dark:bg-gray-800 w-full lg:hidden sticky top-0 z-10 bg-white shadow">
+        <div className="navbar w-full lg:hidden sticky top-0 z-10 bg-white shadow">
           <div className="flex-none">
             <label
               htmlFor="my-drawer"
@@ -37,7 +37,7 @@ const DashboardLayout = () => {
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
-                className="inline-block h-6 w-6 stroke-current dark:text-white"
+                className="inline-block h-6 w-6 stroke-current"
               >
                 <path
                   strokeLinecap="round"
@@ -48,13 +48,13 @@ const DashboardLayout = () => {
               </svg>
             </label>
           </div>
-          <div className="mx-2 dark:text-white flex-1 px-2 font-bold">
+          <div className="mx-2 flex-1 px-2 font-bold">
             Dashboard
           </div>
         </div>
 
         {/* Page Content */}
-        <div className="p-5 dark:bg-gray-700 min-h-screen">
+        <div className="p-5 min-h-screen">
           <Outlet />
         </div>
       </div>
@@ -67,7 +67,7 @@ const DashboardLayout = () => {
         className="drawer-side"
       >
         <label htmlFor="my-drawer" className="drawer-overlay"></label>
-        <ul className="menu bg-base-200 dark:bg-gray-800 text-base-content min-h-full w-80 p-4">
+        <ul className="menu bg-base-200 text-base-content min-h-full w-80 p-4">
           {/* Overview */}
           <NavLink to="/dashboard" end className={navLinkClass}>
             <FaHome className="inline-block mr-2" />
@@ -76,7 +76,7 @@ const DashboardLayout = () => {
 
           {/* Students */}
           <details className="mt-2">
-            <summary className="flex items-center gap-2 px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+            <summary className="flex items-center gap-2 px-4 py-2 cursor-pointer hover:bg-gray-100 rounded-lg">
               <FaUserEdit /> Students
             </summary>
             <ul className="pl-8">
@@ -95,7 +95,7 @@ const DashboardLayout = () => {
 
           {/* Marks */}
           <details className="mt-2">
-            <summary className="flex items-center gap-2 px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+            <summary className="flex items-center gap-2 px-4 py-2 cursor-pointer hover:bg-gray-100 rounded-lg">
               <FaTasks /> Marks
             </summary>
             <ul className="pl-8">
@@ -114,7 +114,7 @@ const DashboardLayout = () => {
 
           {/* Reports */}
           <details className="mt-2">
-            <summary className="flex items-center gap-2 px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+            <summary className="flex items-center gap-2 px-4 py-2 cursor-pointer hover:bg-gray-100 rounded-lg">
               <FaStar /> Reports
             </summary>
             <ul className="pl-8">
@@ -133,7 +133,7 @@ const DashboardLayout = () => {
 
           {/* Settings */}
           <details className="mt-2">
-            <summary className="flex items-center gap-2 px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+            <summary className="flex items-center gap-2 px-4 py-2 cursor-pointer hover:bg-gray-100 rounded-lg">
               <FaUserShield /> Settings
             </summary>
             <ul className="pl-8">
