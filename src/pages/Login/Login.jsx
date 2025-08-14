@@ -23,7 +23,6 @@ const Login = () => {
     setIsLoading(true);
     setTimeout(() => {
       setIsLoading(false);
-      console.log('Login attempt:', data);
     }, 2000);
 
     const { email, password } = data;
@@ -41,9 +40,11 @@ const Login = () => {
       await signIn(email, password);
       Swal.fire('Success', 'Login successfully', 'success').then(() => {
         navigate(from, { replace: true });
+        setIsLoading(false);
       });
     } catch (error) {
       Swal.fire('Error', error.message, 'error');
+      setIsLoading(false);
     }
   };
 

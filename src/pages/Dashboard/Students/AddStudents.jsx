@@ -50,9 +50,7 @@ const AddStudents = () => {
 
   return (
     <div className="bg-white shadow-xl rounded-lg p-6 max-w-4xl mx-auto my-8 border border-gray-200">
-      <h2 className="text-2xl font-bold mb-6 text-green-800 text-center">
-        ➕ Add New Student
-      </h2>
+      <h2 className="text-2xl font-bold mb-6 text-green-800 text-center">➕ Add New Student</h2>
 
       <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Personal Information Section */}
@@ -109,13 +107,8 @@ const AddStudents = () => {
 
         {/* Blood Group */}
         <div>
-          <label className="block font-medium mb-1 text-gray-700">
-            Blood Group
-          </label>
-          <select
-            {...register('bloodGroup')}
-            className="select select-bordered w-full"
-          >
+          <label className="block font-medium mb-1 text-gray-700">Blood Group</label>
+          <select {...register('bloodGroup')} className="select select-bordered w-full">
             <option value="">Select blood group</option>
             {bloodGroups.map((group) => (
               <option key={group} value={group}>
@@ -207,9 +200,7 @@ const AddStudents = () => {
 
         {/* Admission Date */}
         <div>
-          <label className="block font-medium mb-1 text-gray-700">
-            Admission Date
-          </label>
+          <label className="block font-medium mb-1 text-gray-700">Admission Date</label>
           <input
             type="date"
             {...register('admissionDate')}
@@ -256,9 +247,7 @@ const AddStudents = () => {
 
         {/* Father Occupation */}
         <div>
-          <label className="block font-medium mb-1 text-gray-700">
-            Father's Occupation
-          </label>
+          <label className="block font-medium mb-1 text-gray-700">Father's Occupation</label>
           <input
             {...register('fatherOccupation')}
             placeholder="Enter father's occupation"
@@ -268,9 +257,7 @@ const AddStudents = () => {
 
         {/* Mother Occupation */}
         <div>
-          <label className="block font-medium mb-1 text-gray-700">
-            Mother's Occupation
-          </label>
+          <label className="block font-medium mb-1 text-gray-700">Mother's Occupation</label>
           <input
             {...register('motherOccupation')}
             placeholder="Enter mother's occupation"
@@ -299,9 +286,7 @@ const AddStudents = () => {
 
         {/* Emergency Contact */}
         <div>
-          <label className="block font-medium mb-1 text-gray-700">
-            Emergency Contact
-          </label>
+          <label className="block font-medium mb-1 text-gray-700">Emergency Contact</label>
           <input
             type="tel"
             {...register('emergencyContact', {
@@ -334,9 +319,7 @@ const AddStudents = () => {
 
         {/* Post Office */}
         <div>
-          <label className="block font-medium mb-1 text-gray-700">
-            Post Office
-          </label>
+          <label className="block font-medium mb-1 text-gray-700">Post Office</label>
           <input
             {...register('postOffice')}
             placeholder="Enter post office"
@@ -346,9 +329,7 @@ const AddStudents = () => {
 
         {/* Upazila */}
         <div>
-          <label className="block font-medium mb-1 text-gray-700">
-            Upazila/Thana
-          </label>
+          <label className="block font-medium mb-1 text-gray-700">Upazila/Thana</label>
           <input
             {...register('upazila')}
             placeholder="Enter upazila/thana"
@@ -358,9 +339,7 @@ const AddStudents = () => {
 
         {/* District */}
         <div>
-          <label className="block font-medium mb-1 text-gray-700">
-            District
-          </label>
+          <label className="block font-medium mb-1 text-gray-700">District</label>
           <input
             {...register('district')}
             placeholder="Enter district"
@@ -370,9 +349,7 @@ const AddStudents = () => {
 
         {/* Division */}
         <div>
-          <label className="block font-medium mb-1 text-gray-700">
-            Division
-          </label>
+          <label className="block font-medium mb-1 text-gray-700">Division</label>
           <input
             {...register('division')}
             placeholder="Enter division"
@@ -406,9 +383,7 @@ const AddStudents = () => {
 
         {/* Previous School */}
         <div>
-          <label className="block font-medium mb-1 text-gray-700">
-            Previous School
-          </label>
+          <label className="block font-medium mb-1 text-gray-700">Previous School</label>
           <input
             {...register('previousSchool')}
             placeholder="Enter previous school name"
@@ -418,9 +393,7 @@ const AddStudents = () => {
 
         {/* Photo Upload */}
         <div className="md:col-span-2">
-          <label className="block font-medium mb-1 text-gray-700">
-            Student Photo
-          </label>
+          <label className="block font-medium mb-1 text-gray-700">Student Photo</label>
           <input
             type="file"
             {...register('photo')}

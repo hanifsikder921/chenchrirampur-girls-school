@@ -6,18 +6,26 @@ import {
   FaTasks,
   FaStar,
   FaUserShield,
-  FaBookOpen,
-  FaChalkboardTeacher,
+ 
 } from 'react-icons/fa';
 import { motion } from 'framer-motion';
+import useAuth from './../assets/hooks/useAuth';
 
 const DashboardLayout = () => {
+  const { user, loading } = useAuth();
   const navLinkClass = ({ isActive }) =>
     `flex items-center gap-2 px-4 py-2 mt-1 rounded-lg font-medium transition-colors ${
-      isActive
-        ? 'bg-primary text-white'
-        : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
+      isActive ? 'bg-primary text-white' : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
     }`;
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <p className="text-green-600">Loading...</p>
+      </div>
+    );
+  }
+
 
   return (
     <div className="drawer lg:drawer-open">
@@ -48,9 +56,7 @@ const DashboardLayout = () => {
               </svg>
             </label>
           </div>
-          <div className="mx-2 flex-1 px-2 font-bold">
-            Dashboard
-          </div>
+          <div className="mx-2 flex-1 px-2 font-bold">Dashboard</div>
         </div>
 
         {/* Page Content */}

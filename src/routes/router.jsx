@@ -11,6 +11,7 @@ import PrivateRoute from './../provider/PrivateRoute';
 import DashboardLayout from '../layouts/DashboardLayout';
 import AddStudents from '../pages/Dashboard/Students/AddStudents';
 import ViewStudents from '../pages/Dashboard/Students/ViewStudents';
+import AddMarks from '../pages/Dashboard/Marks/AddMarks';
 
 const router = createBrowserRouter([
   {
@@ -62,6 +63,10 @@ const router = createBrowserRouter([
         path: 'manage-students',
         Component: ViewStudents,
       },
+      {
+        path: 'add-marks',
+        Component: AddMarks,
+      }
     ],
   },
 
