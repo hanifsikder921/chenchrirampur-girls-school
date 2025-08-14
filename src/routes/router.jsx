@@ -7,6 +7,8 @@ import Register from './../pages/Register/Register';
 import About from '../pages/About/About';
 import ContactUs from '../pages/Contact/ContactUs';
 import MaintenancePage from '../pages/Maintenance/MaintenancePage';
+import PrivateRoute from './../provider/PrivateRoute';
+import DashboardLayout from '../layouts/DashboardLayout';
 
 const router = createBrowserRouter([
   {
@@ -42,6 +44,17 @@ const router = createBrowserRouter([
       },
     ],
   },
+  {
+     path: "/dashboard",
+    Component: () => (
+      <PrivateRoute>
+        <DashboardLayout />
+      </PrivateRoute>
+    ),
+  },
+
+
+
   {
     path: '*',
     Component:MaintenancePage
