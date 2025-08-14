@@ -49,8 +49,8 @@ const AddStudents = () => {
   };
 
   return (
-    <div className="bg-white dark:bg-gray-800 shadow-xl rounded-lg p-6 max-w-4xl mx-auto my-8 border border-gray-200 dark:border-gray-700">
-      <h2 className="text-2xl font-bold mb-6 text-green-800 dark:text-green-500 text-center">
+    <div className="bg-white shadow-xl rounded-lg p-6 max-w-4xl mx-auto my-8 border border-gray-200">
+      <h2 className="text-2xl font-bold mb-6 text-green-800 text-center">
         ➕ Add New Student
       </h2>
 
@@ -64,25 +64,25 @@ const AddStudents = () => {
 
         {/* Name */}
         <div>
-          <label className="block font-medium mb-1 text-gray-700 dark:text-gray-300">
+          <label className="block font-medium mb-1 text-gray-700">
             Full Name <span className="text-red-500">*</span>
           </label>
           <input
             {...register('name', { required: 'Name is required' })}
             placeholder="Enter full name"
-            className="input input-bordered w-full dark:bg-gray-700 dark:border-gray-600"
+            className="input input-bordered w-full"
           />
           {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>}
         </div>
 
         {/* Gender */}
         <div>
-          <label className="block font-medium mb-1 text-gray-700 dark:text-gray-300">
+          <label className="block font-medium mb-1 text-gray-700">
             Gender <span className="text-red-500">*</span>
           </label>
           <select
             {...register('gender', { required: 'Gender is required' })}
-            className="select select-bordered w-full dark:bg-gray-700 dark:border-gray-600"
+            className="select select-bordered w-full"
           >
             <option value="">Select gender</option>
             {genders.map((gender) => (
@@ -96,25 +96,25 @@ const AddStudents = () => {
 
         {/* DOB */}
         <div>
-          <label className="block font-medium mb-1 text-gray-700 dark:text-gray-300">
+          <label className="block font-medium mb-1 text-gray-700">
             Date of Birth <span className="text-red-500">*</span>
           </label>
           <input
             type="date"
             {...register('dob', { required: 'Date of Birth is required' })}
-            className="input input-bordered w-full dark:bg-gray-700 dark:border-gray-600"
+            className="input input-bordered w-full"
           />
           {errors.dob && <p className="text-red-500 text-sm mt-1">{errors.dob.message}</p>}
         </div>
 
         {/* Blood Group */}
         <div>
-          <label className="block font-medium mb-1 text-gray-700 dark:text-gray-300">
+          <label className="block font-medium mb-1 text-gray-700">
             Blood Group
           </label>
           <select
             {...register('bloodGroup')}
-            className="select select-bordered w-full dark:bg-gray-700 dark:border-gray-600"
+            className="select select-bordered w-full"
           >
             <option value="">Select blood group</option>
             {bloodGroups.map((group) => (
@@ -127,12 +127,12 @@ const AddStudents = () => {
 
         {/* Religion */}
         <div>
-          <label className="block font-medium mb-1 text-gray-700 dark:text-gray-300">
+          <label className="block font-medium mb-1 text-gray-700">
             Religion <span className="text-red-500">*</span>
           </label>
           <select
             {...register('religion', { required: 'Religion is required' })}
-            className="select select-bordered w-full dark:bg-gray-700 dark:border-gray-600"
+            className="select select-bordered w-full"
           >
             <option value="">Select religion</option>
             {religions.map((religion) => (
@@ -155,12 +155,12 @@ const AddStudents = () => {
 
         {/* Class */}
         <div>
-          <label className="block font-medium mb-1 text-gray-700 dark:text-gray-300">
+          <label className="block font-medium mb-1 text-gray-700">
             Class <span className="text-red-500">*</span>
           </label>
           <select
             {...register('className', { required: 'Class is required' })}
-            className="select select-bordered w-full dark:bg-gray-700 dark:border-gray-600"
+            className="select select-bordered w-full"
           >
             <option value="">Select class</option>
             {classes.map((cls) => (
@@ -176,24 +176,24 @@ const AddStudents = () => {
 
         {/* Roll */}
         <div>
-          <label className="block font-medium mb-1 text-gray-700 dark:text-gray-300">
+          <label className="block font-medium mb-1 text-gray-700">
             Roll Number <span className="text-red-500">*</span>
           </label>
           <input
             type="number"
             {...register('roll', { required: 'Roll is required' })}
             placeholder="Enter roll number"
-            className="input input-bordered w-full dark:bg-gray-700 dark:border-gray-600"
+            className="input input-bordered w-full"
           />
           {errors.roll && <p className="text-red-500 text-sm mt-1">{errors.roll.message}</p>}
         </div>
 
         {/* Section */}
         <div>
-          <label className="block font-medium mb-1 text-gray-700 dark:text-gray-300">Section</label>
+          <label className="block font-medium mb-1 text-gray-700">Section</label>
           <select
             {...register('section')}
-            className="select select-bordered w-full dark:bg-gray-700 dark:border-gray-600"
+            className="select select-bordered w-full"
             disabled={['6', '7', '8'].includes(selectedClass)}
           >
             <option value="">Select section</option>
@@ -207,13 +207,13 @@ const AddStudents = () => {
 
         {/* Admission Date */}
         <div>
-          <label className="block font-medium mb-1 text-gray-700 dark:text-gray-300">
+          <label className="block font-medium mb-1 text-gray-700">
             Admission Date
           </label>
           <input
             type="date"
             {...register('admissionDate')}
-            className="input input-bordered w-full dark:bg-gray-700 dark:border-gray-600"
+            className="input input-bordered w-full"
           />
         </div>
 
@@ -226,13 +226,13 @@ const AddStudents = () => {
 
         {/* Father Name */}
         <div>
-          <label className="block font-medium mb-1 text-gray-700 dark:text-gray-300">
+          <label className="block font-medium mb-1 text-gray-700">
             Father's Name <span className="text-red-500">*</span>
           </label>
           <input
             {...register('fatherName', { required: 'Father name is required' })}
             placeholder="Enter father's name"
-            className="input input-bordered w-full dark:bg-gray-700 dark:border-gray-600"
+            className="input input-bordered w-full"
           />
           {errors.fatherName && (
             <p className="text-red-500 text-sm mt-1">{errors.fatherName.message}</p>
@@ -241,13 +241,13 @@ const AddStudents = () => {
 
         {/* Mother Name */}
         <div>
-          <label className="block font-medium mb-1 text-gray-700 dark:text-gray-300">
+          <label className="block font-medium mb-1 text-gray-700">
             Mother's Name <span className="text-red-500">*</span>
           </label>
           <input
             {...register('motherName', { required: 'Mother name is required' })}
             placeholder="Enter mother's name"
-            className="input input-bordered w-full dark:bg-gray-700 dark:border-gray-600"
+            className="input input-bordered w-full"
           />
           {errors.motherName && (
             <p className="text-red-500 text-sm mt-1">{errors.motherName.message}</p>
@@ -256,31 +256,31 @@ const AddStudents = () => {
 
         {/* Father Occupation */}
         <div>
-          <label className="block font-medium mb-1 text-gray-700 dark:text-gray-300">
+          <label className="block font-medium mb-1 text-gray-700">
             Father's Occupation
           </label>
           <input
             {...register('fatherOccupation')}
             placeholder="Enter father's occupation"
-            className="input input-bordered w-full dark:bg-gray-700 dark:border-gray-600"
+            className="input input-bordered w-full"
           />
         </div>
 
         {/* Mother Occupation */}
         <div>
-          <label className="block font-medium mb-1 text-gray-700 dark:text-gray-300">
+          <label className="block font-medium mb-1 text-gray-700">
             Mother's Occupation
           </label>
           <input
             {...register('motherOccupation')}
             placeholder="Enter mother's occupation"
-            className="input input-bordered w-full dark:bg-gray-700 dark:border-gray-600"
+            className="input input-bordered w-full"
           />
         </div>
 
         {/* Parent Contact */}
         <div>
-          <label className="block font-medium mb-1 text-gray-700 dark:text-gray-300">
+          <label className="block font-medium mb-1 text-gray-700">
             Parent's Contact <span className="text-red-500">*</span>
           </label>
           <input
@@ -290,7 +290,7 @@ const AddStudents = () => {
               pattern: { value: /^[0-9]{11}$/, message: 'Enter valid 11 digit number' },
             })}
             placeholder="Enter parent's contact number"
-            className="input input-bordered w-full dark:bg-gray-700 dark:border-gray-600"
+            className="input input-bordered w-full"
           />
           {errors.parentContact && (
             <p className="text-red-500 text-sm mt-1">{errors.parentContact.message}</p>
@@ -299,7 +299,7 @@ const AddStudents = () => {
 
         {/* Emergency Contact */}
         <div>
-          <label className="block font-medium mb-1 text-gray-700 dark:text-gray-300">
+          <label className="block font-medium mb-1 text-gray-700">
             Emergency Contact
           </label>
           <input
@@ -308,7 +308,7 @@ const AddStudents = () => {
               pattern: { value: /^[0-9]{11}$/, message: 'Enter valid 11 digit number' },
             })}
             placeholder="Enter emergency contact"
-            className="input input-bordered w-full dark:bg-gray-700 dark:border-gray-600"
+            className="input input-bordered w-full"
           />
           {errors.emergencyContact && (
             <p className="text-red-500 text-sm mt-1">{errors.emergencyContact.message}</p>
@@ -324,59 +324,59 @@ const AddStudents = () => {
 
         {/* Village */}
         <div>
-          <label className="block font-medium mb-1 text-gray-700 dark:text-gray-300">Village</label>
+          <label className="block font-medium mb-1 text-gray-700">Village</label>
           <input
             {...register('village')}
             placeholder="Enter village"
-            className="input input-bordered w-full dark:bg-gray-700 dark:border-gray-600"
+            className="input input-bordered w-full"
           />
         </div>
 
         {/* Post Office */}
         <div>
-          <label className="block font-medium mb-1 text-gray-700 dark:text-gray-300">
+          <label className="block font-medium mb-1 text-gray-700">
             Post Office
           </label>
           <input
             {...register('postOffice')}
             placeholder="Enter post office"
-            className="input input-bordered w-full dark:bg-gray-700 dark:border-gray-600"
+            className="input input-bordered w-full"
           />
         </div>
 
         {/* Upazila */}
         <div>
-          <label className="block font-medium mb-1 text-gray-700 dark:text-gray-300">
+          <label className="block font-medium mb-1 text-gray-700">
             Upazila/Thana
           </label>
           <input
             {...register('upazila')}
             placeholder="Enter upazila/thana"
-            className="input input-bordered w-full dark:bg-gray-700 dark:border-gray-600"
+            className="input input-bordered w-full"
           />
         </div>
 
         {/* District */}
         <div>
-          <label className="block font-medium mb-1 text-gray-700 dark:text-gray-300">
+          <label className="block font-medium mb-1 text-gray-700">
             District
           </label>
           <input
             {...register('district')}
             placeholder="Enter district"
-            className="input input-bordered w-full dark:bg-gray-700 dark:border-gray-600"
+            className="input input-bordered w-full"
           />
         </div>
 
         {/* Division */}
         <div>
-          <label className="block font-medium mb-1 text-gray-700 dark:text-gray-300">
+          <label className="block font-medium mb-1 text-gray-700">
             Division
           </label>
           <input
             {...register('division')}
             placeholder="Enter division"
-            className="input input-bordered w-full dark:bg-gray-700 dark:border-gray-600"
+            className="input input-bordered w-full"
           />
         </div>
 
@@ -389,7 +389,7 @@ const AddStudents = () => {
 
         {/* Email */}
         <div>
-          <label className="block font-medium mb-1 text-gray-700 dark:text-gray-300">Email</label>
+          <label className="block font-medium mb-1 text-gray-700">Email</label>
           <input
             type="email"
             {...register('email', {
@@ -399,43 +399,43 @@ const AddStudents = () => {
               },
             })}
             placeholder="Enter email address"
-            className="input input-bordered w-full dark:bg-gray-700 dark:border-gray-600"
+            className="input input-bordered w-full"
           />
           {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
         </div>
 
         {/* Previous School */}
         <div>
-          <label className="block font-medium mb-1 text-gray-700 dark:text-gray-300">
+          <label className="block font-medium mb-1 text-gray-700">
             Previous School
           </label>
           <input
             {...register('previousSchool')}
             placeholder="Enter previous school name"
-            className="input input-bordered w-full dark:bg-gray-700 dark:border-gray-600"
+            className="input input-bordered w-full"
           />
         </div>
 
         {/* Photo Upload */}
         <div className="md:col-span-2">
-          <label className="block font-medium mb-1 text-gray-700 dark:text-gray-300">
+          <label className="block font-medium mb-1 text-gray-700">
             Student Photo
           </label>
           <input
             type="file"
             {...register('photo')}
             accept="image/*"
-            className="file-input file-input-bordered w-full dark:bg-gray-700 dark:border-gray-600"
+            className="file-input file-input-bordered w-full"
           />
         </div>
 
         {/* Notes */}
         <div className="md:col-span-2">
-          <label className="block font-medium mb-1 text-gray-700 dark:text-gray-300">Notes</label>
+          <label className="block font-medium mb-1 text-gray-700">Notes</label>
           <textarea
             {...register('notes')}
             placeholder="Any additional notes..."
-            className="textarea textarea-bordered w-full dark:bg-gray-700 dark:border-gray-600"
+            className="textarea textarea-bordered w-full"
             rows={3}
           ></textarea>
         </div>
@@ -444,7 +444,7 @@ const AddStudents = () => {
         <div className="md:col-span-2 mt-4">
           <button
             type="submit"
-            className="btn bg-green-800 hover:bg-green-700 text-white w-full dark:bg-green-700 dark:hover:bg-green-600"
+            className="btn bg-green-800 hover:bg-green-700 text-white w-full"
             disabled={isSubmitting}
           >
             {isSubmitting ? (
