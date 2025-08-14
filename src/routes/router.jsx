@@ -9,6 +9,7 @@ import ContactUs from '../pages/Contact/ContactUs';
 import MaintenancePage from '../pages/Maintenance/MaintenancePage';
 import PrivateRoute from './../provider/PrivateRoute';
 import DashboardLayout from '../layouts/DashboardLayout';
+import AddStudents from '../pages/Dashboard/Students/AddStudents';
 
 const router = createBrowserRouter([
   {
@@ -45,20 +46,24 @@ const router = createBrowserRouter([
     ],
   },
   {
-     path: "/dashboard",
+    path: '/dashboard',
     Component: () => (
       <PrivateRoute>
         <DashboardLayout />
       </PrivateRoute>
     ),
+    children: [
+      {
+        path: 'add-student',
+        Component: AddStudents,
+      },
+    ],
   },
-
-
 
   {
     path: '*',
-    Component:MaintenancePage
-  }
+    Component: MaintenancePage,
+  },
 ]);
 
 export default router;
