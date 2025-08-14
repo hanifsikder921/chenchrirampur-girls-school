@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { IoHome, IoChevronDown, IoMenu } from 'react-icons/io5';
-import { NavLink } from 'react-router'; 
+import { NavLink } from 'react-router';
 
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -9,73 +9,77 @@ const Navbar = () => {
     {
       title: 'ক্যাম্পাস',
       submenu: [
-        { title: 'ক্যাম্পাস লাইফ', bg: 'bg-green-50' },
-        { title: 'ইভেন্টস', bg: 'bg-green-100' },
-        { title: 'ক্লাব ও সংগঠন', bg: 'bg-green-50' },
-        { title: 'ভ্রমণ ও সফর', bg: 'bg-green-100' },
+        { title: 'ক্যাম্পাস লাইফ', bg: 'bg-green-50', target: '/campus/campus-life' },
+        { title: 'ইভেন্টস', bg: 'bg-green-100', target: '/campus/events' },
+        { title: 'ক্লাব ও সংগঠন', bg: 'bg-green-50', target: '/campus/clubs' },
+        { title: 'ভ্রমণ ও সফর', bg: 'bg-green-100', target: '/campus/travel' },
       ],
     },
     {
       title: 'ভর্তি',
       submenu: [
-        { title: 'ভর্তি প্রক্রিয়া', bg: 'bg-blue-50' },
-        { title: 'ভর্তি ফর্ম', bg: 'bg-blue-100' },
-        { title: 'ভর্তি পরীক্ষা', bg: 'bg-blue-50' },
-        { title: 'ফি ও বেতন', bg: 'bg-blue-100' },
+        { title: 'ভর্তি প্রক্রিয়া', bg: 'bg-blue-50', target: '/admission/process' },
+        { title: 'ভর্তি ফর্ম', bg: 'bg-blue-100', target: '/admission/form' },
+        { title: 'ভর্তি পরীক্ষা', bg: 'bg-blue-50', target: '/admission/exam' },
+        { title: 'ফি ও বেতন', bg: 'bg-blue-100', target: '/admission/fees' },
       ],
     },
     {
       title: 'শ্রেণী ও বিষয়',
       submenu: [
-        { title: 'ষষ্ঠ থেকে অষ্টম শ্রেণী', bg: 'bg-purple-50' },
-        { title: 'নবম-দশম শ্রেণী', bg: 'bg-purple-100' },
-        { title: 'বিজ্ঞান বিভাগ', bg: 'bg-purple-50' },
-        { title: 'মানবিক ও ব্যবসায় শিক্ষা', bg: 'bg-purple-100' },
+        { title: 'ষষ্ঠ থেকে অষ্টম শ্রেণী', bg: 'bg-purple-50', target: '/classes/6-8' },
+        { title: 'নবম-দশম শ্রেণী', bg: 'bg-purple-100', target: '/classes/9-10' },
+        { title: 'বিজ্ঞান বিভাগ', bg: 'bg-purple-50', target: '/classes/science' },
+        {
+          title: 'মানবিক ও ব্যবসায় শিক্ষা',
+          bg: 'bg-purple-100',
+          target: '/classes/humanities-commerce',
+        },
       ],
     },
     {
       title: 'ব্যাবস্থাপনা',
       submenu: [
-        { title: 'অ্যাডমিন প্যানেল', bg: 'bg-red-50' },
-        { title: 'ফ্যাকাল্টি ম্যানেজমেন্ট', bg: 'bg-red-100' },
-        { title: 'কর্মচারী ব্যবস্থাপনা', bg: 'bg-red-50' },
-        { title: 'অর্থ ও হিসাব', bg: 'bg-red-100' },
+        { title: 'অ্যাডমিন প্যানেল', bg: 'bg-red-50', target: '/login' },
+        { title: 'ফ্যাকাল্টি ম্যানেজমেন্ট', bg: 'bg-red-100', target: '/management/faculty' },
+        { title: 'কর্মচারী ব্যবস্থাপনা', bg: 'bg-red-50', target: '/management/staff' },
+        { title: 'অর্থ ও হিসাব', bg: 'bg-red-100', target: '/management/finance' },
       ],
     },
     {
       title: 'একাডেমিক পেপার',
       submenu: [
-        { title: 'রিসার্চ পেপার', bg: 'bg-yellow-50' },
-        { title: 'জার্নাল', bg: 'bg-yellow-100' },
-        { title: 'থিসিস', bg: 'bg-yellow-50' },
-        { title: 'প্রজেক্ট রিপোর্ট', bg: 'bg-yellow-100' },
+        { title: 'রিসার্চ পেপার', bg: 'bg-yellow-50', target: '/papers/research' },
+        { title: 'জার্নাল', bg: 'bg-yellow-100', target: '/papers/journal' },
+        { title: 'থিসিস', bg: 'bg-yellow-50', target: '/papers/thesis' },
+        { title: 'প্রজেক্ট রিপোর্ট', bg: 'bg-yellow-100', target: '/papers/project-report' },
       ],
     },
     {
       title: 'শিক্ষার্থী',
       submenu: [
-        { title: 'শিক্ষার্থী প্রোফাইল', bg: 'bg-indigo-50' },
-        { title: 'অ্যাটেন্ডেন্স', bg: 'bg-indigo-100' },
-        { title: 'রেজাল্ট কার্ড', bg: 'bg-indigo-50' },
-        { title: 'শিক্ষাবৃত্তি', bg: 'bg-indigo-100' },
+        { title: 'শিক্ষার্থী প্রোফাইল', bg: 'bg-indigo-50', target: '/students/profile' },
+        { title: 'অ্যাটেন্ডেন্স', bg: 'bg-indigo-100', target: '/students/attendance' },
+        { title: 'রেজাল্ট কার্ড', bg: 'bg-indigo-50', target: '/students/result-card' },
+        { title: 'শিক্ষাবৃত্তি', bg: 'bg-indigo-100', target: '/students/scholarship' },
       ],
     },
     {
       title: 'ফলাফল',
       submenu: [
-        { title: 'পরীক্ষার ফলাফল', bg: 'bg-pink-50' },
-        { title: 'মেরিট লিস্ট', bg: 'bg-pink-100' },
-        { title: 'গ্রেডিং সিস্টেম', bg: 'bg-pink-50' },
-        { title: 'ফলাফল পুনঃনিরীক্ষণ', bg: 'bg-pink-100' },
+        { title: 'পরীক্ষার ফলাফল', bg: 'bg-pink-50', target: '/results/exam' },
+        { title: 'মেরিট লিস্ট', bg: 'bg-pink-100', target: '/results/merit-list' },
+        { title: 'গ্রেডিং সিস্টেম', bg: 'bg-pink-50', target: '/results/grading' },
+        { title: 'ফলাফল পুনঃনিরীক্ষণ', bg: 'bg-pink-100', target: '/results/recheck' },
       ],
     },
     {
       title: 'রিসোর্স',
       submenu: [
-        { title: 'লাইব্রেরি', bg: 'bg-teal-50' },
-        { title: 'ল্যাবরেটরি', bg: 'bg-teal-100' },
-        { title: 'সফটওয়্যার', bg: 'bg-teal-50' },
-        { title: 'অনলাইন রিসোর্স', bg: 'bg-teal-100' },
+        { title: 'লাইব্রেরি', bg: 'bg-teal-50', target: '/resources/library' },
+        { title: 'ল্যাবরেটরি', bg: 'bg-teal-100', target: '/resources/lab' },
+        { title: 'সফটওয়্যার', bg: 'bg-teal-50', target: '/resources/software' },
+        { title: 'অনলাইন রিসোর্স', bg: 'bg-teal-100', target: '/resources/online' },
       ],
     },
   ];
@@ -103,10 +107,8 @@ const Navbar = () => {
                 {item.submenu.map((subItem, index) => (
                   <li key={index}>
                     <NavLink
-                      to={`/${item.title.toLowerCase().replace(/\s+/g, '-')}/${subItem.title
-                        .toLowerCase()
-                        .replace(/\s+/g, '-')}`}
-                      className={`${subItem.bg} block px-4 py-3 text-sm text-gray-700 hover:bg-opacity-90 hover:text-blue-600 border-b border-gray-100 last:border-b-0`}
+                      to={subItem.target}
+                      className={`${subItem.bg} block px-4 py-3 text-sm text-gray-700 hover:bg-opacity-90 hover:text-white hover:font-semibold duration-100 hover:bg-green-800 border-b border-gray-100 last:border-b-0`}
                     >
                       {subItem.title}
                     </NavLink>
@@ -136,7 +138,7 @@ const Navbar = () => {
         >
           <ul className="space-y-2 pb-4">
             {menuItems.map((item) => (
-              <li key={item.title} className="  border-b border-gray-200">
+              <li key={item.title} className="border-b border-gray-200">
                 <details>
                   <summary className="cursor-pointer px-4 py-2 bg-gray-50 font-semibold flex justify-between items-center">
                     {item.title}
@@ -146,9 +148,7 @@ const Navbar = () => {
                     {item.submenu.map((subItem, index) => (
                       <li key={index}>
                         <NavLink
-                          to={`/${item.title.toLowerCase().replace(/\s+/g, '-')}/${subItem.title
-                            .toLowerCase()
-                            .replace(/\s+/g, '-')}`}
+                          to={subItem.target}
                           className={`${subItem.bg} block px-6 py-2 text-sm text-gray-700 hover:bg-opacity-90 hover:text-blue-600`}
                         >
                           {subItem.title}
