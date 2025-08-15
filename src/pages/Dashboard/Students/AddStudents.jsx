@@ -3,10 +3,15 @@ import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
+import useAxios from './../../../assets/hooks/useAxios';
+import { useState } from 'react';
 
 const MySwal = withReactContent(Swal);
 
 const AddStudents = () => {
+  const axios = useAxios();
+  const [studentImage, setStudentImage] = useState('');
+  const [imagePreview, setImagePreview] = useState('');
   const {
     register,
     handleSubmit,
@@ -23,29 +28,75 @@ const AddStudents = () => {
 
   const selectedClass = watch('className');
 
+  // const onSubmit = async (data) => {
+  //   const studentData = {
+  //     ...data,
+  //     image: studentImage,
+  //     status: 'active',
+  //     createdAt: new Date().toISOString(),
+  //   };
+
+  //   try {
+  //     const res = await axios.post('/students', studentData);
+  //     if (res.data.insertedId) {
+  //       Swal.fire({
+  //         icon: 'success',
+  //         title: 'Student added successfully',
+  //       });
+  //       reset();
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //     Swal.fire({
+  //       icon: 'error',
+  //       title: 'Failed to add student',
+  //     });
+  //   }
+  // };
+
   const onSubmit = async (data) => {
+    const studentData = {
+      ...data,
+      image: studentImage,
+      status: 'active',
+      createdAt: new Date().toISOString(),
+    };
+
     try {
-      await axios.post('/api/students', data);
-
-      MySwal.fire({
-        title: 'Success!',
-        text: 'Student added successfully',
-        icon: 'success',
-        confirmButtonText: 'OK',
-        confirmButtonColor: '#15803d', // green-800
-      });
-
-      reset();
-    } catch (err) {
-      console.error(err);
-      MySwal.fire({
-        title: 'Error!',
-        text: err.response?.data?.message || 'Failed to add student',
-        icon: 'error',
-        confirmButtonText: 'OK',
-        confirmButtonColor: '#b91c1c', // red-700
-      });
+      const res = await axios.post('/students', studentData);
+      if (res.data.insertedId) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Student added successfully',
+        });
+        reset();
+      }
+    } catch (error) {
+      console.error(error);
+      if (error.response && error.response.data && error.response.data.message) {
+        Swal.fire({
+          icon: 'error',
+          title: error.response.data.message,
+        });
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Failed to add student',
+        });
+      }
     }
+  };
+  const handleImageUpload = async (e) => {
+    const image = e.target.files[0];
+    const formData = new FormData();
+    formData.append('image', image);
+
+    const imagUploadUrl = `https://api.imgbb.com/1/upload?key=${
+      import.meta.env.VITE_image_upload_key
+    }`;
+    const res = await axios.post(imagUploadUrl, formData);
+    setStudentImage(res.data.data.url);
+    setImagePreview(URL.createObjectURL(image));
   };
 
   return (
@@ -391,15 +442,27 @@ const AddStudents = () => {
           />
         </div>
 
-        {/* Photo Upload */}
-        <div className="md:col-span-2">
-          <label className="block font-medium mb-1 text-gray-700">Student Photo</label>
+        {/* Image Upload */}
+        <div>
+          <label className="text-gray-700 font-medium mb-1">
+            Upload Image <span className="text-red-500">*</span>
+          </label>
           <input
+            {...register('image', { required: true })}
             type="file"
-            {...register('photo')}
-            accept="image/*"
-            className="file-input file-input-bordered w-full"
+            onChange={handleImageUpload}
+            className="w-full px-4 py-2  rounded-md "
           />
+          {errors.image && <p className="text-red-500 text-sm">Image URL is required</p>}
+          {imagePreview && (
+            <div className="mt-4">
+              <img
+                src={imagePreview}
+                alt="Student Preview"
+                className="w-32 h-32 object-cover rounded-md"
+              />
+            </div>
+          )}
         </div>
 
         {/* Notes */}
