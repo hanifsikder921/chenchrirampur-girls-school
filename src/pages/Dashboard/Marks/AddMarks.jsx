@@ -94,7 +94,7 @@ const AddMarks = () => {
     const theory = watchMarks?.[studentIndex]?.[subject]?.theory || 0;
     const mcq = watchMarks?.[studentIndex]?.[subject]?.mcq || 0;
     const practical = watchMarks?.[studentIndex]?.[subject]?.practical || 0;
-    const total = Number(theory) + Number(mcq) + Number(practical);
+    const total = Number(theory) + Number(mcq) + Number(practical) || 0;
 
     return { numValue, total };
   };
@@ -180,11 +180,11 @@ const AddMarks = () => {
                 </thead>
                 <tbody>
                   {subjects.map((subj) => {
-                    const theory = watchMarks?.[sIdx]?.[subj]?.theory;
-                    const mcq = watchMarks?.[sIdx]?.[subj]?.mcq
-                    const practical = watchMarks?.[sIdx]?.[subj]?.practical;
+                    const theory = watchMarks?.[sIdx]?.[subj]?.theory || 0;
+                    const mcq = watchMarks?.[sIdx]?.[subj]?.mcq || 0;
+                    const practical = watchMarks?.[sIdx]?.[subj]?.practical || 0;
                     const total = Number(theory) + Number(mcq) + Number(practical);
-                    const grade = calculateGrade(total);
+                    const grade = calculateGrade(total) || 0;
                     const isICT = subj === 'Information and Communication Technology (ICT)';
 
                     return (
@@ -260,7 +260,7 @@ const AddMarks = () => {
                               );
                               // Update dependent fields
                               setValue(`marks.${sIdx}.${subj}.total`, total);
-                              setValue(`marks.${sIdx}.${subj}.grade`, calculateGrade(total));
+                              setValue(`marks.${sIdx}.${subj}.grade`, calculateGrade(total)) ;
                             }}
                             className={`input input-bordered w-full ${
                               errors?.marks?.[sIdx]?.[subj]?.practical ? 'input-error' : ''
