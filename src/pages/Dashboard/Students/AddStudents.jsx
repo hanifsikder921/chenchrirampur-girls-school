@@ -5,11 +5,14 @@ import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import useAxios from './../../../assets/hooks/useAxios';
 import { useState } from 'react';
+import useAuth from './../../../assets/hooks/useAuth';
+import { IoPersonAddOutline } from 'react-icons/io5';
 
 const MySwal = withReactContent(Swal);
 
 const AddStudents = () => {
   const axios = useAxios();
+  const { user } = useAuth();
   const [studentImage, setStudentImage] = useState('');
   const [imagePreview, setImagePreview] = useState('');
   const {
@@ -58,6 +61,7 @@ const AddStudents = () => {
     const studentData = {
       ...data,
       image: studentImage,
+      adminName: user?.email,
       status: 'active',
       createdAt: new Date().toISOString(),
     };
@@ -101,7 +105,9 @@ const AddStudents = () => {
 
   return (
     <div className="bg-white shadow-xl rounded-lg p-6 max-w-4xl mx-auto my-8 border border-gray-200">
-      <h2 className="text-2xl font-bold mb-6 text-green-800 text-center">➕ Add New Student</h2>
+      <h2 className="text-2xl font-bold mb-6 text-green-800 text-center flex items-center gap-2 justify-center">
+        <IoPersonAddOutline /> Add New Student
+      </h2>
 
       <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Personal Information Section */}
@@ -203,7 +209,7 @@ const AddStudents = () => {
             Class <span className="text-red-500">*</span>
           </label>
           <select
-            {...register('className', { required: 'Class is required' })}
+            {...register('dclassName', { required: 'Class is required' })}
             className="select select-bordered w-full"
           >
             <option value="">Select class</option>
