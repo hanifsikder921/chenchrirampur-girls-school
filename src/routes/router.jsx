@@ -12,6 +12,7 @@ import DashboardLayout from '../layouts/DashboardLayout';
 import AddStudents from '../pages/Dashboard/Students/AddStudents';
 import ViewStudents from '../pages/Dashboard/Students/ViewStudents';
 import AddMarks from '../pages/Dashboard/Marks/AddMarks';
+import EditStudent from './../pages/Dashboard/Students/EditStudent';
 
 const router = createBrowserRouter([
   {
@@ -62,6 +63,10 @@ const router = createBrowserRouter([
       {
         path: 'manage-students',
         Component: ViewStudents,
+      },
+      {
+        path: 'edit-student/:id',
+        Component: EditStudent,
       },
       {
         path: 'add-marks',

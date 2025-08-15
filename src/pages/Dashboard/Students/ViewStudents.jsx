@@ -129,7 +129,10 @@ const ViewStudents = () => {
       {/* Header and Add Button */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
         <h2 className="text-2xl font-bold text-green-800">Student Management</h2>
-        <Link to="/add-student" className="btn bg-green-800 hover:bg-green-700 text-white">
+        <Link
+          to="/dashboard/add-student"
+          className="btn bg-green-800 hover:bg-green-700 text-white"
+        >
           <FaPlus className="mr-2" />
           Add New Student
         </Link>
@@ -234,13 +237,13 @@ const ViewStudents = () => {
                   <td className="px-6 py-4 whitespace-nowrap">{student.roll}</td>
                   <td className="px-6 py-4 whitespace-nowrap flex space-x-2">
                     <Link
-                      to={`/edit-student/${student.id}`}
+                      to={`/dashboard/edit-student/${student.id}`}
                       className="text-blue-600 hover:text-blue-900"
                     >
                       <FaEdit className="w-5 h-5" />
                     </Link>
                     <button
-                      onClick={() => handleDelete(student.id, student.name)}  
+                      onClick={() => handleDelete(student.id, student.name)}
                       className="text-red-600 hover:text-red-900"
                       disabled={deleteMutation.isLoading}
                     >

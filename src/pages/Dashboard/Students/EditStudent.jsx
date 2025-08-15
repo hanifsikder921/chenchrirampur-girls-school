@@ -1,27 +1,85 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import axios from 'axios';
+import { useParams, useNavigate } from 'react-router';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import Swal from 'sweetalert2';
-import withReactContent from 'sweetalert2-react-content';
-import useAxios from './../../../assets/hooks/useAxios';
-import { useState } from 'react';
-import useAuth from './../../../assets/hooks/useAuth';
 import { IoPersonAddOutline } from 'react-icons/io5';
+import useAxios from '../../../assets/hooks/useAxios';
 
-const MySwal = withReactContent(Swal);
-
-const AddStudents = () => {
+const EditStudent = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
   const axios = useAxios();
-  const { user } = useAuth();
+  const queryClient = useQueryClient();
   const [studentImage, setStudentImage] = useState('');
   const [imagePreview, setImagePreview] = useState('');
+
   const {
     register,
     handleSubmit,
-    reset,
     watch,
+    setValue,                          
     formState: { errors, isSubmitting },
   } = useForm();
+
+  const { data: studentData, isLoading: isStudentLoading } = useQuery({
+    queryKey: ['student', id],
+    queryFn: async () => {
+      const res = await axios.get(`/students/${id}`);
+      return res.data.data;
+    },
+    enabled: !!id,
+  });
+
+  useEffect(() => {
+    if (studentData) {
+      Object.keys(studentData).forEach((key) => {
+        setValue(key, studentData[key]);
+      });
+      setStudentImage(studentData.image);
+      setImagePreview(studentData.image);
+    }
+  }, [studentData, setValue]);
+
+  const mutation = useMutation({
+    mutationFn: (updatedData) => axios.put(`/students/${id}`, updatedData),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['students'] });
+      Swal.fire({
+        icon: 'success',
+        title: 'Student updated successfully',
+      });
+      navigate('/dashboard/manage-students');
+    },
+    onError: (error) => {
+      console.error(error);
+      Swal.fire({
+        icon: 'error',
+        title: error.response.data.message,
+      });
+    },
+  });
+
+  const onSubmit = async (data) => {
+    const updatedData = {
+      ...data,
+      image: studentImage,
+    };
+    mutation.mutate(updatedData);
+  };
+  
+  const handleImageUpload = async (e) => {
+    const image = e.target.files[0];
+    const formData = new FormData();
+    formData.append('image', image);
+
+     const imagUploadUrl = `https://api.imgbb.com/1/upload?key=${
+       import.meta.env.VITE_image_upload_key
+     }`;
+    const res = await axios.post(imagUploadUrl, formData);
+    setStudentImage(res.data.data.url);
+    setImagePreview(URL.createObjectURL(image));
+  };
 
   const classes = ['6', '7', '8', '9', '10'];
   const bloodGroups = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'];
@@ -29,90 +87,22 @@ const AddStudents = () => {
   const religions = ['Islam', 'Hindu', 'Christian', 'Buddhist'];
   const sections = ['Science', 'Humanities', 'Business Studies'];
 
-  const selectedClass = watch('className');
+  const selectedClass = watch('dclassName');
 
-  // const onSubmit = async (data) => {
-  //   const studentData = {
-  //     ...data,
-  //     image: studentImage,
-  //     status: 'active',
-  //     createdAt: new Date().toISOString(),
-  //   };
-
-  //   try {
-  //     const res = await axios.post('/students', studentData);
-  //     if (res.data.insertedId) {
-  //       Swal.fire({
-  //         icon: 'success',
-  //         title: 'Student added successfully',
-  //       });
-  //       reset();
-  //     }
-  //   } catch (error) {
-  //     console.error(error);
-  //     Swal.fire({
-  //       icon: 'error',
-  //       title: 'Failed to add student',
-  //     });
-  //   }
-  // };
-
-  const onSubmit = async (data) => {
-    const studentData = {
-      ...data,
-      image: studentImage,
-      adminName: user?.email,
-      status: 'active',
-      createdAt: new Date().toISOString(),
-    };
-
-    try {
-      const res = await axios.post('/students', studentData);
-      if (res.data.insertedId) {
-        Swal.fire({
-          icon: 'success',
-          title: 'Student added successfully',
-        });
-        reset();
-      }
-    } catch (error) {
-      console.error(error);
-      if (error.response && error.response.data && error.response.data.message) {
-        Swal.fire({
-          icon: 'error',
-          title: error.response.data.message,
-        });
-      } else {
-        Swal.fire({
-          icon: 'error',
-          title: 'Failed to add student',
-        });
-      }
-    }
-  };
-  const handleImageUpload = async (e) => {
-    const image = e.target.files[0];
-    const formData = new FormData();
-    formData.append('image', image);
-
-    const imagUploadUrl = `https://api.imgbb.com/1/upload?key=${
-      import.meta.env.VITE_image_upload_key
-    }`;
-    const res = await axios.post(imagUploadUrl, formData);
-    setStudentImage(res.data.data.url);
-    setImagePreview(URL.createObjectURL(image));
-  };
+  if (isStudentLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="bg-white shadow-xl rounded-lg p-6 max-w-7xl mx-auto my-8 border border-gray-200">
       <h2 className="text-2xl font-bold mb-6 text-green-800 text-center flex items-center gap-2 justify-center">
-        <IoPersonAddOutline /> Add New Student
+        <IoPersonAddOutline /> Edit Student
       </h2>
 
       <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Personal Information Section */}
         <div className="md:col-span-2">
-          <h3 className="text-lg font-semibold bg-green-600 p-2 text-white  mb-3">
+          <h3 className="text-lg font-semibold bg-green-600 px-2 text-white  mb-3">
             Personal Information
           </h3>
         </div>
@@ -198,7 +188,7 @@ const AddStudents = () => {
 
         {/* Academic Information Section */}
         <div className="md:col-span-2 mt-4">
-          <h3 className="text-lg font-semibold bg-green-600 p-2 text-white mb-3">
+          <h3 className="text-lg font-semibold bg-green-600 px-2 text-white mb-3">
             Academic Information
           </h3>
         </div>
@@ -219,8 +209,8 @@ const AddStudents = () => {
               </option>
             ))}
           </select>
-          {errors.className && (
-            <p className="text-red-500 text-sm mt-1">{errors.className.message}</p>
+          {errors.dclassName && (
+            <p className="text-red-500 text-sm mt-1">{errors.dclassName.message}</p>
           )}
         </div>
 
@@ -267,7 +257,7 @@ const AddStudents = () => {
 
         {/* Parent Information Section */}
         <div className="md:col-span-2 mt-4">
-          <h3 className="text-lg font-semibold bg-green-600 p-2 text-white mb-3">
+          <h3 className="text-lg font-semibold bg-green-600 px-2 text-white mb-3">
             Parent Information
           </h3>
         </div>
@@ -278,7 +268,7 @@ const AddStudents = () => {
             Father's Name <span className="text-red-500">*</span>
           </label>
           <input
-            {...register('fatherName', { required: 'Father name is required' })}
+            {...register('fatherName', { required: "Father's name is required" })}
             placeholder="Enter father's name"
             className="input input-bordered w-full"
           />
@@ -293,7 +283,7 @@ const AddStudents = () => {
             Mother's Name <span className="text-red-500">*</span>
           </label>
           <input
-            {...register('motherName', { required: 'Mother name is required' })}
+            {...register('motherName', { required: "Mother's name is required" })}
             placeholder="Enter mother's name"
             className="input input-bordered w-full"
           />
@@ -330,7 +320,7 @@ const AddStudents = () => {
           <input
             type="tel"
             {...register('parentContact', {
-              required: 'Parent contact is required',
+              required: "Parent's contact is required",
               pattern: { value: /^[0-9]{11}$/, message: 'Enter valid 11 digit number' },
             })}
             placeholder="Enter parent's contact number"
@@ -359,7 +349,7 @@ const AddStudents = () => {
 
         {/* Address Information Section */}
         <div className="md:col-span-2 mt-4">
-          <h3 className="text-lg font-semibold bg-green-600 p-2 text-white mb-3">
+          <h3 className="text-lg font-semibold bg-green-600 px-2 text-white mb-3">
             Address Information
           </h3>
         </div>
@@ -416,7 +406,7 @@ const AddStudents = () => {
 
         {/* Additional Information */}
         <div className="md:col-span-2 mt-4">
-          <h3 className="text-lg font-semibold bg-green-600 p-2 text-white mb-3">
+          <h3 className="text-lg font-semibold bg-green-600 px-2 text-white mb-3">
             Additional Information
           </h3>
         </div>
@@ -451,15 +441,13 @@ const AddStudents = () => {
         {/* Image Upload */}
         <div>
           <label className="text-gray-700 font-medium mb-1">
-            Upload Image <span className="text-red-500">*</span>
+            Upload Image
           </label>
           <input
-            {...register('image', { required: true })}
             type="file"
             onChange={handleImageUpload}
             className="w-full px-4 py-2  rounded-md "
           />
-          {errors.image && <p className="text-red-500 text-sm">Image URL is required</p>}
           {imagePreview && (
             <div className="mt-4">
               <img
@@ -486,16 +474,16 @@ const AddStudents = () => {
         <div className="md:col-span-2 mt-4">
           <button
             type="submit"
-            className="btn bg-purple-600 hover:bg-purple-700 text-white text-lg  w-full"
+            className="btn bg-green-800 hover:bg-green-700 text-white w-full"
             disabled={isSubmitting}
           >
             {isSubmitting ? (
               <>
                 <span className="loading loading-spinner"></span>
-                Saving...
+                Updating...
               </>
             ) : (
-              'Save Student Information'
+              'Update Student Information'
             )}
           </button>
         </div>
@@ -504,4 +492,4 @@ const AddStudents = () => {
   );
 };
 
-export default AddStudents;
+export default EditStudent;
