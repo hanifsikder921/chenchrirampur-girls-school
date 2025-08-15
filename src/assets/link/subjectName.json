@@ -1,0 +1,90 @@
+{
+  "classes": {
+    "6": {
+      "subjects": [
+        "Bangla",
+        "English",
+        "Mathematics",
+        "Science",
+        "Social Science",
+        "Religion and Moral Education",
+        "Information and Communication Technology (ICT)",
+        "Agriculture Studies/Home Science",
+        "Arts and Crafts",
+        "Physical Education and Health"
+      ]
+    },
+    "7": {
+      "subjects": [
+        "Bangla",
+        "English",
+        "Mathematics",
+        "Science",
+        "Social Science",
+        "Religion and Moral Education",
+        "Information and Communication Technology (ICT)",
+        "Agriculture Studies/Home Science",
+        "Arts and Crafts",
+        "Physical Education and Health"
+      ]
+    },
+    "8": {
+      "subjects": [
+        "Bangla",
+        "English",
+        "Mathematics",
+        "Science",
+        "Social Science",
+        "Religion and Moral Education",
+        "Information and Communication Technology (ICT)",
+        "Agriculture Studies/Home Science",
+        "Arts and Crafts",
+        "Physical Education and Health"
+      ]
+    },
+    "9": {
+      "common_subjects": [
+        "Bangla",
+        "English",
+        "Mathematics",
+        "Information and Communication Technology (ICT)",
+        "Religion and Moral Education",
+        "Career Education",
+        "Physical Education and Health"
+      ],
+      "groups": {
+        "science": {
+          "subjects": ["Physics", "Chemistry", "Biology"]
+        },
+        "humanities": {
+          "subjects": ["Geography and Environment", "History", "Civics and Citizenship"]
+        },
+        "business_studies": {
+          "subjects": ["Accounting", "Finance and Banking", "Business Entrepreneurship"]
+        }
+      }
+    },
+    "10": {
+      "common_subjects": [
+        "Bangla",
+        "English",
+        "Mathematics",
+        "Information and Communication Technology (ICT)",
+        "Religion and Moral Education",
+        "Career Education",
+        "Physical Education and Health"
+      ],
+      "groups": {
+        "science": {
+          "subjects": ["Physics", "Chemistry", "Biology"]
+        },
+        "humanities": {
+          "subjects": ["Geography and Environment", "History", "Civics and Citizenship"]
+        },
+        "business_studies": {
+          "subjects": ["Accounting", "Finance and Banking", "Business Entrepreneurship"]
+        }
+      }
+    }
+  }
+}
