@@ -1,88 +1,90 @@
 {
   "classes": {
+    "common_6_7_8_subjects": [
+      { "name": "Bangla 1st", "mark": 100 },
+      { "name": "Bangla 2nd", "mark": 50 },
+      { "name": "English 1st", "mark": 100 },
+      { "name": "English 2nd", "mark": 50 },
+      { "name": "Mathematics", "mark": 100 },
+      { "name": "Science", "mark": 100 },
+      { "name": "Religion and Moral Education", "mark": 100 },
+      { "name": "Information and Communication Technology (ICT)", "mark": 50 },
+      { "name": "Agriculture Studies", "mark": 50 },
+      { "name": "Bangladesh and Global Studies", "mark": 100 }
+    ],
+    "common_9_10_subjects": [
+      { "name": "Bangla", "mark": 100 },
+      { "name": "English", "mark": 100 },
+      { "name": "Mathematics", "mark": 100 },
+      { "name": "Information and Communication Technology (ICT)", "mark": 50 },
+      { "name": "Religion and Moral Education", "mark": 100 },
+      { "name": "Career Education", "mark": 100 },
+      { "name": "Physical Education and Health", "mark": 100 }
+    ],
     "6": {
-      "subjects": [
-        "Bangla",
-        "English",
-        "Mathematics",
-        "Science",
-        "Social Science",
-        "Religion and Moral Education",
-        "Information and Communication Technology (ICT)",
-        "Agriculture Studies/Home Science",
-        "Arts and Crafts",
-        "Physical Education and Health"
-      ]
+      "subjects_ref": "common_6_7_8_subjects"
     },
     "7": {
-      "subjects": [
-        "Bangla",
-        "English",
-        "Mathematics",
-        "Science",
-        "Social Science",
-        "Religion and Moral Education",
-        "Information and Communication Technology (ICT)",
-        "Agriculture Studies/Home Science",
-        "Arts and Crafts",
-        "Physical Education and Health"
-      ]
+      "subjects_ref": "common_6_7_8_subjects"
     },
     "8": {
-      "subjects": [
-        "Bangla",
-        "English",
-        "Mathematics",
-        "Science",
-        "Social Science",
-        "Religion and Moral Education",
-        "Information and Communication Technology (ICT)",
-        "Agriculture Studies/Home Science",
-        "Arts and Crafts",
-        "Physical Education and Health"
-      ]
+      "subjects_ref": "common_6_7_8_subjects"
     },
     "9": {
-      "common_subjects": [
-        "Bangla",
-        "English",
-        "Mathematics",
-        "Information and Communication Technology (ICT)",
-        "Religion and Moral Education",
-        "Career Education",
-        "Physical Education and Health"
-      ],
+      "common_subjects_ref": "common_9_10_subjects",
       "groups": {
         "science": {
-          "subjects": ["Physics", "Chemistry", "Biology"]
+          "subjects": [
+            { "name": "Physics", "mark": 100 },
+            { "name": "Chemistry", "mark": 100 },
+            { "name": "Biology", "mark": 100 }
+          ]
         },
         "humanities": {
-          "subjects": ["Geography and Environment", "History", "Civics and Citizenship"]
+          "subjects": [
+            { "name": "Geography and Environment", "mark": 100 },
+            { "name": "History", "mark": 100 },
+            { "name": "Civics and Citizenship", "mark": 100 }
+          ]
         },
         "business_studies": {
-          "subjects": ["Accounting", "Finance and Banking", "Business Entrepreneurship"]
+          "subjects": [
+            { "name": "Accounting", "mark": 100 },
+            { "name": "Finance and Banking", "mark": 100 },
+            { "name": "Business Entrepreneurship", "mark": 100 }
+          ]
         }
+      },
+      "additional": {
+        "subjects": [
+          { "name": "Agriculture Studies", "mark": 100 },
+          { "name": "Higher Mathematics", "mark": 100 }
+        ]
       }
     },
     "10": {
-      "common_subjects": [
-        "Bangla",
-        "English",
-        "Mathematics",
-        "Information and Communication Technology (ICT)",
-        "Religion and Moral Education",
-        "Career Education",
-        "Physical Education and Health"
-      ],
+      "common_subjects_ref": "common_9_10_subjects",
       "groups": {
         "science": {
-          "subjects": ["Physics", "Chemistry", "Biology"]
+          "subjects": [
+            { "name": "Physics", "mark": 100 },
+            { "name": "Chemistry", "mark": 100 },
+            { "name": "Biology", "mark": 100 }
+          ]
         },
         "humanities": {
-          "subjects": ["Geography and Environment", "History", "Civics and Citizenship"]
+          "subjects": [
+            { "name": "Geography and Environment", "mark": 100 },
+            { "name": "History", "mark": 100 },
+            { "name": "Civics and Citizenship", "mark": 100 }
+          ]
         },
         "business_studies": {
-          "subjects": ["Accounting", "Finance and Banking", "Business Entrepreneurship"]
+          "subjects": [
+            { "name": "Accounting", "mark": 100 },
+            { "name": "Finance and Banking", "mark": 100 },
+            { "name": "Business Entrepreneurship", "mark": 100 }
+          ]
         }
       }
     }

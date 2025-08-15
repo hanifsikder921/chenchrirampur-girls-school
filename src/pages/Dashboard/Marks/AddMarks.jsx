@@ -1,290 +1,250 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import SubjectJSON from '../../../assets/link/subjectName.json';
-import axios from 'axios';
 
 const MySwal = withReactContent(Swal);
 
 const AddMarks = () => {
-  const {
-    register,
-    handleSubmit,
-    watch,
-    reset,
-    formState: { errors },
-    setValue,
-    trigger,
-  } = useForm();
-  const [students, setStudents] = useState([]);
+  const { register, handleSubmit, setValue, watch } = useForm();
   const [selectedClass, setSelectedClass] = useState('');
-  const [subjects, setSubjects] = useState([]);
   const [selectedGroup, setSelectedGroup] = useState('');
-  const [groups, setGroups] = useState([]);
+  const [additionalSubject, setAdditionalSubject] = useState('');
+  const [marksData, setMarksData] = useState([]);
+  const [warnings, setWarnings] = useState({});
 
-  const classes = ['6', '7', '8', '9', '10'];
-  const watchMarks = watch('marks') || [];
-
-  // Load subjects based on selected class
-  useEffect(() => {
-    if (!selectedClass) {
-      setSubjects([]);
-      setGroups([]);
-      setSelectedGroup('');
-      setStudents([]);
-      return;
-    }
-
-    const classData = SubjectJSON.classes[selectedClass];
-
-    if (['6', '7', '8'].includes(selectedClass)) {
-      setSubjects(classData.subjects);
-      setGroups([]);
-      setSelectedGroup('');
-    } else if (['9', '10'].includes(selectedClass)) {
-      setGroups(Object.keys(classData.groups));
-      if (selectedGroup) {
-        const groupSubjects = classData.groups[selectedGroup].subjects;
-        setSubjects([...classData.common_subjects, ...groupSubjects]);
-      } else {
-        setSubjects(classData.common_subjects);
-      }
-    }
-
-    // Fetch only one student
-    const singleStudent = [{ id: 1, name: 'Student 1', roll: 101 }];
-    setStudents(singleStudent);
-  }, [selectedClass, selectedGroup]);
+  const watchMarks = watch();
 
   // Grade calculation
-  const calculateGrade = (total) => {
-    if (total >= 80) return 'A+';
-    if (total >= 70) return 'A';
-    if (total >= 60) return 'A-';
-    if (total >= 50) return 'B';
-    if (total >= 40) return 'C';
-    if (total >= 33) return 'D';
+  const getGrade = (score, fullMark) => {
+    const percentage = (score / fullMark) * 100;
+    if (percentage >= 80) return 'A+';
+    if (percentage >= 70) return 'A';
+    if (percentage >= 60) return 'A-';
+    if (percentage >= 50) return 'B';
+    if (percentage >= 40) return 'C';
+    if (percentage >= 33) return 'D';
     return 'F';
   };
 
-  // Get max marks for each field based on subject
-  const getMaxMarks = (subject, field) => {
-    const isICT = subject === 'Information and Communication Technology (ICT)';
+  // Grade point calculation
+  const getGradePoint = (grade) => {
+    switch (grade) {
+      case 'A+':
+        return 5.0;
+      case 'A':
+        return 4.0;
+      case 'A-':
+        return 3.5;
+      case 'B':
+        return 3.0;
+      case 'C':
+        return 2.0;
+      case 'D':
+        return 1.0;
+      default:
+        return 0.0;
+    }
+  };
 
-    if (isICT) {
-      return field === 'theory' ? 25 : field === 'mcq' ? 25 : field === 'practical' ? 0 : 0;
+  const calculateGPA = () => {
+    const points = marksData
+      .map((sub) => {
+        const obtained = Number(watchMarks[sub.name] || 0);
+        if (obtained > sub.mark) return null; // invalid mark
+        const grade = getGrade(obtained, sub.mark);
+        return getGradePoint(grade);
+      })
+      .filter((p) => p !== null);
+
+    if (points.length === 0) return '';
+    const gpa = points.reduce((sum, p) => sum + p, 0) / points.length;
+    return gpa.toFixed(2);
+  };
+
+  const handleClassChange = (cls) => {
+    setSelectedClass(cls);
+    setSelectedGroup('');
+    setAdditionalSubject('');
+    setWarnings({});
+    if (cls === '6' || cls === '7' || cls === '8') {
+      setMarksData(SubjectJSON.classes.common_6_7_8_subjects);
+    } else if (cls === '9' || cls === '10') {
+      setMarksData([]); // wait for group selection
+    }
+  };
+
+  const handleGroupChange = (grp) => {
+    setSelectedGroup(grp);
+    if (grp === 'science') {
+      setAdditionalSubject('');
+      setMarksData([
+        ...SubjectJSON.classes.common_9_10_subjects,
+        ...SubjectJSON.classes['9'].groups.science.subjects,
+      ]);
+    } else if (grp === 'humanities') {
+      setAdditionalSubject('Agriculture Studies');
+      setMarksData([
+        ...SubjectJSON.classes.common_9_10_subjects,
+        ...SubjectJSON.classes['9'].groups.humanities.subjects,
+        { name: 'Agriculture Studies', mark: 100 }, // updated full mark
+      ]);
+    } else if (grp === 'business_studies') {
+      setAdditionalSubject('Agriculture Studies');
+      setMarksData([
+        ...SubjectJSON.classes.common_9_10_subjects,
+        ...SubjectJSON.classes['9'].groups.business_studies.subjects,
+        { name: 'Agriculture Studies', mark: 100 }, // updated full mark
+      ]);
+    }
+  };
+
+  const handleAdditionalSubjectChange = (subj) => {
+    setAdditionalSubject(subj);
+    setMarksData((prev) => [
+      ...prev,
+      { name: subj, mark: subj === 'Agriculture Studies' ? 100 : 100 },
+    ]);
+  };
+
+  const handleMarksChange = (subjectName, fullMark, value) => {
+    if (value > fullMark) {
+      setWarnings((prev) => ({ ...prev, [subjectName]: `Full mark is ${fullMark}` }));
     } else {
-      return field === 'theory' ? 70 : field === 'mcq' ? 30 : field === 'practical' ? 0 : 0;
-    }
-  };
-
-  // Handle mark changes with immediate calculation
-  const handleMarkChange = (studentIndex, subject, field, value) => {
-    const max = getMaxMarks(subject, field);
-    const numValue = Math.min(Number(value), max);
-
-    // Set the value (clamped to max)
-    setValue(`marks.${studentIndex}.${subject}.${field}`, numValue);
-
-    // Trigger validation
-    trigger(`marks.${studentIndex}.${subject}.${field}`);
-
-    // Calculate totals
-    const theory = watchMarks?.[studentIndex]?.[subject]?.theory || 0;
-    const mcq = watchMarks?.[studentIndex]?.[subject]?.mcq || 0;
-    const practical = watchMarks?.[studentIndex]?.[subject]?.practical || 0;
-    const total = Number(theory) + Number(mcq) + Number(practical) || 0;
-
-    return { numValue, total };
-  };
-
-  const onSubmit = async (data) => {
-    try {
-      await axios.post('https://your-api.com/marks', data);
-      MySwal.fire({
-        title: 'Success!',
-        text: 'Marks saved successfully',
-        icon: 'success',
-        confirmButtonColor: '#15803d',
-      });
-      reset();
-    } catch (err) {
-      console.error(err);
-      MySwal.fire({
-        title: 'Error!',
-        text: err.response?.data?.message || 'Failed to save marks',
-        icon: 'error',
-        confirmButtonColor: '#b91c1c',
+      setWarnings((prev) => {
+        const updated = { ...prev };
+        delete updated[subjectName];
+        return updated;
       });
     }
+    setValue(subjectName, value);
+  };
+
+  const onSubmit = (data) => {
+    const result = marksData.map((sub) => ({
+      subject: sub.name,
+      fullMark: sub.mark,
+      obtained: Number(data[sub.name] || 0),
+      grade: getGrade(Number(data[sub.name] || 0), sub.mark),
+    }));
+
+    MySwal.fire({
+      title: 'Marks Submitted',
+      html: `<pre>${JSON.stringify(result, null, 2)}\nGPA: ${calculateGPA()}</pre>`,
+      icon: 'success',
+    });
   };
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow-md max-w-6xl mx-auto my-8">
-      <h2 className="text-2xl font-bold mb-6 text-green-800 text-center">Add Marks</h2>
+    <div className="max-w-5xl mx-auto p-6 bg-white shadow rounded-lg">
+      <h2 className="text-2xl font-bold mb-4">Add Student Marks</h2>
 
       {/* Class Selection */}
       <div className="mb-4">
-        <label className="block mb-2 font-medium text-gray-700">Select Class</label>
+        <label className="block font-medium">Select Class</label>
         <select
+          className="border p-2 rounded w-full"
           value={selectedClass}
-          onChange={(e) => setSelectedClass(e.target.value)}
-          className="select select-bordered w-full"
+          onChange={(e) => handleClassChange(e.target.value)}
         >
-          <option value="">Select class</option>
-          {classes.map((cls) => (
-            <option key={cls} value={cls}>
-              Class {cls}
-            </option>
-          ))}
+          <option value="">-- Select Class --</option>
+          <option value="6">Class 6</option>
+          <option value="7">Class 7</option>
+          <option value="8">Class 8</option>
+          <option value="9">Class 9</option>
+          <option value="10">Class 10</option>
         </select>
       </div>
 
-      {['9', '10'].includes(selectedClass) && (
+      {/* Group Selection for Class 9 & 10 */}
+      {(selectedClass === '9' || selectedClass === '10') && (
         <div className="mb-4">
-          <label className="block mb-2 font-medium text-gray-700">Select Group</label>
+          <label className="block font-medium">Select Group</label>
           <select
+            className="border p-2 rounded w-full"
             value={selectedGroup}
-            onChange={(e) => setSelectedGroup(e.target.value)}
-            className="select select-bordered w-full"
+            onChange={(e) => handleGroupChange(e.target.value)}
           >
-            <option value="">Select group</option>
-            {groups.map((group) => (
-              <option key={group} value={group}>
-                {group.charAt(0).toUpperCase() + group.slice(1)}
+            <option value="">-- Select Group --</option>
+            <option value="science">Science</option>
+            <option value="humanities">Humanities</option>
+            <option value="business_studies">Business Studies</option>
+          </select>
+        </div>
+      )}
+
+      {/* Additional Subject for Science */}
+      {selectedGroup === 'science' && (
+        <div className="mb-4">
+          <label className="block font-medium">Select Additional Subject</label>
+          <select
+            className="border p-2 rounded w-full"
+            value={additionalSubject}
+            onChange={(e) => handleAdditionalSubjectChange(e.target.value)}
+          >
+            <option value="">-- Select Subject --</option>
+            {SubjectJSON.classes['9'].additional.subjects.map((sub, i) => (
+              <option key={i} value={sub.name}>
+                {sub.name}
               </option>
             ))}
           </select>
         </div>
       )}
 
-      {students.length > 0 && subjects.length > 0 && (
+      {/* Marks Entry Form */}
+      {marksData.length > 0 && (
         <form onSubmit={handleSubmit(onSubmit)}>
-          {students.map((student, sIdx) => (
-            <div key={student.id} className="mb-6 border rounded-lg p-4 shadow-sm">
-              <h3 className="text-lg font-semibold mb-2 text-green-800">
-                {student.name} (Roll: {student.roll})
-              </h3>
-
-              <table className="w-full border-collapse border border-gray-300">
-                <thead className="bg-green-800 text-white">
-                  <tr>
-                    <th className="border p-2">Subject</th>
-                    <th className="border p-2">Theory (ICT: 25, Others: 70)</th>
-                    <th className="border p-2">MCQ (ICT: 25, Others: 30)</th>
-                    <th className="border p-2">Practical</th>
-                    <th className="border p-2">Total</th>
-                    <th className="border p-2">Grade</th>
+          <table className="table-auto w-full border mb-4">
+            <thead>
+              <tr className="bg-gray-100">
+                <th className="border px-4 py-2">Subject</th>
+                <th className="border px-4 py-2">Full Mark</th>
+                <th className="border px-4 py-2">Obtained</th>
+                <th className="border px-4 py-2">Grade</th>
+              </tr>
+            </thead>
+            <tbody>
+              {marksData.map((sub, index) => {
+                const obtained = watchMarks[sub.name] || 0;
+                return (
+                  <tr key={index}>
+                    <td className="border px-4 py-2">{sub.name}</td>
+                    <td className="border px-4 py-2">{sub.mark}</td>
+                    <td className="border px-4 py-2">
+                      <input
+                        type="number"
+                        className="border p-1 rounded w-24"
+                        {...register(sub.name)}
+                        onChange={(e) =>
+                          handleMarksChange(sub.name, sub.mark, Number(e.target.value))
+                        }
+                      />
+                      {warnings[sub.name] && (
+                        <p className="text-red-500 text-xs">{warnings[sub.name]}</p>
+                      )}
+                    </td>
+                    <td className="border px-4 py-2">
+                      {obtained && obtained <= sub.mark ? getGrade(Number(obtained), sub.mark) : ''}
+                    </td>
                   </tr>
-                </thead>
-                <tbody>
-                  {subjects.map((subj) => {
-                    const theory = watchMarks?.[sIdx]?.[subj]?.theory || 0;
-                    const mcq = watchMarks?.[sIdx]?.[subj]?.mcq || 0;
-                    const practical = watchMarks?.[sIdx]?.[subj]?.practical || 0;
-                    const total = Number(theory) + Number(mcq) + Number(practical);
-                    const grade = calculateGrade(total) || 0;
-                    const isICT = subj === 'Information and Communication Technology (ICT)';
+                );
+              })}
+            </tbody>
+          </table>
 
-                    return (
-                      <tr key={subj} className="hover:bg-gray-100">
-                        <td className="border p-2">{subj}</td>
+          {/* GPA Row */}
+          <div className="mb-4">
+            <strong>GPA: </strong>
+            <span>{calculateGPA()}</span>
+          </div>
 
-                        {/* Theory */}
-                        <td className="border p-2">
-                          <input
-                            type="number"
-                            min="0"
-                            max={getMaxMarks(subj, 'theory')}
-                            value={theory}
-                            onChange={(e) => {
-                              const { total } = handleMarkChange(
-                                sIdx,
-                                subj,
-                                'theory',
-                                e.target.value
-                              );
-                              // Update dependent fields
-                              setValue(`marks.${sIdx}.${subj}.total`, total);
-                              setValue(`marks.${sIdx}.${subj}.grade`, calculateGrade(total));
-                            }}
-                            className={`input input-bordered w-full ${
-                              errors?.marks?.[sIdx]?.[subj]?.theory ? 'input-error' : ''
-                            }`}
-                          />
-                          {errors?.marks?.[sIdx]?.[subj]?.theory && (
-                            <p className="text-red-500 text-xs mt-1">
-                              Max {getMaxMarks(subj, 'theory')}
-                            </p>
-                          )}
-                        </td>
-
-                        {/* MCQ */}
-                        <td className="border p-2">
-                          <input
-                            type="number"
-                            min="0"
-                            max={getMaxMarks(subj, 'mcq')}
-                            value={mcq}
-                            onChange={(e) => {
-                              const { total } = handleMarkChange(sIdx, subj, 'mcq', e.target.value);
-                              // Update dependent fields
-                              setValue(`marks.${sIdx}.${subj}.total`, total);
-                              setValue(`marks.${sIdx}.${subj}.grade`, calculateGrade(total));
-                            }}
-                            className={`input input-bordered w-full ${
-                              errors?.marks?.[sIdx]?.[subj]?.mcq ? 'input-error' : ''
-                            }`}
-                          />
-                          {errors?.marks?.[sIdx]?.[subj]?.mcq && (
-                            <p className="text-red-500 text-xs mt-1">
-                              Max {getMaxMarks(subj, 'mcq')}
-                            </p>
-                          )}
-                        </td>
-
-                        {/* Practical */}
-                        <td className="border p-2">
-                          <input
-                            type="number"
-                            min="0"
-                            max={getMaxMarks(subj, 'practical')}
-                            value={practical}
-                            onChange={(e) => {
-                              const { total } = handleMarkChange(
-                                sIdx,
-                                subj,
-                                'practical',
-                                e.target.value
-                              );
-                              // Update dependent fields
-                              setValue(`marks.${sIdx}.${subj}.total`, total);
-                              setValue(`marks.${sIdx}.${subj}.grade`, calculateGrade(total)) ;
-                            }}
-                            className={`input input-bordered w-full ${
-                              errors?.marks?.[sIdx]?.[subj]?.practical ? 'input-error' : ''
-                            }`}
-                          />
-                          {errors?.marks?.[sIdx]?.[subj]?.practical && (
-                            <p className="text-red-500 text-xs mt-1">
-                              Max {getMaxMarks(subj, 'practical')}
-                            </p>
-                          )}
-                        </td>
-
-                        <td className="border p-2 font-medium">{total}</td>
-                        <td className="border p-2 font-medium">{grade}</td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
-          ))}
-
-          <button type="submit" className="btn bg-green-800 hover:bg-green-700 text-white w-full">
-            Save Marks
+          <button
+            type="submit"
+            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+          >
+            Submit Marks
           </button>
         </form>
       )}
