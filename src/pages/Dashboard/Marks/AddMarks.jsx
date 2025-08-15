@@ -202,7 +202,7 @@ const AddMarks = () => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <table className="table-auto w-full border mb-4">
             <thead>
-              <tr className="bg-gray-100">
+              <tr className="bg-green-200 ">
                 <th className="border px-4 py-2">Subject</th>
                 <th className="border px-4 py-2">Full Mark</th>
                 <th className="border px-4 py-2">Obtained</th>
