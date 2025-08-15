@@ -48,16 +48,20 @@ const AddMarks = () => {
     }
   };
 
-  const calculateGPA = () => {
+  // CGPA calculation with fail count
+  const calculateCGPA = () => {
+    let failCount = 0;
     const points = marksData
       .map((sub) => {
         const obtained = Number(watchMarks[sub.name] || 0);
-        if (obtained > sub.mark) return null; // invalid mark
+        if (obtained > sub.mark) return null;
         const grade = getGrade(obtained, sub.mark);
+        if (grade === 'F') failCount += 1;
         return getGradePoint(grade);
       })
       .filter((p) => p !== null);
 
+    if (failCount > 0) return `F${failCount}`;
     if (points.length === 0) return '';
     const gpa = points.reduce((sum, p) => sum + p, 0) / points.length;
     return gpa.toFixed(2);
@@ -88,14 +92,14 @@ const AddMarks = () => {
       setMarksData([
         ...SubjectJSON.classes.common_9_10_subjects,
         ...SubjectJSON.classes['9'].groups.humanities.subjects,
-        { name: 'Agriculture Studies', mark: 100 }, // updated full mark
+        { name: 'Agriculture Studies', mark: 100 },
       ]);
     } else if (grp === 'business_studies') {
       setAdditionalSubject('Agriculture Studies');
       setMarksData([
         ...SubjectJSON.classes.common_9_10_subjects,
         ...SubjectJSON.classes['9'].groups.business_studies.subjects,
-        { name: 'Agriculture Studies', mark: 100 }, // updated full mark
+        { name: 'Agriculture Studies', mark: 100 },
       ]);
     }
   };
@@ -131,7 +135,7 @@ const AddMarks = () => {
 
     MySwal.fire({
       title: 'Marks Submitted',
-      html: `<pre>${JSON.stringify(result, null, 2)}\nGPA: ${calculateGPA()}</pre>`,
+      html: `<pre>${JSON.stringify(result, null, 2)}\nCGPA: ${calculateCGPA()}</pre>`,
       icon: 'success',
     });
   };
@@ -208,11 +212,13 @@ const AddMarks = () => {
             <tbody>
               {marksData.map((sub, index) => {
                 const obtained = watchMarks[sub.name] || 0;
+                const grade =
+                  obtained && obtained <= sub.mark ? getGrade(Number(obtained), sub.mark) : '';
                 return (
                   <tr key={index}>
                     <td className="border px-4 py-2">{sub.name}</td>
                     <td className="border px-4 py-2">{sub.mark}</td>
-                    <td className="border px-4 py-2">
+                    <td className="border px-4 py-2 ">
                       <input
                         type="number"
                         className="border p-1 rounded w-24"
@@ -225,20 +231,19 @@ const AddMarks = () => {
                         <p className="text-red-500 text-xs">{warnings[sub.name]}</p>
                       )}
                     </td>
-                    <td className="border px-4 py-2">
-                      {obtained && obtained <= sub.mark ? getGrade(Number(obtained), sub.mark) : ''}
-                    </td>
+                    <td className="border px-4 py-2">{grade}</td>
                   </tr>
                 );
               })}
+
+              {/* CGPA Row */}
+              <tr className="bg-gray-200 font-semibold">
+                <td className="border px-4 py-2 text-center" colSpan={4}>
+                  CGPA: {calculateCGPA()}
+                </td>
+              </tr>
             </tbody>
           </table>
-
-          {/* GPA Row */}
-          <div className="mb-4">
-            <strong>GPA: </strong>
-            <span>{calculateGPA()}</span>
-          </div>
 
           <button
             type="submit"
