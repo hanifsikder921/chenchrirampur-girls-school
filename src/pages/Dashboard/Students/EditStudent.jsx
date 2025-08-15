@@ -102,7 +102,7 @@ const EditStudent = () => {
       <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Personal Information Section */}
         <div className="md:col-span-2">
-          <h3 className="text-lg font-semibold bg-green-600 px-2 text-white  mb-3">
+          <h3 className="text-lg font-semibold bg-green-600 p-2 text-white  mb-3">
             Personal Information
           </h3>
         </div>
@@ -188,7 +188,7 @@ const EditStudent = () => {
 
         {/* Academic Information Section */}
         <div className="md:col-span-2 mt-4">
-          <h3 className="text-lg font-semibold bg-green-600 px-2 text-white mb-3">
+          <h3 className="text-lg font-semibold bg-green-600 p-2 text-white mb-3">
             Academic Information
           </h3>
         </div>
@@ -257,7 +257,7 @@ const EditStudent = () => {
 
         {/* Parent Information Section */}
         <div className="md:col-span-2 mt-4">
-          <h3 className="text-lg font-semibold bg-green-600 px-2 text-white mb-3">
+          <h3 className="text-lg font-semibold bg-green-600 p-2 text-white mb-3">
             Parent Information
           </h3>
         </div>
@@ -349,7 +349,7 @@ const EditStudent = () => {
 
         {/* Address Information Section */}
         <div className="md:col-span-2 mt-4">
-          <h3 className="text-lg font-semibold bg-green-600 px-2 text-white mb-3">
+          <h3 className="text-lg font-semibold bg-green-600 p-2 text-white mb-3">
             Address Information
           </h3>
         </div>
@@ -406,7 +406,7 @@ const EditStudent = () => {
 
         {/* Additional Information */}
         <div className="md:col-span-2 mt-4">
-          <h3 className="text-lg font-semibold bg-green-600 px-2 text-white mb-3">
+          <h3 className="text-lg font-semibold bg-green-600 p-2 text-white mb-3">
             Additional Information
           </h3>
         </div>
@@ -440,9 +440,7 @@ const EditStudent = () => {
 
         {/* Image Upload */}
         <div>
-          <label className="text-gray-700 font-medium mb-1">
-            Upload Image
-          </label>
+          <label className="text-gray-700 font-medium mb-1">Upload Image</label>
           <input
             type="file"
             onChange={handleImageUpload}
@@ -474,7 +472,7 @@ const EditStudent = () => {
         <div className="md:col-span-2 mt-4">
           <button
             type="submit"
-            className="btn bg-green-800 hover:bg-green-700 text-white w-full"
+            className="btn bg-purple-600 hover:bg-purple-700 text-white text-lg  w-full"
             disabled={isSubmitting}
           >
             {isSubmitting ? (

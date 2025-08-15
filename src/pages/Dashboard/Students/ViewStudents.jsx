@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import axios from 'axios';
 import { FaEdit, FaTrash, FaSearch, FaPlus } from 'react-icons/fa';
 import Swal from 'sweetalert2';
 import { Link } from 'react-router';
@@ -39,7 +38,7 @@ const ViewStudents = () => {
         });
         return res.data;
       } catch (err) {
-        throw new Error('Failed to fetch students');
+        throw new Error('Failed to fetch students' ,err);
       }
     },
     retry: 1,
@@ -90,6 +89,8 @@ const ViewStudents = () => {
       }
     });
   };
+
+
 
   // Loading state
   if (isLoading) {
@@ -249,12 +250,13 @@ const ViewStudents = () => {
                     >
                       <FaTrash className="w-5 h-5" />
                     </button>
+                   
                   </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="7" className="px-6 py-8 text-center">
+                <td colSpan="8" className="px-6 py-8 text-center">
                   <div className="flex flex-col items-center justify-center">
                     <svg
                       className="w-16 h-16 text-gray-400"
