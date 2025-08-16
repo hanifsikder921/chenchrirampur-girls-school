@@ -9,7 +9,7 @@ const MySwal = withReactContent(Swal);
 
 const AddMarks = () => {
   const axios = useAxios();
-  const { register, handleSubmit, setValue, watch } = useForm();
+  const { register, handleSubmit, setValue, watch, reset } = useForm();
   const [selectedClass, setSelectedClass] = useState('');
   const [selectedGroup, setSelectedGroup] = useState('');
   const [additionalSubject, setAdditionalSubject] = useState('');
@@ -268,6 +268,7 @@ const AddMarks = () => {
       });
 
       // Reset form
+      reset();
       setSelectedClass('');
       setSelectedGroup('');
       setAdditionalSubject('');
@@ -349,7 +350,7 @@ const AddMarks = () => {
           <div className="mb-4">
             <label className="block font-medium">Roll Number</label>
             <input
-              type="text"
+              type="number"
               className="border p-2 rounded w-full"
               value={rollNumber}
               onChange={(e) => setRollNumber(e.target.value)}
