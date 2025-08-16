@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 const axiosInstance = axios.create({
-//   baseURL: `https://food-cycle-server-blond.vercel.app`,
-  baseURL: `http://localhost:5000`
+  // baseURL: `http://localhost:5000`
+  baseURL: `https://chenchri-server.vercel.app`,
 });
 
 const useAxios = () => {
