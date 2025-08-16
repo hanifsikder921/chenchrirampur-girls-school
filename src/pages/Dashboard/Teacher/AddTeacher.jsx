@@ -4,7 +4,15 @@ import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import useAxios from './../../../assets/hooks/useAxios';
 import useAuth from './../../../assets/hooks/useAuth';
-import { IoPersonAddOutline } from 'react-icons/io5';
+import {
+  IoPersonAddOutline,
+  IoCloudUploadOutline,
+  IoPersonOutline,
+  IoCallOutline,
+  IoLocationOutline,
+  IoSchoolOutline,
+  IoIdCardOutline,
+} from 'react-icons/io5';
 
 const MySwal = withReactContent(Swal);
 
@@ -22,7 +30,18 @@ const AddTeacher = () => {
   } = useForm();
 
   const genders = ['Male', 'Female', 'Other'];
-  const designations = ['Head Teacher', 'Assistant Head Teacher', 'Assistant Teacher', 'Office Assistant', 'Computer Teacher', 'Computer Lab Operator', 'Librarian','MLSS','Cleaner','4th Class Employee'];
+  const designations = [
+    'Head Teacher',
+    'Assistant Head Teacher',
+    'Assistant Teacher',
+    'Office Assistant',
+    'Computer Teacher',
+    'Computer Lab Operator',
+    'Librarian',
+    'MLSS',
+    'Cleaner',
+    '4th Class Employee',
+  ];
   const subjects = ['Bangla', 'English', 'Math', 'Science', 'History', 'Geography', 'ICT', 'N/A'];
 
   const handleImageUpload = async (e) => {
@@ -68,174 +87,266 @@ const AddTeacher = () => {
     }
   };
 
+  const inputClass =
+    'w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 bg-gray-50 focus:bg-white';
+  const labelClass = 'block text-sm font-semibold text-gray-700 mb-2';
+  const errorClass = 'text-red-500 text-sm mt-1 flex items-center gap-1';
+
   return (
-    <div className="bg-white shadow-xl rounded-lg p-6 max-w-7xl mx-auto my-8 border border-gray-200">
-      <h2 className="text-2xl font-bold mb-6 text-green-800 text-center flex items-center gap-2 justify-center">
-        <IoPersonAddOutline /> Add New Teacher
-      </h2>
-
-      <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Full Name English */}
-        <div>
-          <label className="block font-medium mb-1 text-gray-700">
-            Full Name (English) <span className="text-red-500">*</span>
-          </label>
-          <input
-            {...register('fullName', { required: 'Full name is required' })}
-            placeholder="Enter full name in English"
-            className="input input-bordered w-full"
-          />
-          {errors.fullName && (
-            <p className="text-red-500 text-sm mt-1">{errors.fullName.message}</p>
-          )}
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 py-8">
+      <div className="max-w-6xl mx-auto px-4">
+        {/* Header Section */}
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl mb-4 shadow-lg">
+            <IoPersonAddOutline className="text-white text-2xl" />
+          </div>
+          <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">
+            Add New Teacher
+          </h1>
+          <p className="text-gray-600 max-w-2xl mx-auto">
+            Fill in the information below to add a new teacher to the system. All required fields
+            are marked with an asterisk (*).
+          </p>
         </div>
 
-        {/* Full Name Bangla */}
-        <div>
-          <label className="block font-medium mb-1 text-gray-700">Full Name (Bangla)</label>
-          <input
-            {...register('fullNameBangla')}
-            placeholder="Enter full name in Bangla"
-            className="input input-bordered w-full"
-          />
-        </div>
+        {/* Form Container */}
+        <div className="bg-white rounded-3xl shadow-2xl p-8 border border-gray-100">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
+            {/* Personal Information Section */}
+            <div className="space-y-6">
+              <div className="flex items-center gap-3 pb-4 border-b border-gray-200">
+                <div className="w-10 h-10 bg-gradient-to-r from-blue-100 to-purple-100 rounded-xl flex items-center justify-center">
+                  <IoPersonOutline className="text-blue-600 text-lg" />
+                </div>
+                <h2 className="text-xl font-bold text-gray-800">Personal Information</h2>
+              </div>
 
-        {/* Gender */}
-        <div>
-          <label className="block font-medium mb-1 text-gray-700">
-            Gender <span className="text-red-500">*</span>
-          </label>
-          <select
-            {...register('gender', { required: 'Gender is required' })}
-            className="select select-bordered w-full"
-          >
-            <option value="">Select gender</option>
-            {genders.map((gender) => (
-              <option key={gender} value={gender}>
-                {gender}
-              </option>
-            ))}
-          </select>
-          {errors.gender && <p className="text-red-500 text-sm mt-1">{errors.gender.message}</p>}
-        </div>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                {/* Full Name English */}
+                <div className="space-y-2">
+                  <label className={labelClass}>
+                    Full Name (English) <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    {...register('fullName', { required: 'Full name is required' })}
+                    placeholder="Enter full name in English"
+                    className={inputClass}
+                  />
+                  {errors.fullName && <p className={errorClass}>⚠️ {errors.fullName.message}</p>}
+                </div>
 
-        {/* Date of Birth */}
-        <div>
-          <label className="block font-medium mb-1 text-gray-700">
-            Date of Birth <span className="text-red-500">*</span>
-          </label>
-          <input
-            type="date"
-            {...register('dob', { required: 'Date of birth is required' })}
-            className="input input-bordered w-full"
-          />
-          {errors.dob && <p className="text-red-500 text-sm mt-1">{errors.dob.message}</p>}
-        </div>
+                {/* Full Name Bangla */}
+                <div className="space-y-2">
+                  <label className={labelClass}>Full Name (Bangla)</label>
+                  <input
+                    {...register('fullNameBangla')}
+                    placeholder="বাংলায় পূর্ণ নাম লিখুন"
+                    className={inputClass}
+                  />
+                </div>
 
-        {/* National ID */}
-        <div>
-          <label className="block font-medium mb-1 text-gray-700">National ID / Passport No</label>
-          <input
-            {...register('nid')}
-            placeholder="Enter NID or Passport number"
-            className="input input-bordered w-full"
-          />
-        </div>
+                {/* Gender */}
+                <div className="space-y-2">
+                  <label className={labelClass}>
+                    Gender <span className="text-red-500">*</span>
+                  </label>
+                  <select
+                    {...register('gender', { required: 'Gender is required' })}
+                    className={inputClass}
+                  >
+                    <option value="">Select gender</option>
+                    {genders.map((gender) => (
+                      <option key={gender} value={gender}>
+                        {gender}
+                      </option>
+                    ))}
+                  </select>
+                  {errors.gender && <p className={errorClass}>⚠️ {errors.gender.message}</p>}
+                </div>
 
-        {/* Phone Number */}
-        <div>
-          <label className="block font-medium mb-1 text-gray-700">
-            Phone Number <span className="text-red-500">*</span>
-          </label>
-          <input
-            type="tel"
-            {...register('phone', { required: 'Phone number is required' })}
-            placeholder="Enter phone number"
-            className="input input-bordered w-full"
-          />
-          {errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone.message}</p>}
-        </div>
+                {/* Date of Birth */}
+                <div className="space-y-2">
+                  <label className={labelClass}>
+                    Date of Birth <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="date"
+                    {...register('dob', { required: 'Date of birth is required' })}
+                    className={inputClass}
+                  />
+                  {errors.dob && <p className={errorClass}>⚠️ {errors.dob.message}</p>}
+                </div>
 
-        {/* Address */}
-        <div className="md:col-span-2">
-          <label className="block font-medium mb-1 text-gray-700">Address</label>
-          <textarea
-            {...register('address')}
-            placeholder="Enter full address"
-            className="textarea textarea-bordered w-full"
-            rows={3}
-          ></textarea>
-        </div>
+                {/* National ID */}
+                <div className="space-y-2">
+                  <label className={labelClass}>National ID / Passport No</label>
+                  <input
+                    {...register('nid')}
+                    placeholder="Enter NID or Passport number"
+                    className={inputClass}
+                  />
+                </div>
 
-        {/* Designation */}
-        <div>
-          <label className="block font-medium mb-1 text-gray-700">Designation</label>
-          <select {...register('designation')} className="select select-bordered w-full">
-            <option value="">Select designation</option>
-            {designations.map((des) => (
-              <option key={des} value={des}>
-                {des}
-              </option>
-            ))}
-          </select>
-        </div>
+                {/* Phone Number */}
+                <div className="space-y-2">
+                  <label className={labelClass}>
+                    Phone Number <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="tel"
+                    {...register('phone', { required: 'Phone number is required' })}
+                    placeholder="Enter phone number"
+                    className={inputClass}
+                  />
+                  {errors.phone && <p className={errorClass}>⚠️ {errors.phone.message}</p>}
+                </div>
+              </div>
 
-        {/* Subject Specialization */}
-        <div>
-          <label className="block font-medium mb-1 text-gray-700">Subject Specialization</label>
-          <select {...register('subject')} className="select select-bordered w-full">
-            <option value="">Select subject</option>
-            {subjects.map((sub) => (
-              <option key={sub} value={sub}>
-                {sub}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        {/* Index / Staff ID */}
-        <div>
-          <label className="block font-medium mb-1 text-gray-700">Index / Staff ID</label>
-          <input
-            type="text"
-            {...register('indexno')}
-            placeholder="Enter index / staff ID"
-            className="input input-bordered w-full"
-          />
-        </div>
-
-        {/* Photo Upload */}
-        <div className="md:col-span-2">
-          <label className="text-gray-700 font-medium mb-1">Upload Photo</label>
-          <input
-            type="file"
-            {...register('image', { required: true })}
-            onChange={handleImageUpload}
-            className="w-full px-4 py-2 rounded-md"
-          />
-          {errors.image && <p className="text-red-500 text-sm">Image is required</p>}
-          {imagePreview && (
-            <div className="mt-4">
-              <img
-                src={imagePreview}
-                alt="Teacher Preview"
-                className="w-32 h-32 object-cover rounded-md"
-              />
+              {/* Address */}
+              <div className="space-y-2">
+                <label className={labelClass}>Address</label>
+                <textarea
+                  {...register('address')}
+                  placeholder="Enter full address"
+                  className={`${inputClass} min-h-[100px] resize-none`}
+                  rows={4}
+                ></textarea>
+              </div>
             </div>
-          )}
+
+            {/* Professional Information Section */}
+            <div className="space-y-6">
+              <div className="flex items-center gap-3 pb-4 border-b border-gray-200">
+                <div className="w-10 h-10 bg-gradient-to-r from-green-100 to-blue-100 rounded-xl flex items-center justify-center">
+                  <IoSchoolOutline className="text-green-600 text-lg" />
+                </div>
+                <h2 className="text-xl font-bold text-gray-800">Professional Information</h2>
+              </div>
+
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                {/* Designation */}
+                <div className="space-y-2">
+                  <label className={labelClass}>Designation</label>
+                  <select {...register('designation')} className={inputClass}>
+                    <option value="">Select designation</option>
+                    {designations.map((des) => (
+                      <option key={des} value={des}>
+                        {des}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* Subject Specialization */}
+                <div className="space-y-2">
+                  <label className={labelClass}>Subject Specialization</label>
+                  <select {...register('subject')} className={inputClass}>
+                    <option value="">Select subject</option>
+                    {subjects.map((sub) => (
+                      <option key={sub} value={sub}>
+                        {sub}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* Index / Staff ID */}
+                <div className="space-y-2">
+                  <label className={labelClass}>Index / Staff ID</label>
+                  <input
+                    type="text"
+                    {...register('indexno')}
+                    placeholder="Enter index / staff ID"
+                    className={inputClass}
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Photo Upload Section */}
+            <div className="space-y-6">
+              <div className="flex items-center gap-3 pb-4 border-b border-gray-200">
+                <div className="w-10 h-10 bg-gradient-to-r from-purple-100 to-pink-100 rounded-xl flex items-center justify-center">
+                  <IoCloudUploadOutline className="text-purple-600 text-lg" />
+                </div>
+                <h2 className="text-xl font-bold text-gray-800">Profile Photo</h2>
+              </div>
+
+              <div className="space-y-4">
+                <label className={labelClass}>
+                  Upload Photo <span className="text-red-500">*</span>
+                </label>
+
+                {/* Upload Area */}
+                <div className="relative">
+                  <input
+                    type="file"
+                    {...register('image', { required: true })}
+                    onChange={handleImageUpload}
+                    className="hidden"
+                    id="photo-upload"
+                    accept="image/*"
+                  />
+                  <label
+                    htmlFor="photo-upload"
+                    className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 rounded-xl cursor-pointer bg-gray-50 hover:bg-gray-100 transition-colors"
+                  >
+                    <IoCloudUploadOutline className="text-3xl text-gray-400 mb-2" />
+                    <span className="text-sm text-gray-500">Click to upload photo</span>
+                    <span className="text-xs text-gray-400">PNG, JPG up to 10MB</span>
+                  </label>
+                </div>
+
+                {errors.image && <p className={errorClass}>⚠️ Image is required</p>}
+
+                {/* Image Preview */}
+                {imagePreview && (
+                  <div className="flex items-center gap-4 p-4 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl border border-blue-200">
+                    <img
+                      src={imagePreview}
+                      alt="Teacher Preview"
+                      className="w-20 h-20 object-cover rounded-xl shadow-md"
+                    />
+                    <div>
+                      <p className="font-medium text-gray-800">Photo uploaded successfully</p>
+                      <p className="text-sm text-gray-600">Ready to save</p>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Submit Button */}
+            <div className="pt-6 border-t border-gray-200">
+              <button
+                type="submit"
+                className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white text-lg font-semibold py-4 px-8 rounded-2xl shadow-xl hover:shadow-2xl transform hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? (
+                  <div className="flex items-center justify-center gap-3">
+                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                    Saving Teacher Information...
+                  </div>
+                ) : (
+                  <div className="flex items-center justify-center gap-3">
+                    <IoPersonAddOutline className="text-xl" />
+                    Save Teacher Information
+                  </div>
+                )}
+              </button>
+            </div>
+          </form>
         </div>
 
-        {/* Submit */}
-        <div className="md:col-span-2 mt-4">
-          <button
-            type="submit"
-            className="btn bg-purple-600 hover:bg-purple-700 text-white text-lg w-full"
-            disabled={isSubmitting}
-          >
-            {isSubmitting ? 'Saving...' : 'Save Teacher Information'}
-          </button>
+        {/* Footer Note */}
+        <div className="text-center mt-8">
+          <p className="text-gray-500 text-sm">
+            All information will be securely stored in the system. Please double-check all details
+            before submitting.
+          </p>
         </div>
-      </form>
+      </div>
     </div>
   );
 };

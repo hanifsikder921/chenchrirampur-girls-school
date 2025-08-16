@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { FaEdit, FaTrash, FaSearch, FaPlus } from 'react-icons/fa';
+import { FaEdit, FaTrash, FaSearch, FaPlus, FaUsers, FaFilter, FaEye } from 'react-icons/fa';
+import { IoPersonOutline, IoCallOutline, IoMailOutline, IoSchoolOutline } from 'react-icons/io5';
 import Swal from 'sweetalert2';
 import { Link } from 'react-router';
 import useAxios from '../../../assets/hooks/useAxios';
@@ -76,158 +77,312 @@ const ViewTeacher = () => {
 
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-green-800"></div>
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+        <div className="flex flex-col justify-center items-center h-96">
+          <div className="w-16 h-16 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin"></div>
+          <p className="mt-4 text-lg font-semibold text-gray-600">Loading Teachers...</p>
+          <p className="text-sm text-gray-500">Please wait while we fetch the data</p>
+        </div>
       </div>
     );
   }
 
   if (isError) {
     return (
-      <div className="alert alert-error shadow-lg max-w-4xl mx-auto">
-        <div>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="stroke-current flex-shrink-0 h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
-            />
-          </svg>
-          <span>{error?.message || 'Failed to load teacher data'}</span>
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 flex items-center justify-center">
+        <div className="bg-white p-8 rounded-3xl shadow-2xl border border-red-200 max-w-md text-center">
+          <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg
+              className="w-8 h-8 text-red-500"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"
+              />
+            </svg>
+          </div>
+          <h3 className="text-lg font-semibold text-red-600 mb-2">Error Loading Data</h3>
+          <p className="text-gray-600">{error?.message || 'Failed to load teacher data'}</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow-md max-w-7xl mx-auto">
-      {/* Header */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
-        <h2 className="text-2xl font-bold text-green-800">Teacher Management</h2>
-        <Link
-          to="/dashboard/add-teacher"
-          className="btn bg-green-800 hover:bg-green-700 text-white"
-        >
-          <FaPlus className="mr-2" />
-          Add New Teacher
-        </Link>
-      </div>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 py-6">
+      <div className="max-w-7xl mx-auto px-4">
+        {/* Header Section */}
+        <div className="mb-8">
+          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
+            <div className="flex items-center gap-4">
+              <div className="w-16 h-16 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg">
+                <FaUsers className="text-white text-2xl" />
+              </div>
+              <div>
+                <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                  Teacher Management
+                </h1>
+                <p className="text-gray-600 mt-1">Manage and view all teachers in the system</p>
+              </div>
+            </div>
+            <Link
+              to="/dashboard/add-teacher"
+              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-6 py-3 rounded-2xl font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 flex items-center gap-2"
+            >
+              <FaPlus className="text-sm" />
+              Add New Teacher
+            </Link>
+          </div>
+        </div>
 
-      {/* Search */}
-      <div className="mb-6 relative md:w-1/3">
-        <input
-          type="text"
-          placeholder="Search by name..."
-          className="input input-bordered w-full pl-10"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-        <FaSearch className="absolute left-3 top-3 text-gray-400" />
-      </div>
+        {/* Stats Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <div className="bg-white p-6 rounded-2xl shadow-lg border border-blue-100">
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
+                <FaUsers className="text-blue-600" />
+              </div>
+              <div>
+                <p className="text-2xl font-bold text-gray-800">{teachers.length}</p>
+                <p className="text-gray-600 text-sm">Total Teachers</p>
+              </div>
+            </div>
+          </div>
+          <div className="bg-white p-6 rounded-2xl shadow-lg border border-green-100">
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
+                <IoSchoolOutline className="text-green-600" />
+              </div>
+              <div>
+                <p className="text-2xl font-bold text-gray-800">{totalPages}</p>
+                <p className="text-gray-600 text-sm">Total Pages</p>
+              </div>
+            </div>
+          </div>
+          <div className="bg-white p-6 rounded-2xl shadow-lg border border-purple-100">
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center">
+                <FaEye className="text-purple-600" />
+              </div>
+              <div>
+                <p className="text-2xl font-bold text-gray-800">{page}</p>
+                <p className="text-gray-600 text-sm">Current Page</p>
+              </div>
+            </div>
+          </div>
+        </div>
 
-      {/* Teachers Table */}
-      <div className="overflow-x-auto rounded-lg border border-gray-200">
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-green-800 text-white">
-            <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
-                Index
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
-                Photo
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
-                Name
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
-                Designation
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
-                Contact
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
-                Actions
-              </th>
-            </tr>
-          </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
-            {teachers.length > 0 ? (
-              teachers.map((teacher) => (
-                <tr key={teacher.id} className="hover:bg-gray-50">
-                  <td className="px-6 py-4 whitespace-nowrap text-green-800 font-semibold">
-                    {teacher.indexno}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <img
-                      src={teacher.image || (teacher.gender === 'Male' ? MaleIcon : FemaleIcon)}
-                      alt={teacher.fullName}
-                      className="w-12 h-12 rounded-full object-cover hover:scale-105 duration-300"
-                      onError={(e) => {
-                        e.target.src = teacher.gender === 'Male' ? MaleIcon : FemaleIcon;
-                      }}
-                    />
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap font-medium">{teacher.fullName}</td>
-                  <td className="px-6 py-4 whitespace-nowrap">{teacher.designation || '-'}</td>
-                  <td className="px-6 py-4 whitespace-nowrap">{teacher.phone || '-'}</td>
-                  <td className="px-6 py-4 whitespace-nowrap ">
-                    <div className='w-full flex justify-center items-center gap-2'>
-                      <Link
-                        to={`/dashboard/edit-teacher/${teacher.id}`}
-                        className="text-blue-600 hover:text-blue-900 flex bg-blue-100 py-2 px-4 rounded-lg transition-colors"
-                      >
-                        <FaEdit className="w-5 h-5" /> Edit 
-                      </Link>
-                      <button
-                        onClick={() => handleDelete(teacher.id, teacher.fullName)}
-                        className="text-red-600 hover:text-red-900 flex items-center gap-1 bg-red-100 py-2 px-4 rounded-lg transition-colors cursor-pointer"
-                        disabled={deleteMutation.isLoading}
-                      >
-                        <FaTrash className="w-5 h-5" /> Delete
-                      </button>
-                    </div>
-                  </td>
+        {/* Search and Filters */}
+        <div className="bg-white p-6 rounded-2xl shadow-lg border border-gray-100 mb-8">
+          <div className="flex flex-col md:flex-row gap-4 items-center">
+            <div className="relative flex-1">
+              <FaSearch className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" />
+              <input
+                type="text"
+                placeholder="Search teachers by name, designation, or phone..."
+                className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 bg-gray-50 focus:bg-white"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </div>
+            <div className="flex gap-2">
+              <button className="px-4 py-3 bg-gray-100 hover:bg-gray-200 rounded-xl transition-colors flex items-center gap-2">
+                <FaFilter className="text-gray-600" />
+                <span className="text-gray-700 font-medium">Filter</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Teachers Grid/Table */}
+        <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead>
+                <tr className="bg-gradient-to-r from-blue-600 to-purple-600 text-white">
+                  <th className="px-6 py-4 text-left text-sm font-semibold uppercase tracking-wider">
+                    Index
+                  </th>
+                  <th className="px-6 py-4 text-left text-sm font-semibold uppercase tracking-wider">
+                    Teacher
+                  </th>
+                  <th className="px-6 py-4 text-left text-sm font-semibold uppercase tracking-wider">
+                    Designation
+                  </th>
+                  <th className="px-6 py-4 text-left text-sm font-semibold uppercase tracking-wider">
+                    Contact
+                  </th>
+                  <th className="px-6 py-4 text-center text-sm font-semibold uppercase tracking-wider">
+                    Actions
+                  </th>
                 </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan="6" className="px-6 py-8 text-center">
-                  <div className="flex flex-col items-center justify-center">
-                    <p className="mt-4 text-lg font-medium text-gray-600">No teachers found</p>
-                    <p className="text-gray-500">Try adjusting your search or add a new teacher</p>
-                  </div>
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
+              </thead>
+              <tbody className="divide-y divide-gray-200">
+                {teachers.length > 0 ? (
+                  teachers.map((teacher, index) => (
+                    <tr
+                      key={teacher.id}
+                      className="hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 transition-all duration-200"
+                    >
+                      <td className="px-6 py-4">
+                        <div className="flex items-center ">
+                          <span className=" bg-blue-100 rounded p-2 flex items-center justify-center text-blue-600 font-semibold text-sm">
+                            {teacher.indexno || index + 1}
+                          </span>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className="flex items-center gap-3">
+                          <div className="relative">
+                            <img
+                              src={
+                                teacher.image || (teacher.gender === 'Male' ? MaleIcon : FemaleIcon)
+                              }
+                              alt={teacher.fullName}
+                              className="w-12 h-12 rounded-full object-cover ring-2 ring-blue-100 shadow-md hover:ring-blue-300 transition-all duration-200"
+                              onError={(e) => {
+                                e.target.src = teacher.gender === 'Male' ? MaleIcon : FemaleIcon;
+                              }}
+                            />
+                            <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 border-2 border-white rounded-full"></div>
+                          </div>
+                          <div>
+                            <p className="font-semibold text-gray-800">{teacher.fullName}</p>
+                            <p className="text-sm text-gray-500 flex items-center gap-1">
+                              <IoPersonOutline className="text-xs" />
+                              {teacher.gender}
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className="flex items-center gap-2">
+                          <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
+                            <IoSchoolOutline className="text-green-600 text-sm" />
+                          </div>
+                          <span className="text-gray-800 font-medium">
+                            {teacher.designation || 'Not Assigned'}
+                          </span>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className="space-y-1">
+                          <div className="flex items-center gap-2 text-sm text-gray-600">
+                            <IoCallOutline className="text-blue-500" />
+                            <span>{teacher.phone || 'N/A'}</span>
+                          </div>
+                          {teacher.email && (
+                            <div className="flex items-center gap-2 text-sm text-gray-600">
+                              <IoMailOutline className="text-green-500" />
+                              <span>{teacher.email}</span>
+                            </div>
+                          )}
+                        </div>
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className="flex items-center justify-center gap-2">
+                          <Link
+                            to={`/dashboard/edit-teacher/${teacher.id}`}
+                            className="inline-flex items-center gap-2 px-4 py-2 bg-blue-100 hover:bg-blue-200 text-blue-600 hover:text-blue-700 rounded-xl transition-all duration-200 font-medium shadow-sm hover:shadow-md"
+                          >
+                            <FaEdit className="text-sm" />
+                            Edit
+                          </Link>
+                          <button
+                            onClick={() => handleDelete(teacher.id, teacher.fullName)}
+                            className="inline-flex items-center gap-2 px-4 py-2 bg-red-100 hover:bg-red-200 text-red-600 hover:text-red-700 rounded-xl transition-all duration-200 font-medium shadow-sm hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+                            disabled={deleteMutation.isLoading}
+                          >
+                            <FaTrash className="text-sm" />
+                            {deleteMutation.isLoading ? 'Deleting...' : 'Delete'}
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="5" className="px-6 py-16 text-center">
+                      <div className="flex flex-col items-center justify-center">
+                        <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mb-4">
+                          <FaUsers className="text-3xl text-gray-400" />
+                        </div>
+                        <h3 className="text-xl font-semibold text-gray-600 mb-2">
+                          No Teachers Found
+                        </h3>
+                        <p className="text-gray-500 mb-6">
+                          {searchTerm
+                            ? 'Try adjusting your search terms'
+                            : 'Get started by adding your first teacher'}
+                        </p>
+                        <Link
+                          to="/dashboard/add-teacher"
+                          className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-6 py-3 rounded-2xl font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 flex items-center gap-2"
+                        >
+                          <FaPlus className="text-sm" />
+                          Add First Teacher
+                        </Link>
+                      </div>
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        </div>
 
-      {/* Pagination Controls */}
-      <div className="flex justify-between items-center mt-4">
-        <button
-          onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
-          disabled={page === 1}
-          className="btn btn-outline"
-        >
-          Previous
-        </button>
-        <span>
-          Page {page} of {totalPages}
-        </span>
-        <button
-          onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
-          disabled={page === totalPages}
-          className="btn btn-outline"
-        >
-          Next
-        </button>
+        {/* Pagination */}
+        {totalPages > 1 && (
+          <div className="mt-8">
+            <div className="bg-white p-6 rounded-2xl shadow-lg border border-gray-100">
+              <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
+                <div className="text-sm text-gray-600">
+                  Showing page <span className="font-semibold">{page}</span> of{' '}
+                  <span className="font-semibold">{totalPages}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+                    disabled={page === 1}
+                    className="px-4 py-2 bg-gray-100 hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed text-gray-700 rounded-xl transition-colors font-medium"
+                  >
+                    Previous
+                  </button>
+                  <div className="flex gap-1">
+                    {[...Array(Math.min(5, totalPages))].map((_, i) => {
+                      const pageNum = i + 1;
+                      return (
+                        <button
+                          key={pageNum}
+                          onClick={() => setPage(pageNum)}
+                          className={`w-10 h-10 rounded-xl font-medium transition-colors ${
+                            page === pageNum
+                              ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg'
+                              : 'bg-gray-100 hover:bg-gray-200 text-gray-700'
+                          }`}
+                        >
+                          {pageNum}
+                        </button>
+                      );
+                    })}
+                  </div>
+                  <button
+                    onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
+                    disabled={page === totalPages}
+                    className="px-4 py-2 bg-gray-100 hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed text-gray-700 rounded-xl transition-colors font-medium"
+                  >
+                    Next
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

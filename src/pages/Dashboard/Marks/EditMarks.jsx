@@ -93,7 +93,7 @@ const EditMarks = () => {
     if (cls === '6' || cls === '7' || cls === '8') {
       setMarksData(SubjectJSON.classes.common_6_7_8_subjects);
     } else if (cls === '9' || cls === '10') {
-      setMarksData([]); // wait for group selection
+      setMarksData([]);
     }
   };
 
@@ -153,12 +153,10 @@ const EditMarks = () => {
       handleClassChange(existingMarks.classesName);
       if (existingMarks.group) handleGroupChange(existingMarks.group);
 
-      // Set values in form
       existingMarks.subjects.forEach((sub) => {
         setValue(sub.subject, sub.obtained);
       });
 
-      // Set marksData to match fetched subjects
       setMarksData(
         existingMarks.subjects.map((sub) => ({
           subject: sub.subject,
@@ -221,146 +219,251 @@ const EditMarks = () => {
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-green-800"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
       </div>
     );
   }
 
   return (
-    <div className="max-w-5xl mx-auto p-6 bg-white shadow rounded-lg">
-      <h2 className="text-2xl font-bold mb-4">Edit Student Marks</h2>
-
-      {/* Selection Boxes */}
-      <div className="md:grid md:grid-cols-2 md:gap-4">
-        {/* Exam Type */}
-        <div className="mb-4">
-          <label className="block font-medium">Exam Type</label>
-          <select
-            className="border p-2 rounded w-full"
-            value={examType}
-            onChange={(e) => setExamType(e.target.value)}
-          >
-            <option value="">-- Select Exam Type --</option>
-            <option value="half_yearly">Half Yearly</option>
-            <option value="yearly">Yearly</option>
-            <option value="test_exam">Test Exam</option>
-            <option value="pre_test">Pre Test</option>
-          </select>
-        </div>
-
-        {/* Exam Year */}
-        <div className="mb-4">
-          <label className="block font-medium">Exam Year</label>
-          <select
-            className="border p-2 rounded w-full"
-            value={examYear}
-            onChange={(e) => setExamYear(e.target.value)}
-          >
-            <option value="">-- Select Year --</option>
-            <option value="2023">2023</option>
-            <option value="2024">2024</option>
-            <option value="2025">2025</option>
-            <option value="2026">2026</option>
-          </select>
-        </div>
-
-        {/* Class */}
-        <div className="mb-4">
-          <label className="block font-medium">Select Class</label>
-          <select className="border p-2 rounded w-full" value={selectedClass} disabled>
-            <option value="">-- Select Class --</option>
-            <option value="6">Class 6</option>
-            <option value="7">Class 7</option>
-            <option value="8">Class 8</option>
-            <option value="9">Class 9</option>
-            <option value="10">Class 10</option>
-          </select>
-        </div>
-
-        {/* Roll Number */}
-        {selectedClass && (
-          <div className="mb-4">
-            <label className="block font-medium">Roll Number</label>
-            <input type="text" className="border p-2 rounded w-full" value={rollNumber} disabled />
-          </div>
-        )}
-
-        {/* Student Name */}
-        {selectedClass && (
-          <div className="mb-4">
-            <label className="block font-medium">Student Name</label>
-            <input type="text" className="border p-2 rounded w-full" value={studentName} disabled />
-          </div>
-        )}
-
-        {/* Group */}
-        {(selectedClass === '9' || selectedClass === '10') && (
-          <div className="mb-4">
-            <label className="block font-medium">Select Group</label>
-            <select className="border p-2 rounded w-full" value={selectedGroup} disabled>
-              <option value="">-- Select Group --</option>
-              <option value="science">Science</option>
-              <option value="humanities">Humanities</option>
-              <option value="business_studies">Business Studies</option>
-            </select>
-          </div>
-        )}
+    <div className="max-w-6xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
+      <div className="bg-gradient-to-r from-blue-600 to-blue-800 text-white p-6">
+        <h2 className="text-2xl font-bold">Edit Student Marks</h2>
+        <p className="text-blue-100">Update examination results for {studentName || 'student'}</p>
       </div>
 
-      {/* Marks Table */}
-      {marksData.length > 0 && (
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <table className="table-auto w-full border mb-4">
-            <thead>
-              <tr className="bg-green-200">
-                <th className="border px-4 py-2">Subject</th>
-                <th className="border px-4 py-2">Full Mark</th>
-                <th className="border px-4 py-2">Obtained</th>
-                <th className="border px-4 py-2">Grade</th>
-              </tr>
-            </thead>
-            <tbody>
-              {marksData.map((sub, index) => {
-                const obtained = watchMarks[sub.subject] || 0;
-                const grade = obtained ? getGrade(Number(obtained), sub.fullMark) : '';
-                return (
-                  <tr key={index}>
-                    <td className="border px-4 py-2">{sub.subject}</td>
-                    <td className="border px-4 py-2">{sub.fullMark}</td>
-                    <td className="border px-4 py-2">
-                      <input
-                        type="number"
-                        value={watchMarks[sub.subject] || ''}
-                        className="border p-1 rounded w-24"
-                        {...register(sub.subject)}
-                        onChange={(e) =>
-                          handleMarksChange(sub.subject, sub.fullMark, Number(e.target.value))
-                        }
-                      />
-                      {warnings[sub.subject] && (
-                        <p className="text-red-500 text-xs">{warnings[sub.subject]}</p>
-                      )}
-                    </td>
-                    <td className="border px-4 py-2">{grade}</td>
-                  </tr>
-                );
-              })}
-              <tr className="bg-gray-200 font-semibold">
-                <td className="border px-4 py-2 text-center" colSpan={4}>
-                  CGPA: {calculateCGPA()}
-                </td>
-              </tr>
-            </tbody>
-          </table>
+      <div className="p-6 space-y-6">
+        {/* Basic Information Section */}
+        <div className="bg-gray-50 p-6 rounded-lg shadow-sm">
+          <h3 className="text-lg font-semibold text-gray-700 border-b pb-2 mb-4">
+            Student Information
+          </h3>
 
-          <button
-            type="submit"
-            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-          >
-            Update Mark
-          </button>
-        </form>
-      )}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            {/* Exam Type */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Exam Type</label>
+              <select
+                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                value={examType}
+                onChange={(e) => setExamType(e.target.value)}
+              >
+                <option value="">Select Exam Type</option>
+                <option value="half_yearly">Half Yearly</option>
+                <option value="yearly">Yearly</option>
+                <option value="test_exam">Test Exam</option>
+                <option value="pre_test">Pre Test</option>
+              </select>
+            </div>
+
+            {/* Exam Year */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Exam Year</label>
+              <select
+                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                value={examYear}
+                onChange={(e) => setExamYear(e.target.value)}
+              >
+                <option value="">Select Year</option>
+                <option value="2023">2023</option>
+                <option value="2024">2024</option>
+                <option value="2025">2025</option>
+                <option value="2026">2026</option>
+              </select>
+            </div>
+
+            {/* Class */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Class</label>
+              <select
+                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm bg-gray-100 cursor-not-allowed"
+                value={selectedClass}
+                disabled
+              >
+                <option value="">Select Class</option>
+                <option value="6">Class 6</option>
+                <option value="7">Class 7</option>
+                <option value="8">Class 8</option>
+                <option value="9">Class 9</option>
+                <option value="10">Class 10</option>
+              </select>
+            </div>
+
+            {/* Roll Number */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Roll Number</label>
+              <input
+                type="text"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm bg-gray-100 cursor-not-allowed"
+                value={rollNumber}
+                disabled
+              />
+            </div>
+          </div>
+
+          {/* Student Name and Group */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Student Name</label>
+              <input
+                type="text"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm bg-gray-100 cursor-not-allowed"
+                value={studentName}
+                disabled
+              />
+            </div>
+
+            {/* Group Selection */}
+            {(selectedClass === '9' || selectedClass === '10') && (
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Group</label>
+                <select
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm bg-gray-100 cursor-not-allowed"
+                  value={selectedGroup}
+                  disabled
+                >
+                  <option value="">Select Group</option>
+                  <option value="science">Science</option>
+                  <option value="humanities">Humanities</option>
+                  <option value="business_studies">Business Studies</option>
+                </select>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Marks Entry Section */}
+        {marksData.length > 0 && (
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="bg-gray-50 p-6 rounded-lg shadow-sm">
+              <h3 className="text-lg font-semibold text-gray-700 border-b pb-2 mb-4">
+                Marks Entry
+              </h3>
+
+              <div className="overflow-x-auto">
+                <table className="min-w-full divide-y divide-gray-200">
+                  <thead className="bg-blue-50">
+                    <tr>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider"
+                      >
+                        Subject
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider"
+                      >
+                        Full Mark
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider"
+                      >
+                        Obtained Mark
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider"
+                      >
+                        Grade
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white divide-y divide-gray-200">
+                    {marksData.map((sub, index) => {
+                      const obtained = watchMarks[sub.subject] || 0;
+                      const grade = obtained ? getGrade(Number(obtained), sub.fullMark) : '';
+                      return (
+                        <tr key={index} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                            {sub.subject}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            {sub.fullMark}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="flex items-center space-x-2">
+                              <input
+                                type="number"
+                                className="w-24 px-2 py-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                {...register(sub.subject)}
+                                onChange={(e) =>
+                                  handleMarksChange(
+                                    sub.subject,
+                                    sub.fullMark,
+                                    Number(e.target.value)
+                                  )
+                                }
+                              />
+                              {warnings[sub.subject] && (
+                                <span className="text-xs text-red-600">
+                                  {warnings[sub.subject]}
+                                </span>
+                              )}
+                            </div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm font-semibold">
+                            {grade && (
+                              <span
+                                className={`px-2 py-1 rounded-full text-xs ${
+                                  grade === 'A+'
+                                    ? 'bg-green-100 text-green-800'
+                                    : grade === 'A'
+                                    ? 'bg-green-50 text-green-700'
+                                    : grade === 'A-'
+                                    ? 'bg-blue-50 text-blue-700'
+                                    : grade === 'B'
+                                    ? 'bg-yellow-50 text-yellow-700'
+                                    : grade === 'C'
+                                    ? 'bg-orange-50 text-orange-700'
+                                    : grade === 'D'
+                                    ? 'bg-purple-50 text-purple-700'
+                                    : 'bg-red-100 text-red-800'
+                                }`}
+                              >
+                                {grade}
+                              </span>
+                            )}
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                  <tfoot className="bg-blue-50">
+                    <tr>
+                      <td
+                        colSpan={3}
+                        className="px-6 py-3 text-right text-sm font-medium text-gray-700 uppercase"
+                      >
+                        CGPA
+                      </td>
+                      <td className="px-6 py-3 text-sm font-bold text-gray-900">
+                        {calculateCGPA()}
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+
+              <div className="mt-6 flex justify-end space-x-3">
+                <button
+                  type="button"
+                  onClick={() => navigate('/dashboard/view-marks')}
+                  className="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md shadow-sm text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                >
+                  Update Marks
+                </button>
+              </div>
+            </div>
+          </form>
+        )}
+      </div>
     </div>
   );
 };

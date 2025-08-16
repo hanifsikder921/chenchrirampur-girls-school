@@ -133,88 +133,6 @@ const AddMarks = () => {
     setValue(subjectName, value);
   };
 
-  //  const onSubmit = async (data) => {
-
-  //    if (!rollNumber) {
-  //      MySwal.fire({
-  //        title: 'Missing Roll Number',
-  //        text: 'Please enter roll number',
-  //        icon: 'warning',
-  //      });
-  //      return;
-  //    }
-  //    if (!studentName) {
-  //      MySwal.fire({
-  //        title: 'Missing Student Name',
-  //        text: 'Please enter student name',
-  //        icon: 'warning',
-  //      });
-  //      return;
-  //    }
-
-  //    // Prepare the subjects data""
-  //    const result = marksData.map((sub) => ({
-  //      subject: sub.name,
-  //      fullMark: sub.mark,
-  //      obtained: Number(data[sub.name] || 0),
-  //      grade: getGrade(Number(data[sub.name] || 0), sub.mark),
-  //    }));
-
-  //    // Prepare the complete marks data
-  //    const marksDataWithMeta = {
-  //      examType,
-  //      classesName: selectedClass,
-  //      group: selectedGroup,
-  //      roll: rollNumber,
-  //      studentName,
-  //      subjects: result,
-  //      cgpa: calculateCGPA(),
-  //      date: new Date().toISOString(),
-  //    };
-
-  //    try {
-  //      // Show loading indicator
-  //      MySwal.fire({
-  //        title: 'Saving Marks...',
-  //        allowOutsideClick: false,
-  //        didOpen: () => {
-  //          MySwal.showLoading();
-  //        },
-  //      });
-
-  //      // Send data to backend
-  //      const response = await axios.post('/marks', marksDataWithMeta);
-  //      console.log('Marks saved successfully:', response.data);
-
-  //      // Show success message
-  //      MySwal.fire({
-  //        title: 'Success!',
-  //        text: 'Marks saved successfully',
-  //        icon: 'success',
-  //        confirmButtonText: 'OK',
-  //      });
-
-  //      // Optionally reset form
-  //      setSelectedClass('');
-  //      setSelectedGroup('');
-  //      setAdditionalSubject('');
-  //      setMarksData([]);
-  //      setExamType('');
-  //      setRollNumber('');
-  //      setStudentName('');
-  //    } catch (error) {
-  //      console.error('Error saving marks:', error);
-
-  //      // Show error message
-  //      MySwal.fire({
-  //        title: 'Error!',
-  //        text: error.response?.data?.message || 'Failed to save marks',
-  //        icon: 'error',
-  //        confirmButtonText: 'OK',
-  //      });
-  //    }
-  //  };
-
   const onSubmit = async (data) => {
     if (!rollNumber) {
       return MySwal.fire({
@@ -289,187 +207,267 @@ const AddMarks = () => {
   };
 
   return (
-    <div className="max-w-5xl mx-auto p-6 bg-white shadow rounded-lg">
-      <h2 className="text-2xl font-bold mb-4">Add Student Marks</h2>
-
-      {/* selected box=============================================================> */}
-      <div className="md:grid md:grid-cols-2 md:gap-4">
-        {/* Exam Type Selection */}
-        <div className="mb-4">
-          <label className="block font-medium">Exam Type</label>
-          <select
-            className="border p-2 rounded w-full"
-            value={examType}
-            onChange={(e) => setExamType(e.target.value)}
-            required
-          >
-            <option value="">-- Select Exam Type --</option>
-            <option value="half_yearly">Half Yearly</option>
-            <option value="yearly">Yearly</option>
-            <option value="test_exam">Test Exam</option>
-            <option value="pre_test">Pre Test</option>
-          </select>
-        </div>
-        {/* Exam Year Selection */}
-        <div className="mb-4">
-          <label className="block font-medium">Exam Year</label>
-          <select
-            className="border p-2 rounded w-full"
-            value={examYear}
-            onChange={(e) => setExamYear(e.target.value)}
-            required
-          >
-            <option value="">-- Select Year --</option>
-            <option value="2023">2023</option>
-            <option value="2024">2024</option>
-            <option value="2025">2025</option>
-            <option value="2025">2026</option>
-          </select>
-        </div>
-
-        {/* Class Selection */}
-        <div className="mb-4">
-          <label className="block font-medium">Select Class</label>
-          <select
-            className="border p-2 rounded w-full"
-            value={selectedClass}
-            onChange={(e) => handleClassChange(e.target.value)}
-            required
-          >
-            <option value="">-- Select Class --</option>
-            <option value="6">Class 6</option>
-            <option value="7">Class 7</option>
-            <option value="8">Class 8</option>
-            <option value="9">Class 9</option>
-            <option value="10">Class 10</option>
-          </select>
-        </div>
-
-        {/* Roll Number Input */}
-        {selectedClass && (
-          <div className="mb-4">
-            <label className="block font-medium">Roll Number</label>
-            <input
-              type="number"
-              className="border p-2 rounded w-full"
-              value={rollNumber}
-              onChange={(e) => setRollNumber(e.target.value)}
-              placeholder="Enter roll number"
-              required
-            />
-          </div>
-        )}
-
-        {/* Student Name Display/Input */}
-        {selectedClass && (
-          <div className="mb-4">
-            <label className="block font-medium">Student Name</label>
-            <input
-              type="text"
-              className="border p-2 rounded w-full"
-              value={studentName}
-              onChange={(e) => setStudentName(e.target.value)}
-              placeholder="Student name"
-              required
-            />
-          </div>
-        )}
-
-        {/* Group Selection for Class 9 & 10 */}
-        {(selectedClass === '9' || selectedClass === '10') && (
-          <div className="mb-4">
-            <label className="block font-medium">Select Group</label>
-            <select
-              className="border p-2 rounded w-full"
-              value={selectedGroup}
-              onChange={(e) => handleGroupChange(e.target.value)}
-            >
-              <option value="">-- Select Group --</option>
-              <option value="science">Science</option>
-              <option value="humanities">Humanities</option>
-              <option value="business_studies">Business Studies</option>
-            </select>
-          </div>
-        )}
-
-        {/* Additional Subject for Science */}
-        {selectedGroup === 'science' && (
-          <div className="mb-4 md:col-span-2">
-            <label className="block font-medium">Select Additional Subject</label>
-            <select
-              className="border p-2 rounded w-full"
-              value={additionalSubject}
-              onChange={(e) => handleAdditionalSubjectChange(e.target.value)}
-            >
-              <option value="">-- Select Subject --</option>
-              {SubjectJSON.classes['9'].additional.subjects.map((sub, i) => (
-                <option key={i} value={sub.name}>
-                  {sub.name}
-                </option>
-              ))}
-            </select>
-          </div>
-        )}
+    <div className="max-w-6xl mx-auto p-6 bg-white rounded-lg shadow-lg">
+      <div className="bg-gradient-to-r from-blue-600 to-blue-800 text-white p-6 rounded-t-lg">
+        <h2 className="text-2xl font-bold">Add Student Marks</h2>
+        <p className="text-blue-100">Enter student examination details and marks</p>
       </div>
 
-      {/* selected box=============================================================> */}
+      <div className="p-6 space-y-6">
+        {/* Basic Information Section */}
+        <div className="bg-gray-50 p-6 rounded-lg shadow-sm">
+          <h3 className="text-lg font-semibold text-gray-700 border-b pb-2 mb-4">
+            Basic Information
+          </h3>
 
-      {/* Marks Entry Form */}
-      {marksData.length > 0 && (
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <table className="table-auto w-full border mb-4">
-            <thead>
-              <tr className="bg-green-200 ">
-                <th className="border px-4 py-2">Subject</th>
-                <th className="border px-4 py-2">Full Mark</th>
-                <th className="border px-4 py-2">Obtained</th>
-                <th className="border px-4 py-2">Grade</th>
-              </tr>
-            </thead>
-            <tbody>
-              {marksData.map((sub, index) => {
-                const obtained = watchMarks[sub.name] || 0;
-                const grade =
-                  obtained && obtained <= sub.mark ? getGrade(Number(obtained), sub.mark) : '';
-                return (
-                  <tr key={index}>
-                    <td className="border px-4 py-2">{sub.name}</td>
-                    <td className="border px-4 py-2">{sub.mark}</td>
-                    <td className="border px-4 py-2 ">
-                      <input
-                        type="number"
-                        className="border p-1 rounded w-24"
-                        {...register(sub.name)}
-                        onChange={(e) =>
-                          handleMarksChange(sub.name, sub.mark, Number(e.target.value))
-                        }
-                      />
-                      {warnings[sub.name] && (
-                        <p className="text-red-500 text-xs">{warnings[sub.name]}</p>
-                      )}
-                    </td>
-                    <td className="border px-4 py-2">{grade}</td>
-                  </tr>
-                );
-              })}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            {/* Exam Type */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Exam Type</label>
+              <select
+                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                value={examType}
+                onChange={(e) => setExamType(e.target.value)}
+                required
+              >
+                <option value="">Select Exam Type</option>
+                <option value="half_yearly">Half Yearly</option>
+                <option value="yearly">Yearly</option>
+                <option value="test_exam">Test Exam</option>
+                <option value="pre_test">Pre Test</option>
+              </select>
+            </div>
 
-              {/* CGPA Row */}
-              <tr className="bg-gray-200 font-semibold">
-                <td className="border px-4 py-2 text-center" colSpan={4}>
-                  CGPA: {calculateCGPA()}
-                </td>
-              </tr>
-            </tbody>
-          </table>
+            {/* Exam Year */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Exam Year</label>
+              <select
+                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                value={examYear}
+                onChange={(e) => setExamYear(e.target.value)}
+                required
+              >
+                <option value="">Select Year</option>
+                <option value="2023">2023</option>
+                <option value="2024">2024</option>
+                <option value="2025">2025</option>
+                <option value="2026">2026</option>
+              </select>
+            </div>
 
-          <button
-            type="submit"
-            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-          >
-            Submit Marks
-          </button>
-        </form>
-      )}
+            {/* Class Selection */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Class</label>
+              <select
+                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                value={selectedClass}
+                onChange={(e) => handleClassChange(e.target.value)}
+                required
+              >
+                <option value="">Select Class</option>
+                <option value="6">Class 6</option>
+                <option value="7">Class 7</option>
+                <option value="8">Class 8</option>
+                <option value="9">Class 9</option>
+                <option value="10">Class 10</option>
+              </select>
+            </div>
+
+            {/* Roll Number */}
+            {selectedClass && (
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Roll Number</label>
+                <input
+                  type="number"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                  value={rollNumber}
+                  onChange={(e) => setRollNumber(e.target.value)}
+                  placeholder="Roll number"
+                  required
+                />
+              </div>
+            )}
+          </div>
+
+          {/* Student Name and Group Selection */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+            {selectedClass && (
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Student Name</label>
+                <input
+                  type="text"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                  value={studentName}
+                  onChange={(e) => setStudentName(e.target.value)}
+                  placeholder="Student name"
+                  required
+                />
+              </div>
+            )}
+
+            {/* Group Selection for Class 9 & 10 */}
+            {(selectedClass === '9' || selectedClass === '10') && (
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Group</label>
+                <select
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                  value={selectedGroup}
+                  onChange={(e) => handleGroupChange(e.target.value)}
+                >
+                  <option value="">Select Group</option>
+                  <option value="science">Science</option>
+                  <option value="humanities">Humanities</option>
+                  <option value="business_studies">Business Studies</option>
+                </select>
+              </div>
+            )}
+
+            {/* Additional Subject for Science */}
+            {selectedGroup === 'science' && (
+              <div className="md:col-span-2">
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Additional Subject
+                </label>
+                <select
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                  value={additionalSubject}
+                  onChange={(e) => handleAdditionalSubjectChange(e.target.value)}
+                >
+                  <option value="">Select Additional Subject</option>
+                  {SubjectJSON.classes['9'].additional.subjects.map((sub, i) => (
+                    <option key={i} value={sub.name}>
+                      {sub.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Marks Entry Section */}
+        {marksData.length > 0 && (
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="bg-gray-50 p-6 rounded-lg shadow-sm">
+              <h3 className="text-lg font-semibold text-gray-700 border-b pb-2 mb-4">
+                Marks Entry
+              </h3>
+
+              <div className="overflow-x-auto">
+                <table className="min-w-full divide-y divide-gray-200">
+                  <thead className="bg-blue-50">
+                    <tr>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider"
+                      >
+                        Subject
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider"
+                      >
+                        Full Mark
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider"
+                      >
+                        Obtained Mark
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider"
+                      >
+                        Grade
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white divide-y divide-gray-200">
+                    {marksData.map((sub, index) => {
+                      const obtained = watchMarks[sub.name] || 0;
+                      const grade =
+                        obtained && obtained <= sub.mark
+                          ? getGrade(Number(obtained), sub.mark)
+                          : '';
+                      return (
+                        <tr key={index} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                            {sub.name}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            {sub.mark}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="flex items-center space-x-2">
+                              <input
+                                type="number"
+                                className="w-24 px-2 py-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                {...register(sub.name)}
+                                onChange={(e) =>
+                                  handleMarksChange(sub.name, sub.mark, Number(e.target.value))
+                                }
+                              />
+                              {warnings[sub.name] && (
+                                <span className="text-xs text-red-600">{warnings[sub.name]}</span>
+                              )}
+                            </div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm font-semibold">
+                            {grade && (
+                              <span
+                                className={`px-2 py-1 rounded-full text-xs ${
+                                  grade === 'A+'
+                                    ? 'bg-green-100 text-green-800'
+                                    : grade === 'A'
+                                    ? 'bg-green-50 text-green-700'
+                                    : grade === 'A-'
+                                    ? 'bg-blue-50 text-blue-700'
+                                    : grade === 'B'
+                                    ? 'bg-yellow-50 text-yellow-700'
+                                    : grade === 'C'
+                                    ? 'bg-orange-50 text-orange-700'
+                                    : grade === 'D'
+                                    ? 'bg-purple-50 text-purple-700'
+                                    : 'bg-red-100 text-red-800'
+                                }`}
+                              >
+                                {grade}
+                              </span>
+                            )}
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                  <tfoot className="bg-blue-50">
+                    <tr>
+                      <td
+                        colSpan={3}
+                        className="px-6 py-3 text-right text-sm font-medium text-gray-700 uppercase"
+                      >
+                        CGPA
+                      </td>
+                      <td className="px-6 py-3 text-sm font-bold text-gray-900">
+                        {calculateCGPA()}
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+
+              <div className="mt-6 flex justify-end">
+                <button
+                  type="submit"
+                  className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                >
+                  Save Marks
+                </button>
+              </div>
+            </div>
+          </form>
+        )}
+      </div>
     </div>
   );
 };

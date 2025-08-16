@@ -3,7 +3,14 @@ import { useForm } from 'react-hook-form';
 import { useParams, useNavigate } from 'react-router';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import Swal from 'sweetalert2';
-import { IoPersonAddOutline } from 'react-icons/io5';
+import {
+  IoPersonAddOutline,
+  IoPersonOutline,
+  IoBriefcaseOutline,
+  IoLocationOutline,
+  IoImageOutline,
+  IoDocumentTextOutline,
+} from 'react-icons/io5';
 import useAxios from '../../../assets/hooks/useAxios';
 
 const EditTeacher = () => {
@@ -91,184 +98,293 @@ const EditTeacher = () => {
   const genders = ['Male', 'Female', 'Other'];
   const statuses = ['active', 'inactive'];
 
-  if (isTeacherLoading) return <div>Loading...</div>;
+  if (isTeacherLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-emerald-50 flex items-center justify-center">
+        <div className="bg-white p-8 rounded-xl shadow-lg">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600 mx-auto"></div>
+          <p className="text-gray-600 mt-4 text-center">Loading teacher information...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="bg-white shadow-xl rounded-lg p-6 max-w-5xl mx-auto my-8 border border-gray-200">
-      <h2 className="text-2xl font-bold mb-6 text-green-800 text-center flex items-center gap-2 justify-center">
-        <IoPersonAddOutline /> Edit Teacher
-      </h2>
-
-      <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Full Name */}
-        <div>
-          <label className="block font-medium mb-1 text-gray-700">
-            Full Name <span className="text-red-500">*</span>
-          </label>
-          <input
-            {...register('fullName', { required: 'Full Name is required' })}
-            placeholder="Enter full name"
-            className="input input-bordered w-full"
-          />
-          {errors.fullName && (
-            <p className="text-red-500 text-sm mt-1">{errors.fullName.message}</p>
-          )}
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-emerald-50 py-8 px-4">
+      <div className="max-w-5xl mx-auto">
+        {/* Header */}
+        <div className="bg-white rounded-xl shadow-lg p-6 mb-8 border border-gray-100">
+          <div className="flex items-center justify-center space-x-3">
+            <div className="bg-emerald-600 p-3 rounded-full">
+              <IoPersonAddOutline className="text-white text-2xl" />
+            </div>
+            <div>
+              <h1 className="text-3xl font-bold text-gray-800">Edit Teacher Information</h1>
+              <p className="text-gray-600 mt-1">
+                Update teacher details and professional information
+              </p>
+            </div>
+          </div>
         </div>
 
-        {/* Full Name Bangla */}
-        <div>
-          <label className="block font-medium mb-1 text-gray-700">Full Name Bangla</label>
-          <input
-            {...register('fullNameBangla')}
-            placeholder="Enter full name in Bangla"
-            className="input input-bordered w-full"
-          />
-        </div>
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
+          {/* Personal Information Section */}
+          <div className="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden">
+            <div className="bg-gradient-to-r from-emerald-600 to-emerald-700 p-4">
+              <div className="flex items-center space-x-2 text-white">
+                <IoPersonOutline className="text-xl" />
+                <h3 className="text-lg font-semibold">Personal Information</h3>
+              </div>
+            </div>
 
-        {/* Gender */}
-        <div>
-          <label className="block font-medium mb-1 text-gray-700">
-            Gender <span className="text-red-500">*</span>
-          </label>
-          <select
-            {...register('gender', { required: 'Gender is required' })}
-            className="select select-bordered w-full"
-          >
-            <option value="">Select gender</option>
-            {genders.map((gender) => (
-              <option key={gender} value={gender}>
-                {gender}
-              </option>
-            ))}
-          </select>
-          {errors.gender && <p className="text-red-500 text-sm mt-1">{errors.gender.message}</p>}
-        </div>
+            <div className="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {/* Full Name */}
+              <div className="space-y-2">
+                <label className="block text-sm font-semibold text-gray-700">
+                  Full Name <span className="text-red-500">*</span>
+                </label>
+                <input
+                  {...register('fullName', { required: 'Full Name is required' })}
+                  placeholder="Enter full name"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-200 bg-gray-50 focus:bg-white"
+                />
+                {errors.fullName && (
+                  <p className="text-red-500 text-sm">{errors.fullName.message}</p>
+                )}
+              </div>
 
-        {/* Date of Birth */}
-        <div>
-          <label className="block font-medium mb-1 text-gray-700">Date of Birth</label>
-          <input type="date" {...register('dob')} className="input input-bordered w-full" />
-        </div>
+              {/* Full Name Bangla */}
+              <div className="space-y-2">
+                <label className="block text-sm font-semibold text-gray-700">
+                  Full Name Bangla
+                </label>
+                <input
+                  {...register('fullNameBangla')}
+                  placeholder="Enter full name in Bangla"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-200 bg-gray-50 focus:bg-white"
+                />
+              </div>
 
-        {/* NID */}
-        <div>
-          <label className="block font-medium mb-1 text-gray-700">NID</label>
-          <input
-            {...register('nid')}
-            placeholder="Enter NID"
-            className="input input-bordered w-full"
-          />
-        </div>
+              {/* Gender */}
+              <div className="space-y-2">
+                <label className="block text-sm font-semibold text-gray-700">
+                  Gender <span className="text-red-500">*</span>
+                </label>
+                <select
+                  {...register('gender', { required: 'Gender is required' })}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-200 bg-gray-50 focus:bg-white"
+                >
+                  <option value="">Select gender</option>
+                  {genders.map((gender) => (
+                    <option key={gender} value={gender}>
+                      {gender}
+                    </option>
+                  ))}
+                </select>
+                {errors.gender && <p className="text-red-500 text-sm">{errors.gender.message}</p>}
+              </div>
 
-        {/* Phone */}
-        <div>
-          <label className="block font-medium mb-1 text-gray-700">
-            Phone <span className="text-red-500">*</span>
-          </label>
-          <input
-            type="tel"
-            {...register('phone', {
-              required: 'Phone is required',
-              pattern: { value: /^[0-9]{11}$/, message: 'Enter valid 11 digit number' },
-            })}
-            placeholder="Enter phone number"
-            className="input input-bordered w-full"
-          />
-          {errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone.message}</p>}
-        </div>
+              {/* Date of Birth */}
+              <div className="space-y-2">
+                <label className="block text-sm font-semibold text-gray-700">Date of Birth</label>
+                <input
+                  type="date"
+                  {...register('dob')}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-200 bg-gray-50 focus:bg-white"
+                />
+              </div>
 
-        {/* Address */}
-        <div className="md:col-span-2">
-          <label className="block font-medium mb-1 text-gray-700">Address</label>
-          <input
-            {...register('address')}
-            placeholder="Enter address"
-            className="input input-bordered w-full"
-          />
-        </div>
+              {/* NID */}
+              <div className="space-y-2">
+                <label className="block text-sm font-semibold text-gray-700">
+                  National ID (NID)
+                </label>
+                <input
+                  {...register('nid')}
+                  placeholder="Enter NID number"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-200 bg-gray-50 focus:bg-white"
+                />
+              </div>
 
-        {/* Designation */}
-        <div>
-          <label className="block font-medium mb-1 text-gray-700">Designation</label>
-          <select {...register('designation')} className="select select-bordered w-full">
-            <option value="">Select designation</option>
-            {designations.map((des) => (
-              <option key={des} value={des}>
-                {des}
-              </option>
-            ))}
-          </select>
-        </div>
+              {/* Phone */}
+              <div className="space-y-2">
+                <label className="block text-sm font-semibold text-gray-700">
+                  Phone Number <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="tel"
+                  {...register('phone', {
+                    required: 'Phone is required',
+                    pattern: { value: /^[0-9]{11}$/, message: 'Enter valid 11 digit number' },
+                  })}
+                  placeholder="Enter phone number"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-200 bg-gray-50 focus:bg-white"
+                />
+                {errors.phone && <p className="text-red-500 text-sm">{errors.phone.message}</p>}
+              </div>
+            </div>
+          </div>
 
-        {/* Subject */}
-        <div>
-          <label className="block font-medium mb-1 text-gray-700">Subject</label>
-          <input
-            {...register('subject')}
-            placeholder="Enter subject"
-            className="input input-bordered w-full"
-          />
-        </div>
+          {/* Professional Information Section */}
+          <div className="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden">
+            <div className="bg-gradient-to-r from-blue-600 to-blue-700 p-4">
+              <div className="flex items-center space-x-2 text-white">
+                <IoBriefcaseOutline className="text-xl" />
+                <h3 className="text-lg font-semibold">Professional Information</h3>
+              </div>
+            </div>
 
-        {/* Index No */}
-        <div>
-          <label className="block font-medium mb-1 text-gray-700">Index No</label>
-          <input
-            {...register('indexno')}
-            placeholder="Enter index number"
-            className="input input-bordered w-full"
-          />
-        </div>
+            <div className="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {/* Designation */}
+              <div className="space-y-2">
+                <label className="block text-sm font-semibold text-gray-700">Designation</label>
+                <select
+                  {...register('designation')}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-gray-50 focus:bg-white"
+                >
+                  <option value="">Select designation</option>
+                  {designations.map((des) => (
+                    <option key={des} value={des}>
+                      {des}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
-     
+              {/* Subject */}
+              <div className="space-y-2">
+                <label className="block text-sm font-semibold text-gray-700">Subject</label>
+                <input
+                  {...register('subject')}
+                  placeholder="Enter subject"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-gray-50 focus:bg-white"
+                />
+              </div>
 
-        {/* Status */}
-        <div>
-          <label className="block font-medium mb-1 text-gray-700">Status</label>
-          <select {...register('status')} className="select select-bordered w-full">
-            {statuses.map((status) => (
-              <option key={status} value={status}>
-                {status}
-              </option>
-            ))}
-          </select>
-        </div>
+              {/* Index No */}
+              <div className="space-y-2">
+                <label className="block text-sm font-semibold text-gray-700">Index Number</label>
+                <input
+                  {...register('indexno')}
+                  placeholder="Enter index number"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-gray-50 focus:bg-white"
+                />
+              </div>
 
-        {/* Image */}
-        <div className="md:col-span-2">
-          <label className="text-gray-700 font-medium mb-1">Upload Image</label>
-          <input type="file" onChange={handleImageUpload} className="w-full px-4 py-2 rounded-md" />
-          {imagePreview && (
-            <img
-              src={imagePreview}
-              alt="Teacher Preview"
-              className="w-32 h-32 object-cover rounded-md mt-2"
-            />
-          )}
-        </div>
+              {/* Status */}
+              <div className="space-y-2">
+                <label className="block text-sm font-semibold text-gray-700">
+                  Employment Status
+                </label>
+                <select
+                  {...register('status')}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-gray-50 focus:bg-white"
+                >
+                  {statuses.map((status) => (
+                    <option key={status} value={status}>
+                      {status.charAt(0).toUpperCase() + status.slice(1)}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+          </div>
 
-        {/* Notes */}
-        <div className="md:col-span-2">
-          <label className="block font-medium mb-1 text-gray-700">Notes</label>
-          <textarea
-            {...register('notes')}
-            placeholder="Any notes..."
-            className="textarea textarea-bordered w-full"
-            rows={3}
-          ></textarea>
-        </div>
+          {/* Address Information Section */}
+          <div className="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden">
+            <div className="bg-gradient-to-r from-purple-600 to-purple-700 p-4">
+              <div className="flex items-center space-x-2 text-white">
+                <IoLocationOutline className="text-xl" />
+                <h3 className="text-lg font-semibold">Address Information</h3>
+              </div>
+            </div>
 
-        {/* Submit */}
-        <div className="md:col-span-2">
-          <button
-            type="submit"
-            className="btn bg-purple-600 hover:bg-purple-700 text-white w-full"
-            disabled={isSubmitting}
-          >
-            {isSubmitting ? 'Updating...' : 'Update Teacher Information'}
-          </button>
-        </div>
-      </form>
+            <div className="p-6">
+              {/* Address */}
+              <div className="space-y-2">
+                <label className="block text-sm font-semibold text-gray-700">Full Address</label>
+                <input
+                  {...register('address')}
+                  placeholder="Enter complete address"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200 bg-gray-50 focus:bg-white"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Additional Information Section */}
+          <div className="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden">
+            <div className="bg-gradient-to-r from-orange-600 to-orange-700 p-4">
+              <div className="flex items-center space-x-2 text-white">
+                <IoDocumentTextOutline className="text-xl" />
+                <h3 className="text-lg font-semibold">Additional Information</h3>
+              </div>
+            </div>
+
+            <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Image Upload */}
+              <div className="space-y-2">
+                <label className="flex items-center space-x-2 text-sm font-semibold text-gray-700">
+                  <IoImageOutline />
+                  <span>Upload Profile Image</span>
+                </label>
+                <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-orange-400 transition-colors duration-200">
+                  <input
+                    type="file"
+                    onChange={handleImageUpload}
+                    className="w-full"
+                    accept="image/*"
+                  />
+                  <p className="text-gray-500 text-sm mt-2">Choose an image file to upload</p>
+                </div>
+                {imagePreview && (
+                  <div className="mt-4 flex justify-center">
+                    <img
+                      src={imagePreview}
+                      alt="Teacher Preview"
+                      className="w-32 h-32 object-cover rounded-lg border-2 border-gray-200 shadow-md"
+                    />
+                  </div>
+                )}
+              </div>
+
+              {/* Notes */}
+              <div className="space-y-2">
+                <label className="block text-sm font-semibold text-gray-700">
+                  Additional Notes
+                </label>
+                <textarea
+                  {...register('notes')}
+                  placeholder="Enter any additional notes or comments..."
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 bg-gray-50 focus:bg-white resize-none"
+                  rows={6}
+                ></textarea>
+              </div>
+            </div>
+          </div>
+
+          {/* Submit Button */}
+          <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-6">
+            <button
+              type="submit"
+              className="w-full bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white font-semibold py-4 px-6 rounded-lg transition-all duration-200 flex items-center justify-center space-x-2 transform hover:scale-[1.01] shadow-lg"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? (
+                <>
+                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                  <span>Updating Teacher Information...</span>
+                </>
+              ) : (
+                <>
+                  <IoPersonAddOutline className="text-xl" />
+                  <span>Update Teacher Information</span>
+                </>
+              )}
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };
