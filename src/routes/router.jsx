@@ -13,6 +13,7 @@ import AddStudents from '../pages/Dashboard/Students/AddStudents';
 import ViewStudents from '../pages/Dashboard/Students/ViewStudents';
 import AddMarks from '../pages/Dashboard/Marks/AddMarks';
 import EditStudent from './../pages/Dashboard/Students/EditStudent';
+import ViewMarks from '../pages/Dashboard/Marks/ViewMarks';
 
 const router = createBrowserRouter([
   {
@@ -71,6 +72,10 @@ const router = createBrowserRouter([
       {
         path: 'add-marks',
         Component: AddMarks,
+      },
+      {
+        path: 'view-marks',
+        Component: ViewMarks,
       }
     ],
   },
