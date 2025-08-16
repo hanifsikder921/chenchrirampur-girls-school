@@ -21,7 +21,7 @@ const icons = [
   examination,
   result,
   resource,
-  gallery,
+  gallery, 
   notice,
   course,
 ];

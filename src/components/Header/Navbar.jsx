@@ -41,9 +41,7 @@ const Navbar = () => {
       title: 'ব্যাবস্থাপনা',
       submenu: [
         { title: 'অ্যাডমিন প্যানেল', bg: 'bg-red-50', target: '/login' },
-        { title: 'ফ্যাকাল্টি ম্যানেজমেন্ট', bg: 'bg-red-100', target: '/management/faculty' },
-        { title: 'কর্মচারী ব্যবস্থাপনা', bg: 'bg-red-50', target: '/management/staff' },
-        { title: 'অর্থ ও হিসাব', bg: 'bg-red-100', target: '/management/finance' },
+        { title: ' শিক্ষক ও কর্মচারী ', bg: 'bg-yellow-100', target: '/staff' },
       ],
     },
     {

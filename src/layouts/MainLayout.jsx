@@ -4,6 +4,7 @@ import TitleLogo from '../components/Header/TitleLogo';
 import Home from '../pages/Home/Home';
 import HeadTeacher from '../components/SideBar/HeadTeacher';
 import RightAside from '../components/SideBar/RightAside';
+import Footer from '../components/Footer/Footer';
 
 
 const MainLayout = () => {
@@ -26,6 +27,8 @@ const MainLayout = () => {
             </div>
           </div>
         </main>
+
+        <Footer/>
       </div>
     );
 };

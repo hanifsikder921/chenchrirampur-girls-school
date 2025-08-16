@@ -18,6 +18,7 @@ import EditMarks from '../pages/Dashboard/Marks/EditMarks';
 import AddTeacher from '../pages/Dashboard/Teacher/AddTeacher';
 import ViewTeacher from '../pages/Dashboard/Teacher/ViewTeacher';
 import EditTeacher from '../pages/Dashboard/Teacher/EditTeacher';
+import StaffManagement from './../pages/MenuPage/StaffManagement';
 
 const router = createBrowserRouter([
   {
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
         path: '/contact',
         Component: ContactUs,
       },
+      {
+        path: '/staff',
+        Component: StaffManagement,
+      }
     ],
   },
 
