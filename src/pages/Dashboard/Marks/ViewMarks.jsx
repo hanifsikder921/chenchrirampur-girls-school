@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import useAxios from './../../../assets/hooks/useAxios';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import Swal from 'sweetalert2';
+import { FaEdit } from 'react-icons/fa';
+import { MdDelete } from 'react-icons/md';
+import { Link } from 'react-router';
 
 const ViewMarks = () => {
   const axios = useAxios();
@@ -65,6 +68,7 @@ const ViewMarks = () => {
       deleteMutation.mutate(id);
     }
   };
+  
 
   return (
     <div className="max-w-6xl mx-auto p-6 bg-white shadow rounded-lg">
@@ -131,7 +135,9 @@ const ViewMarks = () => {
 
       {/* Table */}
       {isLoading ? (
-        <p className="text-center">Loading...</p>
+        <div className="flex justify-center items-center h-64">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-green-800"></div>
+        </div>
       ) : (
         <table className="table-auto w-full border">
           <thead>
@@ -182,14 +188,15 @@ const ViewMarks = () => {
 
                   <td className="border px-4 py-2">
                     <div className="flex items-center justify-center gap-3">
-                      <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-                        View
-                      </button>
+                      <Link to={`/dashboard/edit-marks/${m._id}`} className="bg-blue-500 text-white px-4 py-2 flex items-center gap-1 rounded hover:bg-blue-600">
+                        <FaEdit /> Edit
+                      </Link>
                       <button
-                        className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+                        className="bg-red-500 text-white px-4 py-2 flex items-center gap-1 rounded hover:bg-red-600"
                         onClick={() => handleDelete(m._id)}
                         disabled={deleteMutation.isLoading}
                       >
+                        <MdDelete /> 
                         {deleteMutation.isLoading ? 'Deleting...' : 'Delete'}
                       </button>
                     </div>
