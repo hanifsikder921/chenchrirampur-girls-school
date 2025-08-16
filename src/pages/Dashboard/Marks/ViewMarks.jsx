@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import useAxios from './../../../assets/hooks/useAxios';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import Swal from 'sweetalert2';
 
 const ViewMarks = () => {
   const axios = useAxios();
-  const [marks, setMarks] = useState([]);
+  const queryClient = useQueryClient();
+
   const [filters, setFilters] = useState({
     examType: '',
     examYear: '',
@@ -11,26 +14,56 @@ const ViewMarks = () => {
     roll: '',
   });
 
-  // Fetch marks from backend
-  const fetchMarks = async () => {
-    try {
-      const response = await axios.get('/marks', { params: filters });
-      setMarks(response.data);
-    } catch (error) {
-      console.error('Error fetching marks:', error);
-    }
-  };
+  // Fetch Marks with React Query
+  const {
+    data: marks = [],
+    refetch,
+    isLoading,
+  } = useQuery({
+    queryKey: ['marks', filters],
+    queryFn: async () => {
+      const res = await axios.get('/marks', { params: filters });
+      return res.data;
+    },
+  });
 
-  useEffect(() => {
-    fetchMarks();
-  }, []);
+  // Delete Mutation
+  const deleteMutation = useMutation({
+    mutationFn: async (id) => {
+      return await axios.delete(`/marks/${id}`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(['marks']); // reload data
+      Swal.fire('Deleted!', 'Result deleted successfully!', 'success');
+    },
+    onError: () => {
+      Swal.fire('Error!', 'Failed to delete result.', 'error');
+    },
+  });
 
+  // Handle Filter Change
   const handleFilterChange = (e) => {
     setFilters({ ...filters, [e.target.name]: e.target.value });
   };
 
   const handleSearch = () => {
-    fetchMarks();
+    refetch();
+  };
+
+  const handleDelete = async (id) => {
+    const confirm = await Swal.fire({
+      title: 'Are you sure?',
+      text: 'You will not be able to recover this result!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Yes, delete it!',
+    });
+
+    if (confirm.isConfirmed) {
+      deleteMutation.mutate(id);
+    }
   };
 
   return (
@@ -97,55 +130,82 @@ const ViewMarks = () => {
       </button>
 
       {/* Table */}
-      <table className="table-auto w-full border">
-        <thead>
-          <tr className="bg-green-200">
-            <th className="border px-4 py-2">Name</th>
-            <th className="border px-4 py-2">Class</th>
-            <th className="border px-4 py-2">Roll</th>
-            <th className="border px-4 py-2">Exam Type</th>
-            <th className="border px-4 py-2">Exam Year</th>
-            <th className="border px-4 py-2">CGPA</th>
-            <th className="border px-4 py-2">Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {marks.length > 0 ? (
-            marks.map((m, idx) => (
-              <tr key={idx}>
-                <td className="border px-4 py-2">{m.studentName}</td>
-                <td className="border px-4 py-2">Class {m.classesName}</td>
-                <td className="border px-4 py-2">{m.roll}</td>
-                <td className="border px-4 py-2">{m.examType}</td>
-                <td className="border px-4 py-2">{m.examYear}</td>
-                <td className="border px-4 py-2">{m.cgpa}</td>
-                <td className="border px-4 py-2 gap-2">
-                  <div className='w-full flex items-center justify-center gap-3'>
-                    <button
-                      className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-                      onClick={() => alert(`Viewing marks for ${m.studentName}`)}
-                    >
-                      View
-                    </button>
-                    <button
-                      className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
-                      onClick={() => alert(`Deleting marks for ${m.studentName}`)}
-                    >
-                      Delete
-                    </button>
-                  </div>
+      {isLoading ? (
+        <p className="text-center">Loading...</p>
+      ) : (
+        <table className="table-auto w-full border">
+          <thead>
+            <tr className="bg-green-200">
+              <th className="border px-4 py-2">Name</th>
+              <th className="border px-4 py-2">Class</th>
+              <th className="border px-4 py-2">Roll</th>
+              <th className="border px-4 py-2">Exam Type</th>
+              <th className="border px-4 py-2">Exam Year</th>
+              <th className="border px-4 py-2">CGPA</th>
+              <th className="border px-4 py-2">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {marks.length > 0 ? (
+              marks.map((m, idx) => (
+                <tr key={idx}>
+                  <td className="border px-4 py-2">{m.studentName}</td>
+                  <td className="border px-4 py-2">Class {m.classesName}</td>
+                  <td className="border px-4 py-2">{m.roll}</td>
+                  <td className="border px-4 py-2">{m.examType}</td>
+                  <td className="border px-4 py-2">{m.examYear}</td>
+                  <td
+                    className={`border px-4 py-2 ${
+                      [
+                        'F1',
+                        'F2',
+                        'F3',
+                        'F4',
+                        'F5',
+                        'F6',
+                        'F7',
+                        'F8',
+                        'F9',
+                        'F10',
+                        'F11',
+                        'F12',
+                        'F13',
+                        'F14',
+                        'F15',
+                      ].includes(m.cgpa)
+                        ? 'bg-red-500 text-white'
+                        : ''
+                    }`}
+                  >
+                    {m.cgpa}
+                  </td>
+
+                  <td className="border px-4 py-2">
+                    <div className="flex items-center justify-center gap-3">
+                      <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                        View
+                      </button>
+                      <button
+                        className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+                        onClick={() => handleDelete(m._id)}
+                        disabled={deleteMutation.isLoading}
+                      >
+                        {deleteMutation.isLoading ? 'Deleting...' : 'Delete'}
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td className="border px-4 py-2 text-center" colSpan="7">
+                  No data found
                 </td>
               </tr>
-            ))
-          ) : (
-            <tr>
-              <td className="border px-4 py-2 text-center" colSpan="7">
-                No data found
-              </td>
-            </tr>
-          )}
-        </tbody>
-      </table>
+            )}
+          </tbody>
+        </table>
+      )}
     </div>
   );
 };
