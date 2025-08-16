@@ -5,7 +5,6 @@ import withReactContent from 'sweetalert2-react-content';
 import SubjectJSON from '../../../assets/link/subjectName.json';
 import useAxios from '../../../assets/hooks/useAxios';
 
-
 const MySwal = withReactContent(Swal);
 
 const AddMarks = () => {
@@ -17,9 +16,9 @@ const AddMarks = () => {
   const [marksData, setMarksData] = useState([]);
   const [warnings, setWarnings] = useState({});
   const [examType, setExamType] = useState('');
+  const [examYear, setExamYear] = useState('2025');
   const [rollNumber, setRollNumber] = useState('');
   const [studentName, setStudentName] = useState('');
-
 
   const watchMarks = watch();
 
@@ -73,10 +72,6 @@ const AddMarks = () => {
     const gpa = points.reduce((sum, p) => sum + p, 0) / points.length;
     return gpa.toFixed(2);
   };
-
-
-
-
 
   const handleClassChange = (cls) => {
     setSelectedClass(cls);
@@ -138,264 +133,285 @@ const AddMarks = () => {
     setValue(subjectName, value);
   };
 
-//  const onSubmit = async (data) => {
-  
+  //  const onSubmit = async (data) => {
 
-//    if (!rollNumber) {
-//      MySwal.fire({
-//        title: 'Missing Roll Number',
-//        text: 'Please enter roll number',
-//        icon: 'warning',
-//      });
-//      return;
-//    }
-//    if (!studentName) {
-//      MySwal.fire({
-//        title: 'Missing Student Name',
-//        text: 'Please enter student name',
-//        icon: 'warning',
-//      });
-//      return;
-//    }
+  //    if (!rollNumber) {
+  //      MySwal.fire({
+  //        title: 'Missing Roll Number',
+  //        text: 'Please enter roll number',
+  //        icon: 'warning',
+  //      });
+  //      return;
+  //    }
+  //    if (!studentName) {
+  //      MySwal.fire({
+  //        title: 'Missing Student Name',
+  //        text: 'Please enter student name',
+  //        icon: 'warning',
+  //      });
+  //      return;
+  //    }
 
-//    // Prepare the subjects data""
-//    const result = marksData.map((sub) => ({
-//      subject: sub.name,
-//      fullMark: sub.mark,
-//      obtained: Number(data[sub.name] || 0),
-//      grade: getGrade(Number(data[sub.name] || 0), sub.mark),
-//    }));
+  //    // Prepare the subjects data""
+  //    const result = marksData.map((sub) => ({
+  //      subject: sub.name,
+  //      fullMark: sub.mark,
+  //      obtained: Number(data[sub.name] || 0),
+  //      grade: getGrade(Number(data[sub.name] || 0), sub.mark),
+  //    }));
 
-//    // Prepare the complete marks data
-//    const marksDataWithMeta = {
-//      examType,
-//      classesName: selectedClass,
-//      group: selectedGroup,
-//      roll: rollNumber,
-//      studentName,
-//      subjects: result,
-//      cgpa: calculateCGPA(),
-//      date: new Date().toISOString(),
-//    };
+  //    // Prepare the complete marks data
+  //    const marksDataWithMeta = {
+  //      examType,
+  //      classesName: selectedClass,
+  //      group: selectedGroup,
+  //      roll: rollNumber,
+  //      studentName,
+  //      subjects: result,
+  //      cgpa: calculateCGPA(),
+  //      date: new Date().toISOString(),
+  //    };
 
-//    try {
-//      // Show loading indicator
-//      MySwal.fire({
-//        title: 'Saving Marks...',
-//        allowOutsideClick: false,
-//        didOpen: () => {
-//          MySwal.showLoading();
-//        },
-//      });
+  //    try {
+  //      // Show loading indicator
+  //      MySwal.fire({
+  //        title: 'Saving Marks...',
+  //        allowOutsideClick: false,
+  //        didOpen: () => {
+  //          MySwal.showLoading();
+  //        },
+  //      });
 
-//      // Send data to backend
-//      const response = await axios.post('/marks', marksDataWithMeta);
-//      console.log('Marks saved successfully:', response.data);
+  //      // Send data to backend
+  //      const response = await axios.post('/marks', marksDataWithMeta);
+  //      console.log('Marks saved successfully:', response.data);
 
+  //      // Show success message
+  //      MySwal.fire({
+  //        title: 'Success!',
+  //        text: 'Marks saved successfully',
+  //        icon: 'success',
+  //        confirmButtonText: 'OK',
+  //      });
 
-//      // Show success message
-//      MySwal.fire({
-//        title: 'Success!',
-//        text: 'Marks saved successfully',
-//        icon: 'success',
-//        confirmButtonText: 'OK',
-//      });
+  //      // Optionally reset form
+  //      setSelectedClass('');
+  //      setSelectedGroup('');
+  //      setAdditionalSubject('');
+  //      setMarksData([]);
+  //      setExamType('');
+  //      setRollNumber('');
+  //      setStudentName('');
+  //    } catch (error) {
+  //      console.error('Error saving marks:', error);
 
-//      // Optionally reset form
-//      setSelectedClass('');
-//      setSelectedGroup('');
-//      setAdditionalSubject('');
-//      setMarksData([]);
-//      setExamType('');
-//      setRollNumber('');
-//      setStudentName('');
-//    } catch (error) {
-//      console.error('Error saving marks:', error);
+  //      // Show error message
+  //      MySwal.fire({
+  //        title: 'Error!',
+  //        text: error.response?.data?.message || 'Failed to save marks',
+  //        icon: 'error',
+  //        confirmButtonText: 'OK',
+  //      });
+  //    }
+  //  };
 
-//      // Show error message
-//      MySwal.fire({
-//        title: 'Error!',
-//        text: error.response?.data?.message || 'Failed to save marks',
-//        icon: 'error',
-//        confirmButtonText: 'OK',
-//      });
-//    }
-//  };
+  const onSubmit = async (data) => {
+    if (!rollNumber) {
+      return MySwal.fire({
+        title: 'Missing Roll Number',
+        text: 'Please enter roll number',
+        icon: 'warning',
+      });
+    }
+    if (!studentName) {
+      return MySwal.fire({
+        title: 'Missing Student Name',
+        text: 'Please enter student name',
+        icon: 'warning',
+      });
+    }
 
-const onSubmit = async (data) => {
-  if (!rollNumber) {
-    return MySwal.fire({
-      title: 'Missing Roll Number',
-      text: 'Please enter roll number',
-      icon: 'warning',
-    });
-  }
-  if (!studentName) {
-    return MySwal.fire({
-      title: 'Missing Student Name',
-      text: 'Please enter student name',
-      icon: 'warning',
-    });
-  }
+    // Prepare subjects data
+    const result = marksData.map((sub) => ({
+      subject: sub.name,
+      fullMark: sub.mark,
+      obtained: Number(data[sub.name] || 0),
+      grade: getGrade(Number(data[sub.name] || 0), sub.mark),
+    }));
 
-  // Prepare subjects data
-  const result = marksData.map((sub) => ({
-    subject: sub.name,
-    fullMark: sub.mark,
-    obtained: Number(data[sub.name] || 0),
-    grade: getGrade(Number(data[sub.name] || 0), sub.mark),
-  }));
+    const marksDataWithMeta = {
+      examType,
+      examYear,
+      classesName: selectedClass,
+      group: selectedGroup,
+      roll: rollNumber,
+      studentName,
+      subjects: result,
+      cgpa: calculateCGPA(),
+      date: new Date().toISOString(),
+    };
 
-  const marksDataWithMeta = {
-    examType,
-    classesName: selectedClass,
-    group: selectedGroup,
-    roll: rollNumber,
-    studentName,
-    subjects: result,
-    cgpa: calculateCGPA(),
-    date: new Date().toISOString(),
+    try {
+      MySwal.fire({
+        title: 'Saving Marks...',
+        allowOutsideClick: false,
+        didOpen: () => MySwal.showLoading(),
+      });
+
+      const response = await axios.post('/marks', marksDataWithMeta);
+
+      MySwal.fire({
+        title: 'Success!',
+        text: response.data.message || 'Marks saved successfully',
+        icon: 'success',
+        confirmButtonText: 'OK',
+      });
+
+      // Reset form
+      setSelectedClass('');
+      setSelectedGroup('');
+      setAdditionalSubject('');
+      setMarksData([]);
+      setExamType('');
+      setExamYear('');
+      setRollNumber('');
+      setStudentName('');
+    } catch (error) {
+      const errMsg = error.response?.data?.message || 'Failed to save marks';
+      MySwal.fire({
+        title: 'Error!',
+        text: errMsg,
+        icon: 'error',
+        confirmButtonText: 'OK',
+      });
+    }
   };
-
-  try {
-    MySwal.fire({
-      title: 'Saving Marks...',
-      allowOutsideClick: false,
-      didOpen: () => MySwal.showLoading(),
-    });
-
-    const response = await axios.post('/marks', marksDataWithMeta);
-
-    MySwal.fire({
-      title: 'Success!',
-      text: response.data.message || 'Marks saved successfully',
-      icon: 'success',
-      confirmButtonText: 'OK',
-    });
-
-    // Reset form
-    setSelectedClass('');
-    setSelectedGroup('');
-    setAdditionalSubject('');
-    setMarksData([]);
-    setExamType('');
-    setRollNumber('');
-    setStudentName('');
-  } catch (error) {
-    const errMsg = error.response?.data?.message || 'Failed to save marks';
-    MySwal.fire({
-      title: 'Error!',
-      text: errMsg,
-      icon: 'error',
-      confirmButtonText: 'OK',
-    });
-  }
-};
 
   return (
     <div className="max-w-5xl mx-auto p-6 bg-white shadow rounded-lg">
       <h2 className="text-2xl font-bold mb-4">Add Student Marks</h2>
 
-      {/* Exam Type Selection */}
-      <div className="mb-4">
-        <label className="block font-medium">Exam Type</label>
-        <select
-          className="border p-2 rounded w-full"
-          value={examType}
-          onChange={(e) => setExamType(e.target.value)}
-          required
-        >
-          <option value="">-- Select Exam Type --</option>
-          <option value="half_yearly">Half Yearly</option>
-          <option value="yearly">Yearly</option>
-          <option value="test_exam">Test Exam</option>
-          <option value="pre_test">Pre Test</option>
-        </select>
-      </div>
-
-      {/* Class Selection */}
-      <div className="mb-4">
-        <label className="block font-medium">Select Class</label>
-        <select
-          className="border p-2 rounded w-full"
-          value={selectedClass}
-          onChange={(e) => handleClassChange(e.target.value)}
-          required
-        >
-          <option value="">-- Select Class --</option>
-          <option value="6">Class 6</option>
-          <option value="7">Class 7</option>
-          <option value="8">Class 8</option>
-          <option value="9">Class 9</option>
-          <option value="10">Class 10</option>
-        </select>
-      </div>
-
-      {/* Roll Number Input */}
-      {selectedClass && (
+      {/* selected box=============================================================> */}
+      <div className="md:grid md:grid-cols-2 md:gap-4">
+        {/* Exam Type Selection */}
         <div className="mb-4">
-          <label className="block font-medium">Roll Number</label>
-          <input
-            type="text"
-            className="border p-2 rounded w-full"
-            value={rollNumber}
-            onChange={(e) => setRollNumber(e.target.value)}
-            placeholder="Enter roll number"
-            required
-          />
-        </div>
-      )}
-
-      {/* Student Name Display/Input */}
-      {selectedClass && (
-        <div className="mb-4">
-          <label className="block font-medium">Student Name</label>
-          <input
-            type="text"
-            className="border p-2 rounded w-full"
-            value={studentName}
-            onChange={(e) => setStudentName(e.target.value)}
-            placeholder="Student name"
-            required
-          />
-        </div>
-      )}
-
-      {/* Group Selection for Class 9 & 10 */}
-      {(selectedClass === '9' || selectedClass === '10') && (
-        <div className="mb-4">
-          <label className="block font-medium">Select Group</label>
+          <label className="block font-medium">Exam Type</label>
           <select
             className="border p-2 rounded w-full"
-            value={selectedGroup}
-            onChange={(e) => handleGroupChange(e.target.value)}
+            value={examType}
+            onChange={(e) => setExamType(e.target.value)}
+            required
           >
-            <option value="">-- Select Group --</option>
-            <option value="science">Science</option>
-            <option value="humanities">Humanities</option>
-            <option value="business_studies">Business Studies</option>
+            <option value="">-- Select Exam Type --</option>
+            <option value="half_yearly">Half Yearly</option>
+            <option value="yearly">Yearly</option>
+            <option value="test_exam">Test Exam</option>
+            <option value="pre_test">Pre Test</option>
           </select>
         </div>
-      )}
-
-      {/* Additional Subject for Science */}
-      {selectedGroup === 'science' && (
+        {/* Exam Year Selection */}
         <div className="mb-4">
-          <label className="block font-medium">Select Additional Subject</label>
+          <label className="block font-medium">Exam Year</label>
           <select
             className="border p-2 rounded w-full"
-            value={additionalSubject}
-            onChange={(e) => handleAdditionalSubjectChange(e.target.value)}
+            value={examYear}
+            onChange={(e) => setExamYear(e.target.value)}
+            required
           >
-            <option value="">-- Select Subject --</option>
-            {SubjectJSON.classes['9'].additional.subjects.map((sub, i) => (
-              <option key={i} value={sub.name}>
-                {sub.name}
-              </option>
-            ))}
+            <option value="">-- Select Year --</option>
+            <option value="2023">2023</option>
+            <option value="2024">2024</option>
+            <option value="2025">2025</option>
+            <option value="2025">2026</option>
           </select>
         </div>
-      )}
+
+        {/* Class Selection */}
+        <div className="mb-4">
+          <label className="block font-medium">Select Class</label>
+          <select
+            className="border p-2 rounded w-full"
+            value={selectedClass}
+            onChange={(e) => handleClassChange(e.target.value)}
+            required
+          >
+            <option value="">-- Select Class --</option>
+            <option value="6">Class 6</option>
+            <option value="7">Class 7</option>
+            <option value="8">Class 8</option>
+            <option value="9">Class 9</option>
+            <option value="10">Class 10</option>
+          </select>
+        </div>
+
+        {/* Roll Number Input */}
+        {selectedClass && (
+          <div className="mb-4">
+            <label className="block font-medium">Roll Number</label>
+            <input
+              type="text"
+              className="border p-2 rounded w-full"
+              value={rollNumber}
+              onChange={(e) => setRollNumber(e.target.value)}
+              placeholder="Enter roll number"
+              required
+            />
+          </div>
+        )}
+
+        {/* Student Name Display/Input */}
+        {selectedClass && (
+          <div className="mb-4">
+            <label className="block font-medium">Student Name</label>
+            <input
+              type="text"
+              className="border p-2 rounded w-full"
+              value={studentName}
+              onChange={(e) => setStudentName(e.target.value)}
+              placeholder="Student name"
+              required
+            />
+          </div>
+        )}
+
+        {/* Group Selection for Class 9 & 10 */}
+        {(selectedClass === '9' || selectedClass === '10') && (
+          <div className="mb-4">
+            <label className="block font-medium">Select Group</label>
+            <select
+              className="border p-2 rounded w-full"
+              value={selectedGroup}
+              onChange={(e) => handleGroupChange(e.target.value)}
+            >
+              <option value="">-- Select Group --</option>
+              <option value="science">Science</option>
+              <option value="humanities">Humanities</option>
+              <option value="business_studies">Business Studies</option>
+            </select>
+          </div>
+        )}
+
+        {/* Additional Subject for Science */}
+        {selectedGroup === 'science' && (
+          <div className="mb-4 md:col-span-2">
+            <label className="block font-medium">Select Additional Subject</label>
+            <select
+              className="border p-2 rounded w-full"
+              value={additionalSubject}
+              onChange={(e) => handleAdditionalSubjectChange(e.target.value)}
+            >
+              <option value="">-- Select Subject --</option>
+              {SubjectJSON.classes['9'].additional.subjects.map((sub, i) => (
+                <option key={i} value={sub.name}>
+                  {sub.name}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
+      </div>
+
+      {/* selected box=============================================================> */}
 
       {/* Marks Entry Form */}
       {marksData.length > 0 && (

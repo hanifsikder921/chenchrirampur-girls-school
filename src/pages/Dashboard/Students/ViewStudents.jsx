@@ -233,7 +233,16 @@ const ViewStudents = () => {
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap font-medium">{student.name}</td>
                   <td className="px-6 py-4 whitespace-nowrap">Class {student.dclassName}</td>
-                  <td className="px-6 py-4 whitespace-nowrap">{student.section || '-'}</td>
+
+                  {/* <td className="px-6 py-4 whitespace-nowrap">{student.section || '-'}</td> */}
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    {student.dclassName == 6 ||
+                    student.dclassName == 7 ||
+                    student.dclassName == 8
+                      ? '-'
+                      : student.section || '-'}
+                  </td>
+
                   <td className="px-6 py-4 whitespace-nowrap">{student.gender}</td>
                   <td className="px-6 py-4 whitespace-nowrap">{student.roll}</td>
                   <td className="px-6 py-4 whitespace-nowrap flex space-x-2">
@@ -250,7 +259,6 @@ const ViewStudents = () => {
                     >
                       <FaTrash className="w-5 h-5" />
                     </button>
-                   
                   </td>
                 </tr>
               ))
