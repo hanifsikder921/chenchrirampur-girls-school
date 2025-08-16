@@ -1,31 +1,33 @@
 import React from 'react';
 import { NavLink, Outlet } from 'react-router';
-import {
-  FaHome,
-  FaUserEdit,
-  FaTasks,
-  FaStar,
-  FaUserShield,
- 
-} from 'react-icons/fa';
+import { FaHome, FaUserEdit, FaTasks, FaStar, FaUserShield } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 import useAuth from './../assets/hooks/useAuth';
+import Overview from '../pages/Dashboard/Overview/Overview';
 
 const DashboardLayout = () => {
   const { user, loading } = useAuth();
   const navLinkClass = ({ isActive }) =>
-    `flex items-center gap-2 px-4 py-2 mt-1 rounded-lg font-medium transition-colors ${
+    `flex items-center gap-2 px-4 py-2 mt-1 rounded-lg font-medium transition-colors hover:bg-gray-300 hover:text-gray-900 ${
       isActive ? 'bg-primary text-white' : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
     }`;
 
-  if (loading) {
+
+  if (!user) {
     return (
       <div className="flex items-center justify-center h-screen">
-        <p className="text-green-600">Loading...</p>
+        <p className="text-red-500">You must be logged in to access the dashboard.</p>
       </div>
     );
   }
 
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <p className="text-green-50">Loading...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="drawer lg:drawer-open">
@@ -82,8 +84,26 @@ const DashboardLayout = () => {
 
           {/* Students */}
           <details className="mt-2">
-            <summary className="flex items-center gap-2 px-4 py-2 cursor-pointer hover:bg-gray-100 rounded-lg">
-              <FaUserEdit /> Students
+            <summary className="flex items-center gap-2 px-4 py-2 cursor-pointer hover:bg-gray-300 rounded-lg">
+              <FaUserEdit /> Teacher Management
+            </summary>
+            <ul className="pl-8">
+              <li>
+                <NavLink to="/dashboard/add-teacher" className={navLinkClass}>
+                  ➕ Add Teacher
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/dashboard/manage-teachers" className={navLinkClass}>
+                  📋 View Teachers
+                </NavLink>
+              </li>
+            </ul>
+          </details>
+          {/* Students */}
+          <details className="mt-2">
+            <summary className="flex items-center gap-2 px-4 py-2 cursor-pointer hover:bg-gray-300 rounded-lg">
+              <FaUserEdit /> Students Management
             </summary>
             <ul className="pl-8">
               <li>
@@ -102,7 +122,7 @@ const DashboardLayout = () => {
           {/* Marks */}
           <details className="mt-2">
             <summary className="flex items-center gap-2 px-4 py-2 cursor-pointer hover:bg-gray-100 rounded-lg">
-              <FaTasks /> Marks
+              <FaTasks /> Result Management
             </summary>
             <ul className="pl-8">
               <li>
@@ -120,7 +140,7 @@ const DashboardLayout = () => {
 
           {/* Reports */}
           <details className="mt-2">
-            <summary className="flex items-center gap-2 px-4 py-2 cursor-pointer hover:bg-gray-100 rounded-lg">
+            <summary className="flex items-center gap-2 px-4 py-2 cursor-pointer hover:bg-gray-50 rounded-lg">
               <FaStar /> Reports
             </summary>
             <ul className="pl-8">

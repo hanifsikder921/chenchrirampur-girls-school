@@ -15,6 +15,9 @@ import AddMarks from '../pages/Dashboard/Marks/AddMarks';
 import EditStudent from './../pages/Dashboard/Students/EditStudent';
 import ViewMarks from '../pages/Dashboard/Marks/ViewMarks';
 import EditMarks from '../pages/Dashboard/Marks/EditMarks';
+import AddTeacher from '../pages/Dashboard/Teacher/AddTeacher';
+import ViewTeacher from '../pages/Dashboard/Teacher/ViewTeacher';
+import EditTeacher from '../pages/Dashboard/Teacher/EditTeacher';
 
 const router = createBrowserRouter([
   {
@@ -81,6 +84,18 @@ const router = createBrowserRouter([
       {
         path: 'edit-marks/:id',
         Component: EditMarks,
+      },
+      {
+        path: 'add-teacher',
+        Component: AddTeacher,
+      },
+      {
+        path: 'manage-teachers',
+        Component: ViewTeacher,
+      },
+      {
+        path: 'edit-teacher/:id',
+        Component: EditTeacher,
       },
     ],
   },

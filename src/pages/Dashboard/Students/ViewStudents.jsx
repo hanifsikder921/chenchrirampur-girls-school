@@ -225,7 +225,7 @@ const ViewStudents = () => {
                     <img
                       src={student.image || (student.gender === 'Male' ? MaleIcon : FemaleIcon)}
                       alt={student.name}
-                      className="w-10 h-10 rounded-full object-cover"
+                      className="w-12 h-12 rounded-full object-cover hover:scale-200 duration-300 hover:rounded"
                       onError={(e) => {
                         e.target.src = student.gender === 'Male' ? MaleIcon : FemaleIcon;
                       }}
