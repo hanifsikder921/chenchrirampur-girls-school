@@ -316,6 +316,17 @@ const EditStudent = () => {
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 bg-gray-50 focus:bg-white"
                 />
               </div>
+              {/* Academic Year */}
+              <div className="space-y-2 md:col-span-2">
+                <label className="block text-sm font-semibold text-gray-700">Academic Year</label>
+                <input
+                  {...register('academicYear')}
+                  placeholder="Enter academic year"
+                  minLength={4} maxLength={4}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 bg-gray-50 focus:bg-white"
+                />
+              
+              </div>
             </div>
           </div>
 

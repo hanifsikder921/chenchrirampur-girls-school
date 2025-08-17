@@ -42,7 +42,6 @@ const AddMarks = () => {
       }
     } catch (error) {
       setStudentName('');
-     
     } finally {
       setIsLoadingName(false);
     }

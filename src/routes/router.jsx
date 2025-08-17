@@ -23,6 +23,7 @@ import AdmitCard from '../pages/Dashboard/Marks/AdmitCard';
 import ResultStatistic from '../pages/Dashboard/Marks/ResultStatistic';
 import SeatPlan from '../pages/Dashboard/Marks/SeatPlan';
 import Overview from '../pages/Dashboard/Overview/Overview';
+import StudentMigration from '../pages/Dashboard/Students/StudentMigration';
 
 const router = createBrowserRouter([
   {
@@ -85,6 +86,10 @@ const router = createBrowserRouter([
       {
         path: 'edit-student/:id',
         Component: EditStudent,
+      },
+      {
+        path: 'student-migration',
+        Component: StudentMigration,
       },
       {
         path: 'add-marks',

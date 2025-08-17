@@ -146,6 +146,24 @@ const AddStudents = () => {
                   {errors.name && <p className={errorClass}>⚠️ {errors.name.message}</p>}
                 </div>
 
+                {/* Academic Year */}
+                <div className="space-y-2">
+                  <label className={labelClass}>
+                    Academic Year <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    {...register('academicYear', { required: 'Academic Year is required' })}
+                    placeholder="Enter academic year"
+                    type="number"
+                    minLength={4}
+                    maxLength={4}
+                    className={inputClass}
+                  />
+                  {errors.academicYear && (
+                    <p className={errorClass}>⚠️ {errors.academicYear.message}</p>
+                  )}
+                </div>
+
                 {/* Gender */}
                 <div className="space-y-2">
                   <label className={labelClass}>

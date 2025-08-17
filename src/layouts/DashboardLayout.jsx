@@ -14,12 +14,12 @@ import {
 import { IoIosLogOut } from 'react-icons/io';
 import { motion } from 'framer-motion';
 import useAuth from './../assets/hooks/useAuth';
-import Overview from '../pages/Dashboard/Overview/Overview';
 import logo from '../assets/images/logo.png';
 import Swal from 'sweetalert2';
 import { BiBookAdd } from 'react-icons/bi';
 import { CiViewTimeline } from 'react-icons/ci';
 import { FcStatistics } from 'react-icons/fc';
+import { TbReplace } from 'react-icons/tb';
 
 const DashboardLayout = () => {
   const { user, loading, logoutUser } = useAuth();
@@ -240,6 +240,16 @@ const DashboardLayout = () => {
                       <span className="text-purple-600 text-xs">📋</span>
                     </div>
                     <span className="text-sm">View Students</span>
+                  </div>
+                </NavLink>
+                <NavLink to="/dashboard/student-migration" className={navLinkClass}>
+                  <div className="flex items-center gap-3">
+                    <div className="w-6 h-6 rounded-md bg-purple-50 flex items-center justify-center">
+                      <span className="text-purple-600 text-xs">
+                        <TbReplace />
+                      </span>
+                    </div>
+                    <span className="text-sm">Students Migration</span>
                   </div>
                 </NavLink>
               </div>
