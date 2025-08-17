@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink, Outlet } from 'react-router';
+import { NavLink, Outlet, useNavigate } from 'react-router';
 import {
   FaHome,
   FaUserEdit,
@@ -8,15 +8,45 @@ import {
   FaUserShield,
   FaChevronDown,
   FaBars,
+  FaRegAddressCard,
+  FaSearchLocation,
 } from 'react-icons/fa';
 import { IoIosLogOut } from 'react-icons/io';
 import { motion } from 'framer-motion';
 import useAuth from './../assets/hooks/useAuth';
 import Overview from '../pages/Dashboard/Overview/Overview';
 import logo from '../assets/images/logo.png';
+import Swal from 'sweetalert2';
+import { BiBookAdd } from 'react-icons/bi';
+import { CiViewTimeline } from 'react-icons/ci';
+import { FcStatistics } from 'react-icons/fc';
 
 const DashboardLayout = () => {
-  const { user, loading } = useAuth();
+  const { user, loading, logoutUser } = useAuth();
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You will be logged out of your account!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, logout',
+      cancelButtonText: 'No, stay logged in',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        logoutUser()
+          .then(() => {
+            Swal.fire('Logged Out!', 'You have been logged out successfully.', 'success');
+            navigate('/');
+          })
+          .catch((error) => {
+            Swal.fire('Error', error.message, 'error');
+          });
+      }
+    });
+  };
   const navLinkClass = ({ isActive }) =>
     `flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-all duration-300 group hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 hover:shadow-sm ${
       isActive
@@ -149,7 +179,7 @@ const DashboardLayout = () => {
                 <div className="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center group-hover:bg-blue-200 transition-colors ">
                   <FaHome className="text-blue-600 text-sm" />
                 </div>
-                <span >Overview</span>
+                <span>Overview</span>
               </div>
             </NavLink>
 
@@ -222,7 +252,7 @@ const DashboardLayout = () => {
                   <div className="w-8 h-8 rounded-lg bg-orange-100 flex items-center justify-center group-hover:bg-orange-200 transition-colors">
                     <FaTasks className="text-orange-600 text-sm" />
                   </div>
-                  <span>Result Management</span>
+                  <span>Exam Management</span>
                 </div>
                 <FaChevronDown className="text-gray-400 group-hover:text-orange-600 transition-all duration-300 group-open:rotate-180" />
               </summary>
@@ -230,17 +260,52 @@ const DashboardLayout = () => {
                 <NavLink to="/dashboard/add-marks" className={navLinkClass}>
                   <div className="flex items-center gap-3">
                     <div className="w-6 h-6 rounded-md bg-orange-50 flex items-center justify-center">
-                      <span className="text-orange-600 text-xs">➕</span>
+                      <span className="text-green-600 text-xs">
+                        <BiBookAdd />
+                      </span>
                     </div>
-                    <span className="text-sm">Add Marks</span>
+                    <span className="text-sm">Add Exam Marks</span>
                   </div>
                 </NavLink>
                 <NavLink to="/dashboard/view-marks" className={navLinkClass}>
                   <div className="flex items-center gap-3">
                     <div className="w-6 h-6 rounded-md bg-orange-50 flex items-center justify-center">
-                      <span className="text-orange-600 text-xs">📊</span>
+                      <span className="text-purple-600 text-xs">
+                        <CiViewTimeline />
+                      </span>
                     </div>
-                    <span className="text-sm">View Marks</span>
+                    <span className="text-sm">View Exam Result</span>
+                  </div>
+                </NavLink>
+                <NavLink to="/dashboard/view-marks" className={navLinkClass}>
+                  <div className="flex items-center gap-3">
+                    <div className="w-6 h-6 rounded-md bg-orange-50 flex items-center justify-center">
+                      <span className="text-purple-600 text-xs">
+                        <FcStatistics />
+                      </span>
+                    </div>
+                    <span className="text-sm">Result Statistics</span>
+                  </div>
+                </NavLink>
+
+                <NavLink to="/dashboard/view-marks" className={navLinkClass}>
+                  <div className="flex items-center gap-3">
+                    <div className="w-6 h-6 rounded-md bg-orange-50 flex items-center justify-center">
+                      <span className="text-lime-600 text-xs">
+                        <FaRegAddressCard />
+                      </span>
+                    </div>
+                    <span className="text-sm"> Admit Card</span>
+                  </div>
+                </NavLink>
+                <NavLink to="/dashboard/view-marks" className={navLinkClass}>
+                  <div className="flex items-center gap-3">
+                    <div className="w-6 h-6 rounded-md bg-orange-50 flex items-center justify-center">
+                      <span className="text-orange-600 text-xs">
+                        <FaSearchLocation />
+                      </span>
+                    </div>
+                    <span className="text-sm"> Seat Plan</span>
                   </div>
                 </NavLink>
               </div>
@@ -305,19 +370,24 @@ const DashboardLayout = () => {
                     <span className="text-sm">Manage Classes</span>
                   </div>
                 </NavLink>
-                <NavLink to="/dashboard/manage-classes" className={navLinkClass}>
-                  <div className="flex items-center gap-3">
-                    <div className="w-6 h-6 rounded-md bg-gray-50 flex items-center justify-center">
-                      <span className="text-gray-600 text-xs"><IoIosLogOut/></span>
-                    </div>
-                    <span className="text-sm">Log Out</span>
-                  </div>
-                </NavLink>
               </div>
             </details>
-          </nav>
 
-         
+            {/* Logout */}
+            <button
+              onClick={handleLogout}
+              className="flex items-center gap-3 px-4 py-3 w-full cursor-pointer rounded-xl font-medium transition-all duration-300 group hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 hover:shadow-sm"
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-lg bg-red-100 flex items-center justify-center group-hover:bg-gray-200 transition-colors">
+                  <span className="text-red-600 text-xs ">
+                    <IoIosLogOut className="text-red-600 text-sm" />
+                  </span>
+                </div>
+                <span className="text-sm">Log Out</span>
+              </div>
+            </button>
+          </nav>
         </div>
       </motion.div>
     </div>

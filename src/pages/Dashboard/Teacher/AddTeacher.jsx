@@ -42,7 +42,29 @@ const AddTeacher = () => {
     'Cleaner',
     '4th Class Employee',
   ];
-  const subjects = ['Bangla', 'English', 'Math', 'Science', 'History', 'Geography', 'ICT', 'N/A'];
+  const subjects = [
+    'Bangla',
+    'English',
+    'Math',
+    'Science',
+    'History',
+    'Geography',
+    'Arts',
+    'Islamic Studies',
+    'Physical Education',
+    'Physical Science',
+    'Physics',
+    'Chemistry',
+    'Biology',
+    'Agriculture',
+    'Higher Math',
+    'Hindu Studies',
+    'ICT',
+    'Assistant Teacher (Islam)',
+    'Assistant Teacher (Hindu)',
+    'Religion',
+    'N/A',
+  ];
 
   const handleImageUpload = async (e) => {
     const image = e.target.files[0];
