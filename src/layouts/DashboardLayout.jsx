@@ -9,6 +9,7 @@ import {
   FaChevronDown,
   FaBars,
 } from 'react-icons/fa';
+import { IoIosLogOut } from 'react-icons/io';
 import { motion } from 'framer-motion';
 import useAuth from './../assets/hooks/useAuth';
 import Overview from '../pages/Dashboard/Overview/Overview';
@@ -304,17 +305,19 @@ const DashboardLayout = () => {
                     <span className="text-sm">Manage Classes</span>
                   </div>
                 </NavLink>
+                <NavLink to="/dashboard/manage-classes" className={navLinkClass}>
+                  <div className="flex items-center gap-3">
+                    <div className="w-6 h-6 rounded-md bg-gray-50 flex items-center justify-center">
+                      <span className="text-gray-600 text-xs"><IoIosLogOut/></span>
+                    </div>
+                    <span className="text-sm">Log Out</span>
+                  </div>
+                </NavLink>
               </div>
             </details>
           </nav>
 
-          {/* Sidebar Footer */}
-          <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-gray-50 to-transparent">
-            <div className="text-center text-xs text-gray-500">
-              <p>© 2025 School Management System</p>
-              <p className="mt-1">Version 2.0</p>
-            </div>
-          </div>
+         
         </div>
       </motion.div>
     </div>
