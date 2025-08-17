@@ -174,7 +174,7 @@ const DashboardLayout = () => {
           {/* Navigation Menu */}
           <nav className="p-4 space-y-2">
             {/* Overview */}
-            <NavLink to="/dashboard" end className={navLinkClass}>
+            <NavLink to="/dashboard/overview" end className={navLinkClass}>
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center group-hover:bg-blue-200 transition-colors ">
                   <FaHome className="text-blue-600 text-sm" />
@@ -277,7 +277,7 @@ const DashboardLayout = () => {
                     <span className="text-sm">View Exam Result</span>
                   </div>
                 </NavLink>
-                <NavLink to="/dashboard/view-marks" className={navLinkClass}>
+                <NavLink to="/dashboard/result-statistic" className={navLinkClass}>
                   <div className="flex items-center gap-3">
                     <div className="w-6 h-6 rounded-md bg-orange-50 flex items-center justify-center">
                       <span className="text-purple-600 text-xs">
@@ -288,7 +288,7 @@ const DashboardLayout = () => {
                   </div>
                 </NavLink>
 
-                <NavLink to="/dashboard/view-marks" className={navLinkClass}>
+                <NavLink to="/dashboard/admit-card" className={navLinkClass}>
                   <div className="flex items-center gap-3">
                     <div className="w-6 h-6 rounded-md bg-orange-50 flex items-center justify-center">
                       <span className="text-lime-600 text-xs">
@@ -298,7 +298,7 @@ const DashboardLayout = () => {
                     <span className="text-sm"> Admit Card</span>
                   </div>
                 </NavLink>
-                <NavLink to="/dashboard/view-marks" className={navLinkClass}>
+                <NavLink to="/dashboard/seat-plan" className={navLinkClass}>
                   <div className="flex items-center gap-3">
                     <div className="w-6 h-6 rounded-md bg-orange-50 flex items-center justify-center">
                       <span className="text-orange-600 text-xs">

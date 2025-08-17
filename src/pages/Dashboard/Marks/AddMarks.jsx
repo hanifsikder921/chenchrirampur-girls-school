@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
@@ -19,8 +19,43 @@ const AddMarks = () => {
   const [examYear, setExamYear] = useState('2025');
   const [rollNumber, setRollNumber] = useState('');
   const [studentName, setStudentName] = useState('');
+  const [isLoadingName, setIsLoadingName] = useState(false);
 
   const watchMarks = watch();
+
+  // Function to fetch student name by roll and class
+  const fetchStudentName = async (roll, dclassName) => {
+    if (!roll || !dclassName) return;
+
+    setIsLoadingName(true);
+    try {
+      const response = await axios.get(`/student-name?roll=${roll}&dclassName=${dclassName}`);
+      if (response.data.success) {
+        setStudentName(response.data.data.name);
+      } else {
+        setStudentName('');
+        MySwal.fire({
+          title: 'Student Not Found',
+          text: 'No student found with this roll number in the selected class',
+          icon: 'warning',
+        });
+      }
+    } catch (error) {
+      setStudentName('');
+     
+    } finally {
+      setIsLoadingName(false);
+    }
+  };
+
+  // Effect to fetch student name when both roll and class are available
+  useEffect(() => {
+    if (rollNumber && selectedClass) {
+      fetchStudentName(rollNumber, selectedClass);
+    } else {
+      setStudentName('');
+    }
+  }, [rollNumber, selectedClass]);
 
   // Grade calculation
   const getGrade = (score, fullMark) => {
@@ -294,14 +329,21 @@ const AddMarks = () => {
             {selectedClass && (
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Student Name</label>
-                <input
-                  type="text"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                  value={studentName}
-                  onChange={(e) => setStudentName(e.target.value)}
-                  placeholder="Student name"
-                  required
-                />
+                <div className="relative">
+                  <input
+                    type="text"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm bg-gray-100 cursor-not-allowed focus:outline-none"
+                    value={studentName}
+                    placeholder={isLoadingName ? 'Loading...' : 'Auto-filled student name'}
+                    disabled
+                    readOnly
+                  />
+                  {isLoadingName && (
+                    <div className="absolute right-3 top-2.5">
+                      <div className="animate-spin h-4 w-4 border-2 border-blue-500 border-t-transparent rounded-full"></div>
+                    </div>
+                  )}
+                </div>
               </div>
             )}
 

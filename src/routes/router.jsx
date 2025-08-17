@@ -19,6 +19,10 @@ import AddTeacher from '../pages/Dashboard/Teacher/AddTeacher';
 import ViewTeacher from '../pages/Dashboard/Teacher/ViewTeacher';
 import EditTeacher from '../pages/Dashboard/Teacher/EditTeacher';
 import StaffManagement from './../pages/MenuPage/StaffManagement';
+import AdmitCard from '../pages/Dashboard/Marks/AdmitCard';
+import ResultStatistic from '../pages/Dashboard/Marks/ResultStatistic';
+import SeatPlan from '../pages/Dashboard/Marks/SeatPlan';
+import Overview from '../pages/Dashboard/Overview/Overview';
 
 const router = createBrowserRouter([
   {
@@ -67,6 +71,10 @@ const router = createBrowserRouter([
     ),
     children: [
       {
+        path: 'overview',
+        Component: Overview,
+      },
+      {
         path: 'add-student',
         Component: AddStudents,
       },
@@ -102,6 +110,18 @@ const router = createBrowserRouter([
         path: 'edit-teacher/:id',
         Component: EditTeacher,
       },
+      {
+        path: 'admit-card',
+        Component: AdmitCard,
+      },
+      {
+        path: 'result-statistic',
+        Component: ResultStatistic,
+      },
+      {
+        path: 'seat-plan',
+        Component: SeatPlan,
+      }
     ],
   },
 
