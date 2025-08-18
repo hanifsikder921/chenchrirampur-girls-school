@@ -19,7 +19,7 @@ const Navbar = () => {
       title: 'ভর্তি',
       submenu: [
         { title: 'ভর্তি প্রক্রিয়া', bg: 'bg-blue-50', target: '/admission/process' },
-        { title: 'ভর্তি ফর্ম', bg: 'bg-blue-100', target: '/admission/form' },
+        { title: 'ভর্তি ফর্ম', bg: 'bg-blue-100', target: '/admissionform' },
         { title: 'ভর্তি পরীক্ষা', bg: 'bg-blue-50', target: '/admission/exam' },
         { title: 'ফি ও বেতন', bg: 'bg-blue-100', target: '/admission/fees' },
       ],

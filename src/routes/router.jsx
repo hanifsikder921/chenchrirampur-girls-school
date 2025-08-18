@@ -24,6 +24,7 @@ import ResultStatistic from '../pages/Dashboard/Marks/ResultStatistic';
 import SeatPlan from '../pages/Dashboard/Marks/SeatPlan';
 import Overview from '../pages/Dashboard/Overview/Overview';
 import StudentMigration from '../pages/Dashboard/Students/StudentMigration';
+import AdmissionForm from '../components/Admission/AdmissionForm';
 
 const router = createBrowserRouter([
   {
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
       {
         path: '/staff',
         Component: StaffManagement,
+      },
+      {
+        path: '/admissionform',
+        Component: AdmissionForm,
       }
     ],
   },
