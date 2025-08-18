@@ -23,6 +23,9 @@ const EditMarks = () => {
   const [examYear, setExamYear] = useState('2025');
   const [rollNumber, setRollNumber] = useState('');
   const [studentName, setStudentName] = useState('');
+   const [studentFatherName, setStudentFatherName] = useState('');
+    const [studentMotherName, setStudentMotherName] = useState('');
+    const [studentdob, setStudentdob] = useState('');  
 
   // Fetch existing marks
   const { data: existingMarks, isLoading } = useQuery({
@@ -149,6 +152,9 @@ const EditMarks = () => {
       setSelectedGroup(existingMarks.group || '');
       setRollNumber(existingMarks.roll);
       setStudentName(existingMarks.studentName);
+      setStudentFatherName(existingMarks.fatherName);
+      setStudentMotherName(existingMarks.motherName);
+      setStudentdob(existingMarks.dob);
 
       handleClassChange(existingMarks.classesName);
       if (existingMarks.group) handleGroupChange(existingMarks.group);
@@ -308,6 +314,33 @@ const EditMarks = () => {
                 type="text"
                 className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm bg-gray-100 cursor-not-allowed"
                 value={studentName}
+                disabled
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Date of Birth</label>
+              <input
+                type="text"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm bg-gray-100 cursor-not-allowed"
+                value={studentdob}
+                disabled
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Father Name</label>
+              <input
+                type="text"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm bg-gray-100 cursor-not-allowed"
+                value={studentFatherName}
+                disabled
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Mother Name</label>
+              <input
+                type="text"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm bg-gray-100 cursor-not-allowed"
+                value={studentMotherName}
                 disabled
               />
             </div>

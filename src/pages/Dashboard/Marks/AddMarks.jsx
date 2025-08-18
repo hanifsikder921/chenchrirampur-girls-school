@@ -19,6 +19,9 @@ const AddMarks = () => {
   const [examYear, setExamYear] = useState('2025');
   const [rollNumber, setRollNumber] = useState('');
   const [studentName, setStudentName] = useState('');
+  const [studentFatherName, setStudentFatherName] = useState('');
+  const [studentMotherName, setStudentMotherName] = useState('');
+  const [studentdob, setStudentdob] = useState('');
   const [isLoadingName, setIsLoadingName] = useState(false);
 
   const watchMarks = watch();
@@ -32,6 +35,9 @@ const AddMarks = () => {
       const response = await axios.get(`/student-name?roll=${roll}&dclassName=${dclassName}`);
       if (response.data.success) {
         setStudentName(response.data.data.name);
+        setStudentFatherName(response.data.data.fatherName);
+        setStudentMotherName(response.data.data.motherName);
+        setStudentdob(response.data.data.dob);
       } else {
         setStudentName('');
         MySwal.fire({
@@ -41,7 +47,10 @@ const AddMarks = () => {
         });
       }
     } catch (error) {
-      setStudentName('');
+      setStudentName('')
+      setStudentFatherName('')
+      setStudentMotherName('')
+      setStudentdob('')
     } finally {
       setIsLoadingName(false);
     }
@@ -198,6 +207,9 @@ const AddMarks = () => {
       group: selectedGroup,
       roll: rollNumber,
       studentName,
+      fatherName: studentFatherName,
+      motherName:studentMotherName,
+      dob: studentdob,
       subjects: result,
       cgpa: calculateCGPA(),
       date: new Date().toISOString(),
@@ -345,6 +357,69 @@ const AddMarks = () => {
                 </div>
               </div>
             )}
+            {selectedClass && (
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Date Of Birth</label>
+                <div className="relative">
+                  <input
+                    type="text"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm bg-gray-100 cursor-not-allowed focus:outline-none"
+                    value={studentdob}
+                    placeholder={isLoadingName ? 'Loading...' : 'Auto-filled Birth'}
+                    disabled
+                    readOnly
+                  />
+                  {isLoadingName && (
+                    <div className="absolute right-3 top-2.5">
+                      <div className="animate-spin h-4 w-4 border-2 border-blue-500 border-t-transparent rounded-full"></div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+            {/* ======================Student Father name */}
+            {selectedClass && (
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Faher Name</label>
+                <div className="relative">
+                  <input
+                    type="text"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm bg-gray-100 cursor-not-allowed focus:outline-none"
+                    value={studentFatherName}
+                    placeholder={isLoadingName ? 'Loading...' : 'Auto-filled Father Name'}
+                    disabled
+                    readOnly
+                  />
+                  {isLoadingName && (
+                    <div className="absolute right-3 top-2.5">
+                      <div className="animate-spin h-4 w-4 border-2 border-blue-500 border-t-transparent rounded-full"></div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+            {/* ======================Student Mother name */}
+            {selectedClass && (
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Mother Name Name</label>
+                <div className="relative">
+                  <input
+                    type="text"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm bg-gray-100 cursor-not-allowed focus:outline-none"
+                    value={studentMotherName}
+                    placeholder={isLoadingName ? 'Loading...' : 'Auto-filled Mother Nmae'}
+                    disabled
+                    readOnly
+                  />
+                  {isLoadingName && (
+                    <div className="absolute right-3 top-2.5">
+                      <div className="animate-spin h-4 w-4 border-2 border-blue-500 border-t-transparent rounded-full"></div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+            
 
             {/* Group Selection for Class 9 & 10 */}
             {(selectedClass === '9' || selectedClass === '10') && (
