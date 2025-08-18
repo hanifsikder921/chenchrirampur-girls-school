@@ -36,21 +36,24 @@
           "subjects": [
             { "name": "Physics", "mark": 100 },
             { "name": "Chemistry", "mark": 100 },
-            { "name": "Biology", "mark": 100 }
+            { "name": "Biology", "mark": 100 },
+            { "name": "Bangladesh and Global Studies", "mark": 100 }
           ]
         },
         "humanities": {
           "subjects": [
             { "name": "Geography and Environment", "mark": 100 },
             { "name": "History", "mark": 100 },
-            { "name": "Civics and Citizenship", "mark": 100 }
+            { "name": "Civics and Citizenship", "mark": 100 },
+            { "name": "Science", "mark": 100 }
           ]
         },
         "business_studies": {
           "subjects": [
             { "name": "Accounting", "mark": 100 },
             { "name": "Finance and Banking", "mark": 100 },
-            { "name": "Business Entrepreneurship", "mark": 100 }
+            { "name": "Business Entrepreneurship", "mark": 100 },
+            { "name": "Science", "mark": 100 }
           ]
         }
       },
