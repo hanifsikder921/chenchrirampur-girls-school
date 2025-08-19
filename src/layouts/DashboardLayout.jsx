@@ -11,6 +11,7 @@ import {
   FaRegAddressCard,
   FaSearchLocation,
 } from 'react-icons/fa';
+import { FaUsers } from 'react-icons/fa6';
 import { IoIosLogOut } from 'react-icons/io';
 import { motion } from 'framer-motion';
 import useAuth from './../assets/hooks/useAuth';
@@ -250,6 +251,31 @@ const DashboardLayout = () => {
                       </span>
                     </div>
                     <span className="text-sm">Students Migration</span>
+                  </div>
+                </NavLink>
+              </div>
+            </details>
+
+            {/* Admission Management */}
+            <details className="group">
+              <summary className={summaryClass}>
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-lg bg-purple-100 flex items-center justify-center group-hover:bg-purple-200 transition-colors">
+                    <FaUserEdit className="text-lime-600 text-sm" />
+                  </div>
+                  <span>Admission Management</span>
+                </div>
+                <FaChevronDown className="text-gray-400 group-hover:text-purple-600 transition-all duration-300 group-open:rotate-180" />
+              </summary>
+              <div className="ml-4 mt-2 space-y-1 border-l-2 border-gray-100 pl-4">
+                <NavLink to="/dashboard/view-admissions" className={navLinkClass}>
+                  <div className="flex items-center gap-3">
+                    <div className="w-6 h-6 rounded-md bg-purple-50 flex items-center justify-center">
+                      <span className="text-lime-600 text-xs">
+                        <FaUsers />
+                      </span>
+                    </div>
+                    <span className="text-sm">View Admission</span>
                   </div>
                 </NavLink>
               </div>

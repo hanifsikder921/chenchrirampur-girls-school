@@ -1,391 +1,555 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { motion } from 'framer-motion';
 import {
   FaUserGraduate,
-  FaBook,
-  FaIdCard,
   FaPhone,
-  FaMapMarkerAlt,
+  FaHome,
   FaCalendarAlt,
-  FaVenusMars,
-  FaSchool,
+  FaEnvelope,
+  FaIdCard,
+  FaGraduationCap,
+  FaUsers,
+  FaMale,
+  FaFemale,
+  FaBookOpen,
+  FaFileAlt,
 } from 'react-icons/fa';
-import { MdEmail } from 'react-icons/md';
+import useAxios from '../../assets/hooks/useAxios';
+import Swal from 'sweetalert2';
 
 const AdmissionForm = () => {
-  const [formData, setFormData] = useState({
-    fullName: '',
-    fatherName: '',
-    motherName: '',
-    phone: '',
-    email: '',
-    address: '',
-    dob: '',
-    gender: '',
-    class: '',
-    group: '',
-    previousSchool: '',
-  });
+  const axios = useAxios();
 
-  const [errors, setErrors] = useState({});
+  const {
+    register,
+    handleSubmit,
+    reset,
+    watch,
+    formState: { errors },
+  } = useForm();
 
-  const groups = {
-    Science: 'বিজ্ঞান',
-    Commerce: 'ব্যবসায় শিক্ষা',
-    Arts: 'মানবিক',
-    General: 'সাধারণ',
-  };
+  const selectedClass = watch('className');
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
+  const onSubmit = async (data) => {
+    const studentData = {
+      ...data,
+      status: 'pending',
+      createdAt: new Date().toISOString(),
+    };
 
-  const validateForm = () => {
-    const newErrors = {};
-
-    if (!formData.fullName.trim()) newErrors.fullName = 'Full name is required';
-    if (!formData.fatherName.trim()) newErrors.fatherName = 'Father name is required';
-    if (!formData.motherName.trim()) newErrors.motherName = 'Mother name is required';
-    if (!formData.phone.trim()) newErrors.phone = 'Phone number is required';
-    if (!formData.email.trim()) newErrors.email = 'Email is required';
-    else if (!/^\S+@\S+\.\S+$/.test(formData.email)) newErrors.email = 'Email is invalid';
-    if (!formData.address.trim()) newErrors.address = 'Address is required';
-    if (!formData.dob) newErrors.dob = 'Date of birth is required';
-    if (!formData.gender) newErrors.gender = 'Gender is required';
-    if (!formData.class) newErrors.class = 'Class is required';
-    if (formData.class === '9' && !formData.group) newErrors.group = 'Group is required';
-    if (!formData.previousSchool.trim()) newErrors.previousSchool = 'Previous school is required';
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (validateForm()) {
-      // Form submission logic here
-      console.log('Form submitted:', formData);
-      alert('Admission form submitted successfully!');
+    try {
+      const res = await axios.post('/admissionsPost', studentData);
+      if (res.data.insertedId) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Admission Application submitted successfully',
+        });
+        reset();
+      }
+    } catch (error) {
+      console.error(error);
+      Swal.fire({
+        icon: 'error',
+        title: error?.response?.data?.message || 'Failed to add student',
+      });
     }
   };
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: 'spring',
+        damping: 20,
+        stiffness: 100,
+      },
+    },
+  };
+
+  const FormField = ({ children, delay = 0 }) => (
+    <motion.div
+      variants={itemVariants}
+      initial="hidden"
+      animate="visible"
+      transition={{ delay }}
+      whileHover={{ scale: 1.01 }}
+      className="relative"
+    >
+      {children}
+    </motion.div>
+  );
+
   return (
-    <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-3xl mx-auto bg-white rounded-lg shadow-md overflow-hidden">
-        <div className="bg-blue-600 py-4 px-6">
-          <h1 className="text-2xl font-bold text-white flex items-center">
-            <FaUserGraduate className="mr-2" />
-            Admission Form (Class 6-9)
-          </h1>
-        </div>
+    <div className="w-full min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 py-16 px-4">
+      {/* Header Section */}
+      <motion.div
+        className="text-center mb-12"
+        initial={{ opacity: 0, y: -50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, type: 'spring', damping: 20 }}
+      >
+        <motion.div
+          className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full mb-6 shadow-lg"
+          whileHover={{ rotate: 360, scale: 1.1 }}
+          transition={{ duration: 0.6 }}
+        >
+          <FaGraduationCap className="text-3xl text-white" />
+        </motion.div>
 
-        <form onSubmit={handleSubmit} className="p-6 space-y-6">
-          {/* Personal Information Section */}
-          <div className="border-b border-gray-200 pb-6">
-            <h2 className="text-lg font-medium text-gray-900 mb-4 flex items-center">
-              <FaIdCard className="mr-2 text-blue-500" />
-              Personal Information
-            </h2>
+        <motion.h1
+          className="text-4xl md:text-3xl py-2 font-bold bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent mb-4"
+          whileHover={{ scale: 1.02 }}
+        >
+          ভর্তি আবেদন ফরম
+        </motion.h1>
 
-            <div className="grid grid-cols-1 gap-y-4 gap-x-6 sm:grid-cols-6">
-              {/* Full Name */}
-              <div className="sm:col-span-3">
-                <label htmlFor="fullName" className="block text-sm font-medium text-gray-700">
-                  Full Name
+        <motion.div
+          className="w-24 h-1 bg-gradient-to-r from-blue-500 to-indigo-500 mx-auto rounded-full mb-4"
+          initial={{ width: 0 }}
+          animate={{ width: 96 }}
+          transition={{ duration: 1, delay: 0.5 }}
+        />
+
+        <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+          নিচের ফরমটি সম্পূর্ণ করে আপনার ভর্তির আবেদন জমা দিন। সকল তথ্য সঠিক ও সম্পূর্ণ দিতে হবে।
+        </p>
+      </motion.div>
+
+      {/* Form Section */}
+      <motion.div
+        className="max-w-4xl mx-auto"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+      >
+        <motion.form
+          onSubmit={handleSubmit(onSubmit)}
+          className="bg-white/80 backdrop-blur-sm shadow-2xl rounded-3xl p-8 md:p-12 border border-white/20 relative overflow-hidden"
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6 }}
+        >
+          {/* Background decoration */}
+          <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-blue-100 to-indigo-100 rounded-full blur-3xl opacity-30 -translate-y-32 translate-x-32" />
+          <div className="absolute bottom-0 left-0 w-64 h-64 bg-gradient-to-tr from-purple-100 to-pink-100 rounded-full blur-3xl opacity-30 translate-y-32 -translate-x-32" />
+
+          {/* Student Information Section */}
+          <div className="relative z-10">
+            <motion.div
+              className="mb-10"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.3 }}
+            >
+              <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                <FaUserGraduate className="text-blue-600 mr-3" />
+                ছাত্র/ছাত্রীর তথ্য
+              </h2>
+              <div className="w-full h-0.5 bg-gradient-to-r from-blue-500 to-transparent rounded-full mb-8" />
+            </motion.div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
+              {/* Student Name */}
+              <FormField>
+                <label className="block mb-3 font-semibold text-gray-700 text-lg">
+                  <FaUserGraduate className="inline text-blue-600 mr-2" />
+                  ছাত্র/ছাত্রীর নাম <span className="text-red-500">*</span>
                 </label>
-                <div className="mt-1 relative rounded-md shadow-sm">
-                  <input
-                    type="text"
-                    name="fullName"
-                    id="fullName"
-                    value={formData.fullName}
-                    onChange={handleChange}
-                    className={`block w-full rounded-md border ${
-                      errors.fullName ? 'border-red-300' : 'border-gray-300'
-                    } shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2`}
-                  />
-                </div>
-                {errors.fullName && <p className="mt-1 text-sm text-red-600">{errors.fullName}</p>}
-              </div>
-
-              {/* Father's Name */}
-              <div className="sm:col-span-3">
-                <label htmlFor="fatherName" className="block text-sm font-medium text-gray-700">
-                  Father's Name
-                </label>
-                <div className="mt-1 relative rounded-md shadow-sm">
-                  <input
-                    type="text"
-                    name="fatherName"
-                    id="fatherName"
-                    value={formData.fatherName}
-                    onChange={handleChange}
-                    className={`block w-full rounded-md border ${
-                      errors.fatherName ? 'border-red-300' : 'border-gray-300'
-                    } shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2`}
-                  />
-                </div>
-                {errors.fatherName && (
-                  <p className="mt-1 text-sm text-red-600">{errors.fatherName}</p>
+                <input
+                  type="text"
+                  {...register('studentName', { required: 'নাম আবশ্যক' })}
+                  placeholder="সম্পূর্ণ নাম লিখুন"
+                  className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-300 bg-white/70 backdrop-blur-sm"
+                />
+                {errors.studentName && (
+                  <p className="text-red-500 text-sm mt-2 flex items-center">
+                    <span className="w-1 h-1 bg-red-500 rounded-full mr-2" />
+                    {errors.studentName.message}
+                  </p>
                 )}
-              </div>
-
-              {/* Mother's Name */}
-              <div className="sm:col-span-3">
-                <label htmlFor="motherName" className="block text-sm font-medium text-gray-700">
-                  Mother's Name
-                </label>
-                <div className="mt-1 relative rounded-md shadow-sm">
-                  <input
-                    type="text"
-                    name="motherName"
-                    id="motherName"
-                    value={formData.motherName}
-                    onChange={handleChange}
-                    className={`block w-full rounded-md border ${
-                      errors.motherName ? 'border-red-300' : 'border-gray-300'
-                    } shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2`}
-                  />
-                </div>
-                {errors.motherName && (
-                  <p className="mt-1 text-sm text-red-600">{errors.motherName}</p>
-                )}
-              </div>
-
-              {/* Phone */}
-              <div className="sm:col-span-3">
-                <label htmlFor="phone" className="block text-sm font-medium text-gray-700">
-                  Phone Number
-                </label>
-                <div className="mt-1 relative rounded-md shadow-sm">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <FaPhone className="h-4 w-4 text-gray-400" />
-                  </div>
-                  <input
-                    type="tel"
-                    name="phone"
-                    id="phone"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    className={`block w-full pl-10 rounded-md border ${
-                      errors.phone ? 'border-red-300' : 'border-gray-300'
-                    } shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2`}
-                  />
-                </div>
-                {errors.phone && <p className="mt-1 text-sm text-red-600">{errors.phone}</p>}
-              </div>
-
-              {/* Email */}
-              <div className="sm:col-span-3">
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                  Email
-                </label>
-                <div className="mt-1 relative rounded-md shadow-sm">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <MdEmail className="h-4 w-4 text-gray-400" />
-                  </div>
-                  <input
-                    type="email"
-                    name="email"
-                    id="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    className={`block w-full pl-10 rounded-md border ${
-                      errors.email ? 'border-red-300' : 'border-gray-300'
-                    } shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2`}
-                  />
-                </div>
-                {errors.email && <p className="mt-1 text-sm text-red-600">{errors.email}</p>}
-              </div>
-
-              {/* Address */}
-              <div className="sm:col-span-6">
-                <label htmlFor="address" className="block text-sm font-medium text-gray-700">
-                  Address
-                </label>
-                <div className="mt-1 relative rounded-md shadow-sm">
-                  <div className="absolute inset-y-0 left-0 pl-3 pt-2 flex items-start pointer-events-none">
-                    <FaMapMarkerAlt className="h-4 w-4 text-gray-400" />
-                  </div>
-                  <textarea
-                    name="address"
-                    id="address"
-                    rows={3}
-                    value={formData.address}
-                    onChange={handleChange}
-                    className={`block w-full pl-10 rounded-md border ${
-                      errors.address ? 'border-red-300' : 'border-gray-300'
-                    } shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2`}
-                  />
-                </div>
-                {errors.address && <p className="mt-1 text-sm text-red-600">{errors.address}</p>}
-              </div>
-
-              {/* Date of Birth */}
-              <div className="sm:col-span-2">
-                <label htmlFor="dob" className="block text-sm font-medium text-gray-700">
-                  Date of Birth
-                </label>
-                <div className="mt-1 relative rounded-md shadow-sm">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <FaCalendarAlt className="h-4 w-4 text-gray-400" />
-                  </div>
-                  <input
-                    type="date"
-                    name="dob"
-                    id="dob"
-                    value={formData.dob}
-                    onChange={handleChange}
-                    className={`block w-full pl-10 rounded-md border ${
-                      errors.dob ? 'border-red-300' : 'border-gray-300'
-                    } shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2`}
-                  />
-                </div>
-                {errors.dob && <p className="mt-1 text-sm text-red-600">{errors.dob}</p>}
-              </div>
+              </FormField>
 
               {/* Gender */}
-              <div className="sm:col-span-2">
-                <label className="block text-sm font-medium text-gray-700">Gender</label>
-                <div className="mt-1 flex items-center space-x-4">
-                  <div className="flex items-center">
+              <FormField>
+                <label className="block mb-3 font-semibold text-gray-700 text-lg">
+                  <FaUsers className="inline text-purple-600 mr-2" />
+                  লিঙ্গ <span className="text-red-500">*</span>
+                </label>
+                <div className="flex gap-4">
+                  <label
+                    className={`flex items-center cursor-pointer rounded-xl px-4 py-3 border-2 border-gray-200 transition-colors ${
+                      watch('gender') === 'male'
+                        ? 'bg-green-500 text-white'
+                        : 'bg-white/70 hover:border-blue-300'
+                    }`}
+                  >
                     <input
-                      id="male"
-                      name="gender"
                       type="radio"
-                      value="Male"
-                      checked={formData.gender === 'Male'}
-                      onChange={handleChange}
-                      className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
+                      value="male"
+                      {...register('gender', { required: 'লিঙ্গ নির্বাচন করুন' })}
+                      className="sr-only"
                     />
-                    <label
-                      htmlFor="male"
-                      className="ml-2 block text-sm text-gray-700 flex items-center"
-                    >
-                      <FaVenusMars className="mr-1" /> Male
-                    </label>
-                  </div>
-                  <div className="flex items-center">
+                    <FaMale className={`mr-2 ${watch('gender') === 'male' ? 'text-white' : 'text-blue-600'}`} />
+                    <span>পুরুষ</span>
+                  </label>
+                  <label
+                    className={`flex items-center cursor-pointer rounded-xl px-4 py-3 border-2 border-gray-200 transition-colors ${
+                      watch('gender') === 'female'
+                        ? 'bg-green-500 text-white'
+                        : 'bg-white/70 hover:border-pink-300'
+                    }`}
+                  >
                     <input
-                      id="female"
-                      name="gender"
                       type="radio"
-                      value="Female"
-                      checked={formData.gender === 'Female'}
-                      onChange={handleChange}
-                      className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
+                      value="female"
+                      {...register('gender', { required: 'লিঙ্গ নির্বাচন করুন' })}
+                      className="sr-only"
                     />
-                    <label
-                      htmlFor="female"
-                      className="ml-2 block text-sm text-gray-700 flex items-center"
-                    >
-                      <FaVenusMars className="mr-1" /> Female
-                    </label>
-                  </div>
+                    <FaFemale className={`mr-2 ${watch('gender') === 'female' ? 'text-white' : 'text-pink-600'}`} />
+                    <span>মহিলা</span>
+                  </label>
                 </div>
-                {errors.gender && <p className="mt-1 text-sm text-red-600">{errors.gender}</p>}
-              </div>
+                {errors.gender && (
+                  <p className="text-red-500 text-sm mt-2">{errors.gender.message}</p>
+                )}
+              </FormField>
+
+              {/* Father Name */}
+              <FormField>
+                <label className="block mb-3 font-semibold text-gray-700 text-lg">
+                  পিতার নাম <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  {...register('fatherName', { required: 'পিতার নাম আবশ্যক' })}
+                  placeholder="পিতার সম্পূর্ণ নাম"
+                  className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-300 bg-white/70"
+                />
+                {errors.fatherName && (
+                  <p className="text-red-500 text-sm mt-2">{errors.fatherName.message}</p>
+                )}
+              </FormField>
+
+              {/* Mother Name */}
+              <FormField>
+                <label className="block mb-3 font-semibold text-gray-700 text-lg">
+                  মাতার নাম <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  {...register('motherName', { required: 'মাতার নাম আবশ্যক' })}
+                  placeholder="মাতার সম্পূর্ণ নাম"
+                  className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-300 bg-white/70"
+                />
+                {errors.motherName && (
+                  <p className="text-red-500 text-sm mt-2">{errors.motherName.message}</p>
+                )}
+              </FormField>
+
+              {/* Date of Birth */}
+              <FormField>
+                <label className="block mb-3 font-semibold text-gray-700 text-lg">
+                  <FaCalendarAlt className="inline text-purple-600 mr-2" />
+                  জন্ম তারিখ <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="date"
+                  {...register('dob', { required: 'জন্ম তারিখ আবশ্যক' })}
+                  className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200 transition-all duration-300 bg-white/70"
+                />
+                {errors.dob && <p className="text-red-500 text-sm mt-2">{errors.dob.message}</p>}
+              </FormField>
+
+              {/* National ID/Birth Certificate */}
+              <FormField>
+                <label className="block mb-3 font-semibold text-gray-700 text-lg">
+                  <FaIdCard className="inline text-indigo-600 mr-2" />
+                  জন্ম নিবন্ধন নম্বর <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  {...register('birthCertificate', { required: 'জন্ম নিবন্ধন নম্বর আবশ্যক' })}
+                  placeholder="17-সংখ্যার জন্ম নিবন্ধন নম্বর"
+                  className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition-all duration-300 bg-white/70"
+                />
+                {errors.birthCertificate && (
+                  <p className="text-red-500 text-sm mt-2">{errors.birthCertificate.message}</p>
+                )}
+              </FormField>
             </div>
-          </div>
 
-          {/* Academic Information Section */}
-          <div className="border-b border-gray-200 pb-6">
-            <h2 className="text-lg font-medium text-gray-900 mb-4 flex items-center">
-              <FaBook className="mr-2 text-blue-500" />
-              Academic Information
-            </h2>
+            {/* Contact Information Section */}
+            <motion.div
+              className="mb-10"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5 }}
+            >
+              <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                <FaPhone className="text-green-600 mr-3" />
+                যোগাযোগের তথ্য
+              </h2>
+              <div className="w-full h-0.5 bg-gradient-to-r from-green-500 to-transparent rounded-full mb-8" />
+            </motion.div>
 
-            <div className="grid grid-cols-1 gap-y-4 gap-x-6 sm:grid-cols-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
+              {/* Phone */}
+              <FormField>
+                <label className="block mb-3 font-semibold text-gray-700 text-lg">
+                  <FaPhone className="inline text-green-600 mr-2" />
+                  মোবাইল নাম্বার <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  {...register('phone', {
+                    required: 'মোবাইল নাম্বার আবশ্যক',
+                    pattern: {
+                      value: /^01[0-9]{9}$/,
+                      message: 'সঠিক মোবাইল নাম্বার লিখুন',
+                    },
+                  })}
+                  placeholder="01XXXXXXXXX"
+                  className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-200 transition-all duration-300 bg-white/70"
+                />
+                {errors.phone && (
+                  <p className="text-red-500 text-sm mt-2">{errors.phone.message}</p>
+                )}
+              </FormField>
+
+              {/* Email */}
+              <FormField>
+                <label className="block mb-3 font-semibold text-gray-700 text-lg">
+                  <FaEnvelope className="inline text-blue-600 mr-2" />
+                  ইমেইল ঠিকানা
+                </label>
+                <input
+                  type="email"
+                  {...register('email', {
+                    pattern: {
+                      value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                      message: 'সঠিক ইমেইল ঠিকানা লিখুন',
+                    },
+                  })}
+                  placeholder="example@email.com"
+                  className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-300 bg-white/70"
+                />
+                {errors.email && (
+                  <p className="text-red-500 text-sm mt-2">{errors.email.message}</p>
+                )}
+              </FormField>
+
+              {/* Guardian Phone */}
+              <FormField>
+                <label className="block mb-3 font-semibold text-gray-700 text-lg">
+                  অভিভাবকের মোবাইল নাম্বার
+                </label>
+                <input
+                  type="text"
+                  {...register('guardianPhone', {
+                    pattern: {
+                      value: /^01[0-9]{9}$/,
+                      message: 'সঠিক মোবাইল নাম্বার লিখুন',
+                    },
+                  })}
+                  placeholder="01XXXXXXXXX"
+                  className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-200 transition-all duration-300 bg-white/70"
+                />
+                {errors.guardianPhone && (
+                  <p className="text-red-500 text-sm mt-2">{errors.guardianPhone.message}</p>
+                )}
+              </FormField>
+
+              {/* Emergency Contact */}
+              <FormField>
+                <label className="block mb-3 font-semibold text-gray-700 text-lg">
+                  জরুরি যোগাযোগের নম্বর
+                </label>
+                <input
+                  type="text"
+                  {...register('emergencyContact')}
+                  placeholder="01XXXXXXXXX"
+                  className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-200 transition-all duration-300 bg-white/70"
+                />
+              </FormField>
+            </div>
+
+            {/* Academic Information Section */}
+            <motion.div
+              className="mb-10"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.7 }}
+            >
+              <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                <FaBookOpen className="text-indigo-600 mr-3" />
+                শিক্ষাগত তথ্য
+              </h2>
+              <div className="w-full h-0.5 bg-gradient-to-r from-indigo-500 to-transparent rounded-full mb-8" />
+            </motion.div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
               {/* Class */}
-              <div className="sm:col-span-3">
-                <label htmlFor="class" className="block text-sm font-medium text-gray-700">
-                  Class
+              <FormField>
+                <label className="block mb-3 font-semibold text-gray-700 text-lg">
+                  ভর্তিচ্ছু ক্লাস <span className="text-red-500">*</span>
                 </label>
                 <select
-                  id="class"
-                  name="class"
-                  value={formData.class}
-                  onChange={handleChange}
-                  className={`mt-1 block w-full rounded-md border ${
-                    errors.class ? 'border-red-300' : 'border-gray-300'
-                  } py-2 pl-3 pr-10 text-base focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm`}
+                  {...register('className', { required: 'ক্লাস আবশ্যক' })}
+                  className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200 transition-all duration-300 bg-white/70"
                 >
-                  <option value="">Select Class</option>
-                  <option value="6">Class 6</option>
-                  <option value="7">Class 7</option>
-                  <option value="8">Class 8</option>
-                  <option value="9">Class 9</option>
+                  <option value="">ক্লাস নির্বাচন করুন</option>
+                  <option value="6">ষষ্ঠ শ্রেণি</option>
+                  <option value="7">সপ্তম শ্রেণি</option>
+                  <option value="8">অষ্টম শ্রেণি</option>
+                  <option value="9">নবম শ্রেণি</option>
+                  <option value="10">দশম শ্রেণি</option>
                 </select>
-                {errors.class && <p className="mt-1 text-sm text-red-600">{errors.class}</p>}
-              </div>
+                {errors.className && (
+                  <p className="text-red-500 text-sm mt-2">{errors.className.message}</p>
+                )}
+              </FormField>
 
-              {/* Group (only shown for class 9) */}
-              {formData.class === '9' && (
-                <div className="sm:col-span-3">
-                  <label htmlFor="group" className="block text-sm font-medium text-gray-700">
-                    Group
+              {/* Group (if class 9 or 10) */}
+              {(selectedClass === 'nine' || selectedClass === 'ten') && (
+                <FormField>
+                  <label className="block mb-3 font-semibold text-gray-700 text-lg">
+                    গ্রুপ <span className="text-red-500">*</span>
                   </label>
                   <select
-                    id="group"
-                    name="group"
-                    value={formData.group}
-                    onChange={handleChange}
-                    className={`mt-1 block w-full rounded-md border ${
-                      errors.group ? 'border-red-300' : 'border-gray-300'
-                    } py-2 pl-3 pr-10 text-base focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm`}
+                    {...register('group', {
+                      required:
+                        selectedClass === 'nine' || selectedClass === 'ten'
+                          ? 'গ্রুপ নির্বাচন করুন'
+                          : false,
+                    })}
+                    className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition-all duration-300 bg-white/70"
                   >
-                    <option value="">Select Group</option>
-                    {Object.entries(groups).map(([key, value]) => (
-                      <option key={key} value={key}>
-                        {value} ({key})
-                      </option>
-                    ))}
+                    <option value="">গ্রুপ নির্বাচন করুন</option>
+                    <option value="science">বিজ্ঞান</option>
+                    <option value="commerce">ব্যবসায় শিক্ষা</option>
+                    <option value="arts">মানবিক</option>
                   </select>
-                  {errors.group && <p className="mt-1 text-sm text-red-600">{errors.group}</p>}
-                </div>
+                  {errors.group && (
+                    <p className="text-red-500 text-sm mt-2">{errors.group.message}</p>
+                  )}
+                </FormField>
               )}
 
               {/* Previous School */}
-              <div className="sm:col-span-6">
-                <label htmlFor="previousSchool" className="block text-sm font-medium text-gray-700">
-                  Previous School
+              <FormField>
+                <label className="block mb-3 font-semibold text-gray-700 text-lg">
+                  পূর্ববর্তী শিক্ষা প্রতিষ্ঠান
                 </label>
-                <div className="mt-1 relative rounded-md shadow-sm">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <FaSchool className="h-4 w-4 text-gray-400" />
-                  </div>
-                  <input
-                    type="text"
-                    name="previousSchool"
-                    id="previousSchool"
-                    value={formData.previousSchool}
-                    onChange={handleChange}
-                    className={`block w-full pl-10 rounded-md border ${
-                      errors.previousSchool ? 'border-red-300' : 'border-gray-300'
-                    } shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2`}
-                  />
-                </div>
-                {errors.previousSchool && (
-                  <p className="mt-1 text-sm text-red-600">{errors.previousSchool}</p>
-                )}
-              </div>
-            </div>
-          </div>
+                <input
+                  type="text"
+                  {...register('previousSchool')}
+                  placeholder="পূর্ববর্তী স্কুলের নাম"
+                  className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-300 bg-white/70"
+                />
+              </FormField>
 
-          {/* Submit Button */}
-          <div className="flex justify-end">
-            <button
-              type="submit"
-              className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              {/* Previous Result */}
+              <FormField>
+                <label className="block mb-3 font-semibold text-gray-700 text-lg">
+                  পূর্ববর্তী পরীক্ষার ফলাফল
+                </label>
+                <input
+                  type="text"
+                  {...register('previousResult')}
+                  placeholder="GPA বা গ্রেড"
+                  className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-200 transition-all duration-300 bg-white/70"
+                />
+              </FormField>
+            </div>
+
+            {/* Address */}
+            <FormField>
+              <label className="block mb-3 font-semibold text-gray-700 text-lg">
+                <FaHome className="inline text-orange-600 mr-2" />
+                বর্তমান ঠিকানা <span className="text-red-500">*</span>
+              </label>
+              <textarea
+                {...register('address', { required: 'ঠিকানা আবশ্যক' })}
+                rows="4"
+                placeholder="সম্পূর্ণ ঠিকানা লিখুন (গ্রাম/মহল্লা, ডাকঘর, উপজেলা, জেলা)"
+                className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-200 transition-all duration-300 bg-white/70"
+              />
+              {errors.address && (
+                <p className="text-red-500 text-sm mt-2">{errors.address.message}</p>
+              )}
+            </FormField>
+
+            {/* Additional Information */}
+            <FormField>
+              <label className="block mb-3 font-semibold text-gray-700 text-lg mt-8">
+                <FaFileAlt className="inline text-gray-600 mr-2" />
+                অতিরিক্ত তথ্য
+              </label>
+              <textarea
+                {...register('additionalInfo')}
+                rows="3"
+                placeholder="কোন বিশেষ প্রয়োজন বা তথ্য থাকলে এখানে লিখুন"
+                className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-gray-500 focus:ring-2 focus:ring-gray-200 transition-all duration-300 bg-white/70"
+              />
+            </FormField>
+
+            {/* Submit Button */}
+            <motion.div
+              className="text-center mt-12"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 1, type: 'spring', damping: 15 }}
             >
-              Submit Application
-            </button>
+              <motion.button
+                type="submit"
+                className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold px-12 py-4 rounded-2xl shadow-xl text-lg flex items-center justify-center mx-auto gap-3 relative overflow-hidden"
+                whileHover={{
+                  scale: 1.05,
+                  boxShadow: '0 20px 40px rgba(0,0,0,0.15)',
+                }}
+                whileTap={{ scale: 0.95 }}
+                transition={{ type: 'spring', damping: 15 }}
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300" />
+                <FaGraduationCap className="text-xl" />
+                ভর্তি আবেদন জমা দিন
+                <motion.div
+                  className="w-2 h-2 bg-white rounded-full"
+                  animate={{ x: [0, 6, 0] }}
+                  transition={{
+                    duration: 1.5,
+                    repeat: Infinity,
+                    ease: 'easeInOut',
+                  }}
+                />
+              </motion.button>
+
+              <motion.p
+                className="text-sm text-gray-500 mt-4"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 1.2 }}
+              >
+                আবেদন জমা দেওয়ার পর আমরা শীঘ্রই আপনার সাথে যোগাযোগ করব
+              </motion.p>
+            </motion.div>
           </div>
-        </form>
-      </div>
+        </motion.form>
+      </motion.div>
     </div>
   );
 };

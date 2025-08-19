@@ -4,7 +4,6 @@ import Home from '../pages/Home/Home';
 import AuthencationLayout from './../layouts/AuthencationLayout';
 import Login from './../pages/Login/Login';
 import Register from './../pages/Register/Register';
-import About from '../pages/About/About';
 import ContactUs from '../pages/Contact/ContactUs';
 import MaintenancePage from '../pages/Maintenance/MaintenancePage';
 import PrivateRoute from './../provider/PrivateRoute';
@@ -25,6 +24,10 @@ import SeatPlan from '../pages/Dashboard/Marks/SeatPlan';
 import Overview from '../pages/Dashboard/Overview/Overview';
 import StudentMigration from '../pages/Dashboard/Students/StudentMigration';
 import AdmissionForm from '../components/Admission/AdmissionForm';
+import AboutUs from '../components/Campus/AboutUs';
+import Mission from '../components/Campus/Mission';
+import AdmissionProcess from '../components/Admission/AdmissionProcess';
+import ViewAdmission from '../pages/Dashboard/Admission/ViewAdmission';
 
 const router = createBrowserRouter([
   {
@@ -36,8 +39,12 @@ const router = createBrowserRouter([
         Component: Home,
       },
       {
-        path: '/about',
-        Component: About,
+        path: '/aboutus',
+        Component: AboutUs,
+      },
+      {
+        path: '/mission',
+        Component: Mission,
       },
       {
         path: '/contact',
@@ -50,7 +57,11 @@ const router = createBrowserRouter([
       {
         path: '/admissionform',
         Component: AdmissionForm,
-      }
+      },
+      {
+        path: '/admissionprocess',
+        Component: AdmissionProcess,
+      },
     ],
   },
 
@@ -131,7 +142,11 @@ const router = createBrowserRouter([
       {
         path: 'seat-plan',
         Component: SeatPlan,
-      }
+      },
+      {
+        path: 'view-admissions',
+        Component: ViewAdmission,
+      },
     ],
   },
 

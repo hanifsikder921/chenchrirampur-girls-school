@@ -9,19 +9,17 @@ const Navbar = () => {
     {
       title: 'ক্যাম্পাস',
       submenu: [
-        { title: 'ক্যাম্পাস লাইফ', bg: 'bg-green-50', target: '/campus/campus-life' },
-        { title: 'ইভেন্টস', bg: 'bg-green-100', target: '/campus/events' },
-        { title: 'ক্লাব ও সংগঠন', bg: 'bg-green-50', target: '/campus/clubs' },
-        { title: 'ভ্রমণ ও সফর', bg: 'bg-green-100', target: '/campus/travel' },
+        { title: 'আমাদের সম্পর্কে', bg: 'bg-green-50', target: '/aboutus' },
+        { title: 'মিশন', bg: 'bg-green-100', target: '/mission' },
       ],
     },
     {
       title: 'ভর্তি',
       submenu: [
-        { title: 'ভর্তি প্রক্রিয়া', bg: 'bg-blue-50', target: '/admission/process' },
+        { title: 'ভর্তি প্রক্রিয়া', bg: 'bg-blue-50', target: '/admissionprocess' },
         { title: 'ভর্তি ফর্ম', bg: 'bg-blue-100', target: '/admissionform' },
-        { title: 'ভর্তি পরীক্ষা', bg: 'bg-blue-50', target: '/admission/exam' },
-        { title: 'ফি ও বেতন', bg: 'bg-blue-100', target: '/admission/fees' },
+        // { title: 'ভর্তি পরীক্ষা', bg: 'bg-blue-50', target: '/admission/exam' },
+        // { title: 'ফি ও বেতন', bg: 'bg-blue-100', target: '/admission/fees' },
       ],
     },
     {
