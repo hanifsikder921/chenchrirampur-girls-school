@@ -30,6 +30,7 @@ import AdmissionProcess from '../components/Admission/AdmissionProcess';
 import ViewAdmission from '../pages/Dashboard/Admission/ViewAdmission';
 import SixToTen from '../components/ClassAndSubject/SixToTen';
 import ClassRutin from '../components/ClassAndSubject/ClassRutin';
+import SchoolResult from '../components/ExamResult/SchoolResult';
 
 const router = createBrowserRouter([
   {
@@ -71,6 +72,10 @@ const router = createBrowserRouter([
       {
         path: '/class-routine',
         Component: ClassRutin,
+      },
+      {
+        path: '/school-result',
+        Component: SchoolResult,
       }
     ],
   },

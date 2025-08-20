@@ -51,18 +51,19 @@ const Navbar = () => {
       title: 'শিক্ষার্থী',
       submenu: [
         { title: 'শিক্ষার্থী প্রোফাইল', bg: 'bg-indigo-50', target: '/students/profile' },
-        { title: 'অ্যাটেন্ডেন্স', bg: 'bg-indigo-100', target: '/students/attendance' },
-        { title: 'রেজাল্ট কার্ড', bg: 'bg-indigo-50', target: '/students/result-card' },
-        { title: 'শিক্ষাবৃত্তি', bg: 'bg-indigo-100', target: '/students/scholarship' },
+        // { title: 'অ্যাটেন্ডেন্স', bg: 'bg-indigo-100', target: '/students/attendance' },
+        // { title: 'রেজাল্ট কার্ড', bg: 'bg-indigo-50', target: '/students/result-card' },
+        // { title: 'শিক্ষাবৃত্তি', bg: 'bg-indigo-100', target: '/students/scholarship' },
       ],
     },
     {
       title: 'ফলাফল',
       submenu: [
-        { title: 'পরীক্ষার ফলাফল', bg: 'bg-pink-50', target: '/results/exam' },
-        { title: 'মেরিট লিস্ট', bg: 'bg-pink-100', target: '/results/merit-list' },
-        { title: 'গ্রেডিং সিস্টেম', bg: 'bg-pink-50', target: '/results/grading' },
-        { title: 'ফলাফল পুনঃনিরীক্ষণ', bg: 'bg-pink-100', target: '/results/recheck' },
+        { title: 'স্কুল পরীক্ষা ফলাফল', bg: 'bg-pink-50', target: '/school-result' },
+        { title: 'বোর্ড পরীক্ষার ফলাফল', bg: 'bg-pink-50', target: '/results/exam' },
+        // { title: 'মেরিট লিস্ট', bg: 'bg-pink-100', target: '/results/merit-list' },
+        // { title: 'গ্রেডিং সিস্টেম', bg: 'bg-pink-50', target: '/results/grading' },
+        // { title: 'ফলাফল পুনঃনিরীক্ষণ', bg: 'bg-pink-100', target: '/results/recheck' },
       ],
     },
     {
@@ -70,8 +71,9 @@ const Navbar = () => {
       submenu: [
         { title: 'লাইব্রেরি', bg: 'bg-teal-50', target: '/resources/library' },
         { title: 'ল্যাবরেটরি', bg: 'bg-teal-100', target: '/resources/lab' },
-        { title: 'সফটওয়্যার', bg: 'bg-teal-50', target: '/resources/software' },
-        { title: 'অনলাইন রিসোর্স', bg: 'bg-teal-100', target: '/resources/online' },
+        { title: 'কম্পিউটার ল্যাব', bg: 'bg-teal-100', target: '/resources/lab' },
+        // { title: 'সফটওয়্যার', bg: 'bg-teal-50', target: '/resources/software' },
+        // { title: 'অনলাইন রিসোর্স', bg: 'bg-teal-100', target: '/resources/online' },
       ],
     },
   ];
