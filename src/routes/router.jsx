@@ -29,6 +29,7 @@ import Mission from '../components/Campus/Mission';
 import AdmissionProcess from '../components/Admission/AdmissionProcess';
 import ViewAdmission from '../pages/Dashboard/Admission/ViewAdmission';
 import SixToTen from '../components/ClassAndSubject/SixToTen';
+import ClassRutin from '../components/ClassAndSubject/ClassRutin';
 
 const router = createBrowserRouter([
   {
@@ -66,6 +67,10 @@ const router = createBrowserRouter([
       {
         path: '/sixtoTen',
         Component: SixToTen,
+      },
+      {
+        path: '/class-routine',
+        Component: ClassRutin,
       }
     ],
   },

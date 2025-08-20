@@ -44,14 +44,26 @@ const StudentStatistics = () => {
   return (
     <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">ছাত্র-ছাত্রী পরিসংখ্যান</h1>
+        {/* Header - Professional Design */}
+        <div className="text-center mb-12 relative">
+          <div className="absolute inset-0 flex items-center justify-center" aria-hidden="true">
+            <div className="w-24 h-24 bg-blue-100 rounded-full opacity-20"></div>
+          </div>
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4 relative z-10">
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-700">
+              ছাত্র-ছাত্রী পরিসংখ্যান
+            </span>
+          </h1>
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            প্রতিষ্ঠানের সামগ্রিক ছাত্র-ছাত্রীর সংখ্যা ও শ্রেণিভিত্তিক বিশ্লেষণ
+          </p>
+          <div className="mt-4 flex justify-center">
+            <div className="w-16 h-1 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full"></div>
+          </div>
         </div>
 
         {/* Overall Statistics */}
         <div className="mb-12">
-          <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">সামগ্রিক পরিসংখ্যান</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg shadow-lg p-6 text-white">
               <div className="flex items-center justify-between">
@@ -282,9 +294,6 @@ const StudentStatistics = () => {
             <div className="text-sm text-gray-600">মোট বিভাগ (৯ম ও ১০ম)</div>
           </div>
 
-
-
-
           <div className="bg-white rounded-lg shadow-lg p-6 text-center">
             <div className="text-2xl font-bold text-orange-600 mb-2">
               {overview?.totalMaleStudents && overview?.totalFemaleStudents
@@ -304,10 +313,6 @@ const StudentStatistics = () => {
             </div>
             <div className="text-sm text-gray-600">ছাত্রদের অনুপাত</div>
           </div>
-
-
-
-
 
           <div className="bg-white rounded-lg shadow-lg p-6 text-center col-span-2">
             <div className="text-2xl font-bold text-teal-600 mb-2">
