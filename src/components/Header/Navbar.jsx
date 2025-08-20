@@ -25,14 +25,10 @@ const Navbar = () => {
     {
       title: 'শ্রেণী ও বিষয়',
       submenu: [
-        { title: 'ষষ্ঠ থেকে অষ্টম শ্রেণী', bg: 'bg-purple-50', target: '/classes/6-8' },
-        { title: 'নবম-দশম শ্রেণী', bg: 'bg-purple-100', target: '/classes/9-10' },
-        { title: 'বিজ্ঞান বিভাগ', bg: 'bg-purple-50', target: '/classes/science' },
-        {
-          title: 'মানবিক ও ব্যবসায় শিক্ষা',
-          bg: 'bg-purple-100',
-          target: '/classes/humanities-commerce',
-        },
+        { title: 'ষষ্ঠ থেকে দশম শ্রেণী', bg: 'bg-purple-50', target: '/sixtoTen' },
+        { title: 'ক্লাস রুটিন', bg: 'bg-purple-100', target: '/class-routine' },
+
+       
       ],
     },
     {

@@ -175,10 +175,7 @@ const AdmissionProcess = () => {
                     className={`absolute inset-0 bg-gradient-to-r ${step.color} opacity-5 group-hover:opacity-10 transition-opacity duration-300`}
                   />
 
-                  {/* Step number indicator */}
-                  <div className="absolute -top-4 -right-4 w-12 h-12 bg-gradient-to-br from-white to-gray-100 rounded-full flex items-center justify-center shadow-lg border-4 border-white">
-                    <span className="text-gray-600 font-bold text-sm">{index + 1}</span>
-                  </div>
+                
 
                   <div className="flex items-start gap-6">
                     <motion.div

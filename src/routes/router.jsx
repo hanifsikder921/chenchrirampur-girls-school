@@ -28,6 +28,7 @@ import AboutUs from '../components/Campus/AboutUs';
 import Mission from '../components/Campus/Mission';
 import AdmissionProcess from '../components/Admission/AdmissionProcess';
 import ViewAdmission from '../pages/Dashboard/Admission/ViewAdmission';
+import SixToTen from '../components/ClassAndSubject/SixToTen';
 
 const router = createBrowserRouter([
   {
@@ -62,6 +63,10 @@ const router = createBrowserRouter([
         path: '/admissionprocess',
         Component: AdmissionProcess,
       },
+      {
+        path: '/sixtoTen',
+        Component: SixToTen,
+      }
     ],
   },
 

@@ -345,7 +345,7 @@ const ViewAdmission = () => {
                           className="text-green-600 hover:text-green-900 flex bg-green-100 p-2 items-center gap-1 rounded"
                           title="Approved"
                         >
-                          <MdDownloadDone /> Approved
+                          <MdDownloadDone /> Approve
                         </button>
 
                         <button
@@ -397,6 +397,10 @@ const ViewAdmission = () => {
 
               {/* Content */}
               <div className="p-6" ref={modalContentRef}>
+                <div className='w-full text-center mb-6'>
+                  <h2 className="text-xl font-bold mx-auto text-green-800">Chenchri Rampur Girls High School</h2>
+                  <p className="text-gray-600">Admission Application</p>
+                </div>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                   {/* Personal Information Card */}
                   <div className="bg-gray-50 rounded-lg p-5 border border-gray-200 shadow-sm">
@@ -654,7 +658,7 @@ const ViewAdmission = () => {
                   >
                     Print Details
                   </button>
-                  <button className="px-5 py-2.5 text-sm font-medium text-white bg-green-600 rounded-lg hover:bg-green-700 focus:outline-none focus:ring-4 focus:ring-green-300">
+                  <button className="px-5 py-2.5 hidden text-sm font-medium text-white bg-green-600 rounded-lg hover:bg-green-700 focus:outline-none focus:ring-4 focus:ring-green-300">
                     Approve Application
                   </button>
                 </div>
