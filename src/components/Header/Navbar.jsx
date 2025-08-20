@@ -69,9 +69,9 @@ const Navbar = () => {
     {
       title: 'রিসোর্স',
       submenu: [
-        { title: 'লাইব্রেরি', bg: 'bg-teal-50', target: '/resources/library' },
-        { title: 'ল্যাবরেটরি', bg: 'bg-teal-100', target: '/resources/lab' },
-        { title: 'কম্পিউটার ল্যাব', bg: 'bg-teal-100', target: '/resources/lab' },
+        { title: 'লাইব্রেরি', bg: 'bg-teal-50', target: '/library' },
+        { title: 'ল্যাবরেটরি', bg: 'bg-teal-100', target: '/laboratory' },
+        { title: 'কম্পিউটার ল্যাব', bg: 'bg-teal-100', target: '/computer-lab' },
         // { title: 'সফটওয়্যার', bg: 'bg-teal-50', target: '/resources/software' },
         // { title: 'অনলাইন রিসোর্স', bg: 'bg-teal-100', target: '/resources/online' },
       ],

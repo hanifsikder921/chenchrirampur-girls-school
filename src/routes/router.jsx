@@ -32,6 +32,10 @@ import SixToTen from '../components/ClassAndSubject/SixToTen';
 import ClassRutin from '../components/ClassAndSubject/ClassRutin';
 import SchoolResult from '../components/ExamResult/SchoolResult';
 import BoardResult from '../components/ExamResult/BoardResult';
+import ComputerLab from '../components/ResourceSchool/ComputerLab';
+import Library from '../components/ResourceSchool/Library';
+import Laboratory from '../components/ResourceSchool/Laboratory';
+
 
 const router = createBrowserRouter([
   {
@@ -81,6 +85,18 @@ const router = createBrowserRouter([
       {
         path: '/board-result',
         Component: BoardResult,
+      },
+      {
+        path: '/computer-lab',
+        Component: ComputerLab,
+      },
+      {
+        path: '/library',
+        Component: Library,
+      },
+      {
+        path: '/laboratory',
+        Component: Laboratory,
       }
     ],
   },
