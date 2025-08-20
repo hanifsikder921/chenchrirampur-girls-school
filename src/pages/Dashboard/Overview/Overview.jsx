@@ -105,7 +105,7 @@ const Overview = () => {
             <StatCard
               title="মোট শিক্ষক"
               value={stats.teachers.total}
-              subtitle="সর্বমোট শিক্ষক সংখ্যা"
+              subtitle="সর্বমোট শিক্ষকদের সংখ্যা"
               icon="👥"
               bgColor="bg-gradient-to-r from-blue-400 to-blue-600"
               textColor="text-white"
@@ -134,7 +134,7 @@ const Overview = () => {
 
           {/* Subject-wise Teacher Distribution */}
           {detailedStats.teacherSubjects.length > 0 && (
-            <SectionCard title="📚 বিষয়ভিত্তিক শিক্ষক বিতরণ">
+            <SectionCard title="📚 বিষয়ভিত্তিক শিক্ষকদের তথ্য">
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {detailedStats.teacherSubjects.map((item, index) => (
                   <div key={index} className="bg-blue-50 rounded-lg p-3 text-center">
@@ -183,7 +183,7 @@ const Overview = () => {
 
           {/* Designation-wise Staff Distribution */}
           {detailedStats.staffDesignations.length > 0 && (
-            <SectionCard title="📋 পদভিত্তিক কর্মচারী বিতরণ">
+            <SectionCard title="📋 পদভিত্তিক কর্মচারীদের তথ্য">
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                 {detailedStats.staffDesignations.map((item, index) => (
                   <div key={index} className="bg-orange-50 rounded-lg p-3 text-center">
@@ -255,7 +255,7 @@ const Overview = () => {
           {/* Class-wise Student Distribution */}
           {detailedStats.studentClasses.length > 0 && (
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <SectionCard title="📚 শ্রেণীভিত্তিক শিক্ষার্থী বিতরণ">
+              <SectionCard title="📚 শ্রেণীভিত্তিক শিক্ষার্থীদের তথ্য">
                 <div className="space-y-3">
                   {detailedStats.studentClasses.map((item, index) => (
                     <div

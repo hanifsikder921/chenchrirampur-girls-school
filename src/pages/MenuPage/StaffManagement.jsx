@@ -23,6 +23,11 @@ const StaffManagement = () => {
 
   const teachers = data?.data || [];
 
+  // Filter teachers and employees
+  const actualTeachers = teachers.filter((teacher) => teacher.subject !== 'N/A');
+  const employees = teachers.filter((teacher) => teacher.subject == 'N/A');
+  console.log(employees);
+
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 flex items-center justify-center">
@@ -64,7 +69,69 @@ const StaffManagement = () => {
   return (
     <div className=" bg-gradient-to-br from-blue-50 via-white to-purple-50 py-6">
       <div className="max-w-7xl mx-auto px-4">
-        {/* -------- TABLE VIEW (Desktop) -------- */}
+        {/* teachers and employee stats */}
+        <div>
+          {/* Overall Statistics */}
+          <div className="mb-12">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg shadow-lg p-6 text-white">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-blue-100 text-sm font-medium">মোট শিক্ষক কর্মচারী</p>
+                    <p className="text-3xl font-bold">{teachers.length || 0}</p>
+                  </div>
+                  <div className="bg-blue-400 rounded-full p-3">
+                    <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
+                      <path
+                        fillRule="evenodd"
+                        d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-gradient-to-r from-green-500 to-green-600 rounded-lg shadow-lg p-6 text-white">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-green-100 text-sm font-medium">মোট শিক্ষক</p>
+                    <p className="text-3xl font-bold">{actualTeachers.length || 0}</p>
+                  </div>
+                  <div className="bg-green-400 rounded-full p-3">
+                    <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
+                      <path
+                        fillRule="evenodd"
+                        d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-gradient-to-r from-pink-500 to-pink-600 rounded-lg shadow-lg p-6 text-white">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-pink-100 text-sm font-medium">মোট কর্মচারী</p>
+                    <p className="text-3xl font-bold">{employees.length || 0}</p>
+                  </div>
+                  <div className="bg-pink-400 rounded-full p-3">
+                    <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
+                      <path
+                        fillRule="evenodd"
+                        d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* -------- Teachers TABLE VIEW (Desktop) -------- */}
         <div className="hidden md:block bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full">
@@ -85,8 +152,8 @@ const StaffManagement = () => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">
-                {teachers.length > 0 ? (
-                  teachers.map((teacher, index) => (
+                {actualTeachers.length > 0 ? (
+                  actualTeachers.map((teacher, index) => (
                     <tr
                       key={teacher.id}
                       className="hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 transition-all duration-200"
@@ -144,6 +211,88 @@ const StaffManagement = () => {
           </div>
         </div>
 
+        {/* --------Employee TABLE VIEW (Desktop) -------- */}
+        <div className="hidden md:block bg-white rounded-2xl shadow-lg border my-8 border-gray-100 overflow-hidden">
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead>
+                <tr className="bg-gradient-to-r from-blue-600 to-purple-600 text-white">
+                  <th className="px-6 py-4 text-left text-sm font-semibold uppercase tracking-wider">
+                    Index
+                  </th>
+                  <th className="px-6 py-4 text-left text-sm font-semibold uppercase tracking-wider">
+                    Employee
+                  </th>
+                  <th className="px-6 py-4 text-left text-sm font-semibold uppercase tracking-wider">
+                    Designation
+                  </th>
+                  <th className="px-6 py-4 text-left text-sm font-semibold uppercase tracking-wider">
+                    Contact
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-200">
+                {employees.length > 0 ? (
+                  employees.map((employee, index) => (
+                    <tr
+                      key={employee.id}
+                      className="hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 transition-all duration-200"
+                    >
+                      <td className="px-6 py-4">
+                        <span className=" bg-blue-100 rounded p-2 text-blue-600 font-semibold text-sm">
+                          {employee.indexno || index + 1}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 flex items-center gap-3">
+                        <img
+                          src={
+                            employee.image || (employee.gender === 'Male' ? MaleIcon : FemaleIcon)
+                          }
+                          alt={employee.fullName}
+                          className="w-12 h-12 rounded-full object-cover ring-2 ring-blue-100 shadow-md hover:ring-blue-300 transition-all duration-200"
+                          onError={(e) => {
+                            e.target.src = employee.gender === 'Male' ? MaleIcon : FemaleIcon;
+                          }}
+                        />
+                        <div>
+                          <p className="font-semibold text-gray-800">{employee.fullName}</p>
+                          <p className="text-sm text-gray-500 flex items-center gap-1">
+                            <IoPersonOutline className="text-xs" /> {employee.gender}
+                          </p>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className="flex items-center gap-2">
+                          <IoSchoolOutline className="text-green-600 text-lg" />
+                          <span className="text-gray-800 font-medium">
+                            {employee.designation || 'Not Assigned'}
+                          </span>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 space-y-1">
+                        <p className="flex items-center gap-2 text-sm text-gray-600">
+                          <IoCallOutline className="text-blue-500" /> {employee.phone || 'N/A'}
+                        </p>
+                        {employee.email && (
+                          <p className="flex items-center gap-2 text-sm text-gray-600">
+                            <IoMailOutline className="text-green-500" /> {employee.email}
+                          </p>
+                        )}
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="5" className="px-6 py-16 text-center">
+                      <NoTeachers />
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
         {/* -------- CARD VIEW (Mobile) -------- */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:hidden">
           {teachers.length > 0 ? (
@@ -154,7 +303,9 @@ const StaffManagement = () => {
               >
                 <div className="flex items-center gap-3">
                   <img
-                    src={teacher.image || (teacher.gender === 'Male' ? MaleIcon : FemaleIcon)}
+                    src={
+                      teacher.image || (teacher.gender === 'Male' ? MaleIcon : FemaleIcon)
+                    }
                     alt={teacher.fullName}
                     className="w-16 h-16 rounded-full object-cover ring-2 ring-blue-100 shadow-md"
                     onError={(e) => {
@@ -178,7 +329,10 @@ const StaffManagement = () => {
                   </p>
                   {teacher.indexno && (
                     <p className="flex items-center gap-2 text-sm text-gray-600">
-                      <IoMailOutline className="text-green-500" /> {teacher.indexno} <span className='text-sm bg-green-200 px-1 text-green-800 rounded'>index No.</span>
+                      <IoMailOutline className="text-green-500" /> {teacher.indexno}{' '}
+                      <span className="text-sm bg-green-200 px-1 text-green-800 rounded">
+                        index No.
+                      </span>
                     </p>
                   )}
                 </div>
