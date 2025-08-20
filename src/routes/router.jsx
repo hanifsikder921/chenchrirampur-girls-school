@@ -31,6 +31,7 @@ import ViewAdmission from '../pages/Dashboard/Admission/ViewAdmission';
 import SixToTen from '../components/ClassAndSubject/SixToTen';
 import ClassRutin from '../components/ClassAndSubject/ClassRutin';
 import SchoolResult from '../components/ExamResult/SchoolResult';
+import BoardResult from '../components/ExamResult/BoardResult';
 
 const router = createBrowserRouter([
   {
@@ -76,6 +77,10 @@ const router = createBrowserRouter([
       {
         path: '/school-result',
         Component: SchoolResult,
+      },
+      {
+        path: '/board-result',
+        Component: BoardResult,
       }
     ],
   },

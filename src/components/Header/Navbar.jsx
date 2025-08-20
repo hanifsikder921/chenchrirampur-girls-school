@@ -60,7 +60,7 @@ const Navbar = () => {
       title: 'ফলাফল',
       submenu: [
         { title: 'স্কুল পরীক্ষা ফলাফল', bg: 'bg-pink-50', target: '/school-result' },
-        { title: 'বোর্ড পরীক্ষার ফলাফল', bg: 'bg-pink-50', target: '/results/exam' },
+        { title: 'বোর্ড পরীক্ষার ফলাফল', bg: 'bg-pink-50', target: '/board-result' },
         // { title: 'মেরিট লিস্ট', bg: 'bg-pink-100', target: '/results/merit-list' },
         // { title: 'গ্রেডিং সিস্টেম', bg: 'bg-pink-50', target: '/results/grading' },
         // { title: 'ফলাফল পুনঃনিরীক্ষণ', bg: 'bg-pink-100', target: '/results/recheck' },
