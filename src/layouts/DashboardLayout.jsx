@@ -389,21 +389,21 @@ const DashboardLayout = () => {
                 </div>
                 <FaChevronDown className="text-gray-400 group-hover:text-gray-600 transition-all duration-300 group-open:rotate-180" />
               </summary>
-              <div className="ml-4 mt-2 space-y-1 border-l-2 border-gray-100 pl-4">
-                <NavLink to="/dashboard/manage-subjects" className={navLinkClass}>
-                  <div className="flex items-center gap-3">
+              <div className="ml-4 mt-2 space-y-1 border-l-2 border-gray-100 pl-4 ">
+                {/* <NavLink to="/dashboard/manage-subjects" className={navLinkClass}>
+                  <div className=" items-center gap-3">
                     <div className="w-6 h-6 rounded-md bg-gray-50 flex items-center justify-center">
                       <span className="text-gray-600 text-xs">📚</span>
                     </div>
                     <span className="text-sm">Manage Subjects</span>
                   </div>
-                </NavLink>
-                <NavLink to="/dashboard/manage-classes" className={navLinkClass}>
+                </NavLink> */}
+                <NavLink to="/dashboard/school-info" className={navLinkClass}>
                   <div className="flex items-center gap-3">
                     <div className="w-6 h-6 rounded-md bg-gray-50 flex items-center justify-center">
                       <span className="text-gray-600 text-xs">🏷</span>
                     </div>
-                    <span className="text-sm">Manage Classes</span>
+                    <span className="text-sm">School Info</span>
                   </div>
                 </NavLink>
               </div>

@@ -35,6 +35,7 @@ import BoardResult from '../components/ExamResult/BoardResult';
 import ComputerLab from '../components/ResourceSchool/ComputerLab';
 import Library from '../components/ResourceSchool/Library';
 import Laboratory from '../components/ResourceSchool/Laboratory';
+import SchoolInfo from '../pages/Dashboard/Setting/SchoolInfo';
 
 
 const router = createBrowserRouter([
@@ -182,6 +183,10 @@ const router = createBrowserRouter([
       {
         path: 'view-admissions',
         Component: ViewAdmission,
+      },
+      {
+        path: 'school-info',
+        Component: SchoolInfo,
       },
     ],
   },

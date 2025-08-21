@@ -177,7 +177,7 @@ const AdmitCard = () => {
                 <div className="school-name">চেঁচরীরামপুর বালিকা মাধ্যমিক বিদ্যালয়</div>
                 <div className="exam-info">
                   {selectedExamType} Examination - {selectedExamYear}
-                <p className="border w-max mx-auto px-4 rounded-full">Admit Card</p>
+                  <p className="border w-max mx-auto px-4 rounded-full">Admit Card</p>
                 </div>
               </div>
 
@@ -197,7 +197,15 @@ const AdmitCard = () => {
                   </div>
                   <div className="info-row">
                     <span className="label">শ্রেণি:</span>
-                    <span className="value">{student.dclassName}</span>
+                    <span className="value">
+                      {{
+                        6: 'Six',
+                        7: 'Seven',
+                        8: 'Eight',
+                        9: 'Nine',
+                        10: 'Ten',
+                      }[student.dclassName] || student.dclassName}
+                    </span>
                   </div>
                   <div className="info-row">
                     <span className="label">রোল নং:</span>
@@ -205,7 +213,7 @@ const AdmitCard = () => {
                   </div>
                   <div className="info-row">
                     <span className="label">শাখা:</span>
-                    <span className="value">{student.section}</span>
+                    <span className="value">{student.section || 'N/A'}</span>
                   </div>
                   <div className="info-row">
                     <span className="label">লিঙ্গ:</span>
@@ -409,7 +417,7 @@ const AdmitCard = () => {
                     <p className="text-lg text-gray-700 font-semibold">
                       {selectedExamType} - {selectedExamYear}
                     </p>
-                    <p className='border w-max mx-auto py-1 px-4 rounded-full'>Admit Card</p>
+                    <p className="border w-max mx-auto py-1 px-4 rounded-full">Admit Card</p>
                   </div>
 
                   {/* Content */}
@@ -436,7 +444,13 @@ const AdmitCard = () => {
                       <div className="flex">
                         <span className="font-semibold w-24 text-gray-700">শ্রেণি:</span>
                         <span className="flex-1 border-b border-dotted border-gray-400 text-gray-800">
-                          {student.dclassName}
+                          {{
+                            6: 'Six',
+                            7: 'Seven',
+                            8: 'Eight',
+                            9: 'Nine',
+                            10: 'Ten',
+                          }[student.dclassName] || student.dclassName}
                         </span>
                       </div>
                       <div className="flex">
@@ -448,7 +462,7 @@ const AdmitCard = () => {
                       <div className="flex">
                         <span className="font-semibold w-24 text-gray-700">শাখা:</span>
                         <span className="flex-1 border-b border-dotted border-gray-400 text-gray-800">
-                          {student.section}
+                          {student.section || 'N/A'}
                         </span>
                       </div>
                       <div className="flex">
