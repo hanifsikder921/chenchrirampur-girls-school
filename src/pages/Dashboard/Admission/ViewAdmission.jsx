@@ -77,7 +77,7 @@ const ViewAdmission = () => {
   // Update admission status mutation
   const updateStatusMutation = useMutation({
     mutationFn: async ({ id, status }) => {
-      const response = await axios.patch(`${axios}/admissions/${id}`, { status });
+      const response = await axios.patch(`/admissions/${id}`, { status });
       return response.data;
     },
     onSuccess: () => {
