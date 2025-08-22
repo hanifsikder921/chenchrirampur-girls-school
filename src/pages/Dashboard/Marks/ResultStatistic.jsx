@@ -29,6 +29,7 @@ import {
   Line,
 } from 'recharts';
 import useAxios from '../../../assets/hooks/useAxios';
+import Swal from 'sweetalert2';
 
 const ResultStatistic = () => {
   const axios = useAxios();
@@ -115,7 +116,11 @@ const ResultStatistic = () => {
 
   const handleSearch = () => {
     if (!selectedExamType || !selectedExamYear) {
-      alert('দয়া করে পরীক্ষার ধরণ এবং শিক্ষাবর্ষ নির্বাচন করুন');
+      Swal.fire({
+        title: 'দয়া করে পরীক্ষার ধরণ এবং শিক্ষাবর্ষ নির্বাচন করুন',
+        icon: 'warning',
+        draggable: true,
+      });
       return;
     }
 
@@ -143,7 +148,11 @@ const ResultStatistic = () => {
     } else {
       // নির্দিষ্ট ক্লাসের পরিসংখ্যান
       if (!selectedClass) {
-        alert('দয়া করে শ্রেণি নির্বাচন করুন');
+         Swal.fire({
+           title: 'দয়া করে শ্রেণি নির্বাচন করুন',
+           icon: 'warning',
+           draggable: true,
+         });
         return;
       }
 
@@ -155,7 +164,11 @@ const ResultStatistic = () => {
       );
 
       if (classMarks.length === 0) {
-        alert('কোন ডেটা পাওয়া যায়নি');
+          Swal.fire({
+            title: 'কোন ডেটা পাওয়া যায়নি',
+            icon: 'warning',
+            draggable: true,
+          });
         return;
       }
 

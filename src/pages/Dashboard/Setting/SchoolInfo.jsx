@@ -28,6 +28,8 @@ const SchoolInfo = () => {
   const queryClient = useQueryClient();
   const [schoolLogo, setSchoolLogo] = useState('');
   const [logoPreview, setLogoPreview] = useState('');
+  const [routinPreview, setRoutinPreview] = useState('');
+  const [routinPhoto, setRoutinPhoto] = useState('');
   const [principalPhoto, setPrincipalPhoto] = useState('');
   const [principalPreview, setPrincipalPreview] = useState('');
   const [precidentPhoto, setPrecidentPhoto] = useState('');
@@ -80,11 +82,18 @@ const SchoolInfo = () => {
         setSchoolLogo(imageUrl);
         setLogoPreview(preview);
         setValue('schoolLogo', imageUrl);
-      } else if (type === 'principal') {
+      } 
+      else if (type === 'principal') {
         setPrincipalPhoto(imageUrl);
         setPrincipalPreview(preview);
         setValue('principalPhoto', imageUrl);
-      } else if (type === 'precident') {
+      } 
+      else if (type === 'routin') {
+        setRoutinPhoto(imageUrl);
+        setRoutinPreview(preview);
+        setValue('classRoutin', imageUrl);
+      } 
+      else if (type === 'precident') {
         setPrecidentPhoto(imageUrl);
         setPrecidentPreview(preview);
         setValue('precidentPhoto', imageUrl);
@@ -239,28 +248,29 @@ const SchoolInfo = () => {
               </label>
               <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center hover:border-blue-400 transition-colors">
                 {logoPreview ? (
-                  <div className="relative">
-                    <img
-                      src={logoPreview}
-                      alt="Logo Preview"
-                      className="w-32 h-32 object-cover mx-auto rounded-lg"
-                    />
-                    <div className="absolute top-2 right-2">
-                      <label className="bg-blue-600 text-white p-2 rounded-full cursor-pointer hover:bg-blue-700 transition-colors">
-                        <FaEdit />
-                        <input
-                          type="file"
-                          accept="image/*"
-                          onChange={(e) => handleImageUpload(e, 'logo')}
-                          className="hidden"
-                          disabled={isUploading.logo}
-                        />
-                      </label>
+                  <div className="flex flex-col items-center">
+                    <div className="relative mb-3">
+                      <img
+                        src={logoPreview}
+                        alt="Logo Preview"
+                        className="w-32 h-32 object-contain mx-auto rounded-lg"
+                      />
                     </div>
+                    <label className="bg-blue-600 text-white px-4 py-2 rounded-lg cursor-pointer hover:bg-blue-700 transition-colors flex items-center gap-2">
+                      <FaEdit />
+                      লগো পরিবর্তন করুন
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => handleImageUpload(e, 'logo')}
+                        className="hidden"
+                        disabled={isUploading.logo}
+                      />
+                    </label>
                   </div>
                 ) : (
-                  <label className="cursor-pointer">
-                    <FaUpload className="text-4xl text-gray-400 mx-auto mb-2" />
+                  <label className="cursor-pointer flex flex-col items-center">
+                    <FaUpload className="text-4xl text-gray-400 mb-2" />
                     <p className="text-gray-600">লগো আপলোড করুন</p>
                     <input
                       type="file"
@@ -283,28 +293,29 @@ const SchoolInfo = () => {
               </label>
               <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center hover:border-blue-400 transition-colors">
                 {principalPreview ? (
-                  <div className="relative">
-                    <img
-                      src={principalPreview}
-                      alt="Principal Preview"
-                      className="w-32 h-32 object-cover mx-auto rounded-lg"
-                    />
-                    <div className="absolute top-2 right-2">
-                      <label className="bg-blue-600 text-white p-2 rounded-full cursor-pointer hover:bg-blue-700 transition-colors">
-                        <FaEdit />
-                        <input
-                          type="file"
-                          accept="image/*"
-                          onChange={(e) => handleImageUpload(e, 'principal')}
-                          className="hidden"
-                          disabled={isUploading.principal}
-                        />
-                      </label>
+                  <div className="flex flex-col items-center">
+                    <div className="relative mb-3">
+                      <img
+                        src={principalPreview}
+                        alt="Principal Preview"
+                        className="w-32 h-32 object-cover mx-auto rounded-lg"
+                      />
                     </div>
+                    <label className="bg-blue-600 text-white px-4 py-2 rounded-lg cursor-pointer hover:bg-blue-700 transition-colors flex items-center gap-2">
+                      <FaEdit />
+                      ছবি পরিবর্তন করুন
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => handleImageUpload(e, 'principal')}
+                        className="hidden"
+                        disabled={isUploading.principal}
+                      />
+                    </label>
                   </div>
                 ) : (
-                  <label className="cursor-pointer">
-                    <FaUpload className="text-4xl text-gray-400 mx-auto mb-2" />
+                  <label className="cursor-pointer flex flex-col items-center">
+                    <FaUpload className="text-4xl text-gray-400 mb-2" />
                     <p className="text-gray-600">ছবি আপলোড করুন</p>
                     <input
                       type="file"
@@ -327,28 +338,29 @@ const SchoolInfo = () => {
               </label>
               <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center hover:border-blue-400 transition-colors">
                 {precidentPreview ? (
-                  <div className="relative">
-                    <img
-                      src={precidentPreview}
-                      alt="President Preview"
-                      className="w-32 h-32 object-cover mx-auto rounded-lg"
-                    />
-                    <div className="absolute top-2 right-2">
-                      <label className="bg-blue-600 text-white p-2 rounded-full cursor-pointer hover:bg-blue-700 transition-colors">
-                        <FaEdit />
-                        <input
-                          type="file"
-                          accept="image/*"
-                          onChange={(e) => handleImageUpload(e, 'precident')}
-                          className="hidden"
-                          disabled={isUploading.precident}
-                        />
-                      </label>
+                  <div className="flex flex-col items-center">
+                    <div className="relative mb-3">
+                      <img
+                        src={precidentPreview}
+                        alt="President Preview"
+                        className="w-32 h-32 object-cover mx-auto rounded-lg"
+                      />
                     </div>
+                    <label className="bg-blue-600 text-white px-4 py-2 rounded-lg cursor-pointer hover:bg-blue-700 transition-colors flex items-center gap-2">
+                      <FaEdit />
+                      ছবি পরিবর্তন করুন
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => handleImageUpload(e, 'precident')}
+                        className="hidden"
+                        disabled={isUploading.precident}
+                      />
+                    </label>
                   </div>
                 ) : (
-                  <label className="cursor-pointer">
-                    <FaUpload className="text-4xl text-gray-400 mx-auto mb-2" />
+                  <label className="cursor-pointer flex flex-col items-center">
+                    <FaUpload className="text-4xl text-gray-400 mb-2" />
                     <p className="text-gray-600">ছবি আপলোড করুন</p>
                     <input
                       type="file"
@@ -681,15 +693,54 @@ const SchoolInfo = () => {
             animate={{ y: 0 }}
             className="grid grid-cols-1 md:grid-cols-2 gap-6"
           >
-            <div className="space-y-2">
-              <label className="text-sm font-semibold text-gray-700">ক্লাস রুটিন</label>
-              <textarea
-                {...register('classRoutin')}
-                rows="3"
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-                placeholder="ক্লাস রুটিন"
-              ></textarea>
+       
+            {/* School Logo Upload */}
+            <div className="space-y-4">
+              <label className="flex items-center gap-2 text-lg font-semibold text-gray-700">
+                <FaImage className="text-blue-600" />
+                ক্লাস রুটিন
+              </label>
+              <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center hover:border-blue-400 transition-colors">
+                {routinPreview ? (
+                  <div className="flex flex-col items-center">
+                    <div className="relative mb-3">
+                      <img
+                        src={routinPreview}
+                        alt="routin Preview"
+                        className="w-32 h-32 object-contain mx-auto rounded-lg"
+                      />
+                    </div>
+                    <label className="bg-blue-600 text-white px-4 py-2 rounded-lg cursor-pointer hover:bg-blue-700 transition-colors flex items-center gap-2">
+                      <FaEdit />
+                      রুটিন পরিবর্তন করুন
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => handleImageUpload(e, 'routin')}
+                        className="hidden"
+                        disabled={isUploading.logo}
+                      />
+                    </label>
+                  </div>
+                ) : (
+                  <label className="cursor-pointer flex flex-col items-center">
+                    <FaUpload className="text-4xl text-gray-400 mb-2" />
+                    <p className="text-gray-600">ক্লাস রুটিন আপলোড করুন</p>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) => handleImageUpload(e, 'routin')}
+                      className="hidden"
+                      disabled={isUploading.logo}
+                    />
+                  </label>
+                )}
+                {isUploading.logo && <p className="text-blue-600 mt-2">আপলোড হচ্ছে...</p>}
+              </div>
             </div>
+
+
+
 
             <div className="space-y-2">
               <label className="text-sm font-semibold text-gray-700">স্ক্রোল নোটিশ</label>
