@@ -131,8 +131,8 @@ const SchoolInfo = () => {
       setPrincipalPreview(schoolData.principalPhoto);
       setPrecidentPhoto(schoolData.precidentPhoto);
       setPrecidentPreview(schoolData.precidentPhoto);
-      setRoutinPreview(schoolData.routinPhoto);
-      setRoutinPhoto(schoolData.routinPhoto);
+      setRoutinPhoto(schoolData.classRoutin); 
+      setRoutinPreview(schoolData.classRoutin);
     }
   }, [schoolData, setValue]);
 
@@ -141,12 +141,26 @@ const SchoolInfo = () => {
   const onSubmit = (data) => {
     console.log('Form Data Before Processing:', data);
 
+    // const formattedData = {
+    //   ...data,
+    //   grades: data.grades ? data.grades.split(',').map((grade) => grade.trim()) : [],
+    //   facilities: data.facilities
+    //     ? data.facilities.split(',').map((facility) => facility.trim())
+    //     : [],
+    //   socialMedia: {
+    //     facebook: data.facebook || '',
+    //     twitter: data.twitter || '',
+    //     linkedin: data.linkedin || '',
+    //   },
+    //   schoolLogo: schoolLogo || data.schoolLogo || '',
+    //   principalPhoto: principalPhoto || data.principalPhoto || '',
+    //   precidentPhoto: precidentPhoto || data.precidentPhoto || '',
+    //   routinPhoto: routinPhoto || data.routinPhoto || '',
+    // };
     const formattedData = {
       ...data,
-      grades: data.grades ? data.grades.split(',').map((grade) => grade.trim()) : [],
-      facilities: data.facilities
-        ? data.facilities.split(',').map((facility) => facility.trim())
-        : [],
+      grades: data.grades ? data.grades.split(',').map((g) => g.trim()) : [],
+      facilities: data.facilities ? data.facilities.split(',').map((f) => f.trim()) : [],
       socialMedia: {
         facebook: data.facebook || '',
         twitter: data.twitter || '',
@@ -155,15 +169,16 @@ const SchoolInfo = () => {
       schoolLogo: schoolLogo || data.schoolLogo || '',
       principalPhoto: principalPhoto || data.principalPhoto || '',
       precidentPhoto: precidentPhoto || data.precidentPhoto || '',
-      routinPhoto: routinPhoto || data.routinPhoto || '',
+      classRoutin: routinPhoto || data.classRoutin || '', // ✅ এখানে classRoutin পাঠাও
     };
 
-    // Remove individual social media fields from main object
-    delete formattedData.facebook;
-    delete formattedData.twitter;
-    delete formattedData.linkedin;
 
-    console.log('Formatted Data:', formattedData);
+    // // Remove individual social media fields from main object
+    // delete formattedData.facebook;
+    // delete formattedData.twitter;
+    // delete formattedData.linkedin;
+
+   
 
     updateMutation.mutate(formattedData);
   };
@@ -247,7 +262,7 @@ const SchoolInfo = () => {
             <div className="space-y-4">
               <label className="flex items-center gap-2 text-lg font-semibold text-gray-700">
                 <FaImage className="text-blue-600" />
-                স্কুল লগো
+                স্কুল লোগো
               </label>
               <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center hover:border-blue-400 transition-colors">
                 {logoPreview ? (
@@ -261,7 +276,7 @@ const SchoolInfo = () => {
                     </div>
                     <label className="bg-blue-600 text-white px-4 py-2 rounded-lg cursor-pointer hover:bg-blue-700 transition-colors flex items-center gap-2">
                       <FaEdit />
-                      লগো পরিবর্তন করুন
+                      লোগো পরিবর্তন করুন
                       <input
                         type="file"
                         accept="image/*"

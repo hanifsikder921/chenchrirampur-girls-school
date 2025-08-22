@@ -1,49 +1,36 @@
 import React from 'react';
+import useAxios from '../../assets/hooks/useAxios';
+import { useQuery } from '@tanstack/react-query';
 
-const galleryImages = [
-  {
-    id: 1,
-    imgUrl: 'https://i.ibb.co.com/gLXrpPfG/banner1.jpg',
-    title: 'ছবি ১',
-  },
-  {
-    id: 2,
-    imgUrl: 'https://i.ibb.co.com/G3BQj02p/accident.jpg',
-    title: 'ছবি ২',
-  },
-  {
-    id: 3,
-    imgUrl: 'https://i.ibb.co.com/JWrR4Yz5/banner2.jpg',
-    title: 'ছবি ৩',
-  },
-  {
-    id: 4,
-    imgUrl: 'https://i.ibb.co.com/RTVfyJKM/TREE.jpg',
-    title: 'ছবি ৪',
-  },
-  {
-    id: 5,
-    imgUrl: 'https://i.ibb.co.com/pjSpWhyZ/sss.jpg',
-    title: 'ছবি ৫',
-  },
-  {
-    id: 6,
-    imgUrl: 'https://i.ibb.co.com/yD68mGL/beayty.jpg',
-    title: 'ছবি ৬',
-  },
-];
+
 
 const ImageGallery = () => {
+
+   const axios = useAxios();
+
+   // Fetch Images
+   const { data } = useQuery({
+     queryKey: ['imageGallery'],
+     queryFn: async () => {
+       const res = await axios.get('/imageMedia');
+       return res.data;
+     },
+     retry: 1,
+   });
+
+   const gallery = data || [];
+     const galleryImages = gallery.filter((img) => img.gallery === true);
+
   return (
     <div className="w-full border border-gray-300 overflow-hidden my-6">
       <h2 className="text-base font-bold bg-green-800 text-white p-2">ইমেজ গ্যালারি</h2>
 
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4 p-4">
-        {galleryImages.map((image) => (
+        {galleryImages.slice(0, 6).map((image) => (
           <div key={image.id} className="w-full group">
             <div className="relative pb-[100%] h-0 overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
               <img
-                src={image.imgUrl}
+                src={image.imageUrl}
                 alt={image.title || `Gallery image ${image.id}`}
                 className="absolute top-0 left-0  w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
               />

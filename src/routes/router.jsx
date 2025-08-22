@@ -37,6 +37,7 @@ import Library from '../components/ResourceSchool/Library';
 import Laboratory from '../components/ResourceSchool/Laboratory';
 import SchoolInfo from '../pages/Dashboard/Setting/SchoolInfo';
 import AcademicCard from '../pages/Dashboard/Marks/AcademicCard';
+import MediaManagement from '../pages/Dashboard/Setting/MediaManagement';
 
 
 const router = createBrowserRouter([
@@ -99,7 +100,7 @@ const router = createBrowserRouter([
       {
         path: '/laboratory',
         Component: Laboratory,
-      }
+      },
     ],
   },
 
@@ -182,8 +183,8 @@ const router = createBrowserRouter([
         Component: SeatPlan,
       },
       {
-        path:'acdemic-card',
-        Component:AcademicCard,
+        path: 'acdemic-card',
+        Component: AcademicCard,
       },
       {
         path: 'view-admissions',
@@ -192,6 +193,10 @@ const router = createBrowserRouter([
       {
         path: 'school-info',
         Component: SchoolInfo,
+      },
+      {
+        path: 'media-management',
+        Component:MediaManagement
       },
     ],
   },

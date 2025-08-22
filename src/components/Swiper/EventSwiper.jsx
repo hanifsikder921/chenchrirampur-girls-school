@@ -3,24 +3,28 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import { Pagination, Navigation, Autoplay } from 'swiper/modules';
+import useAxios from '../../assets/hooks/useAxios';
+import { useQuery } from '@tanstack/react-query';
 
 export default function EventSwiper() {
-  const slides = [
-    {
-      img: 'https://i.ibb.co.com/vxBYFXgk/banner3.jpg',
-      title: 'জলবায়ু পরিবর্তন ও সচেতনতামূলক বিতর্ক প্রতিযোগিতা',
+  const axios = useAxios();
+
+  // Fetch Images
+  const { data } = useQuery({
+    queryKey: ['feturedImage'],
+    queryFn: async () => {
+      const res = await axios.get('/imageMedia');
+      return res.data;
     },
-    {
-      img: 'https://i.ibb.co.com/JWrR4Yz5/banner2.jpg',
-      title: 'জলবায়ু পরিবর্তন ও সচেতনতামূলক কর্মসূচি',
-    },
-    { img: 'https://i.ibb.co.com/G3BQj02p/accident.jpg', title: 'মাইলস্টোনে বিমান দুর্ঘটনায় নিহতদের জন্য দোয়া প্রার্থনা' },
-    { img: 'https://i.ibb.co.com/gLXrpPfG/banner1.jpg', title: 'দৈনিক সমাবেশ' },
-  ];
+    retry: 1,
+  });
+
+  const feturedImage = data || [];
+
+  const showcaseBanner = feturedImage.filter((fetured) => fetured.feature === true);
 
   return (
     <Swiper
-      // pagination={{ type: 'creative' }}
       navigation={true}
       loop={true}
       autoplay={{
@@ -30,9 +34,13 @@ export default function EventSwiper() {
       modules={[Pagination, Navigation, Autoplay]}
       className="mySwiper w-full "
     >
-      {slides.map((slide, index) => (
-        <SwiperSlide key={index} className="relative">
-          <img src={slide.img} alt={slide.title} className="w-full md:h-96 h-48 object-cover" />
+      {showcaseBanner.map((slide) => (
+        <SwiperSlide key={slide._id} className="relative">
+          <img
+            src={slide.imageUrl}
+            alt={slide.title}
+            className="w-full md:h-96 h-48 object-cover"
+          />
           <div className="absolute inset-0 flex items-center justify-center bg-black/30">
             <h2 className="text-white md:text-2xl text-sm text-center line-clamp-2 md:font-bold font-semibold absolute bottom-0 md:py-6 py-2 bg-black/30 w-full ">
               {slide.title}
