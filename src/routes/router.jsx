@@ -41,6 +41,8 @@ import MediaManagement from '../pages/Dashboard/Setting/MediaManagement';
 import NoticePage from '../components/NoticeBord/NoticePage';
 import PublicNotice from '../components/NoticeBord/PublicNotice';
 import StudentProfile from '../components/StudentCorner/StudentProfile';
+import ClassReport from '../components/ReportPage/ClassReport';
+import StudentReport from '../components/ReportPage/StudentReport';
 
 
 const router = createBrowserRouter([
@@ -105,13 +107,13 @@ const router = createBrowserRouter([
         Component: Laboratory,
       },
       {
-        path:'/public-notice',
-        Component:PublicNotice
+        path: '/public-notice',
+        Component: PublicNotice,
       },
       {
-        path:'student-profile',
-        Component:StudentProfile
-      }
+        path: 'student-profile',
+        Component: StudentProfile,
+      },
     ],
   },
 
@@ -207,11 +209,19 @@ const router = createBrowserRouter([
       },
       {
         path: 'media-management',
-        Component:MediaManagement
+        Component: MediaManagement,
       },
       {
-        path:'notice-management',
-        Component:NoticePage
+        path: 'notice-management',
+        Component: NoticePage,
+      },
+      {
+        path: 'class-report',
+        Component: ClassReport,
+      },
+      {
+        path:'student-report',
+        Component:StudentReport
       }
     ],
   },
