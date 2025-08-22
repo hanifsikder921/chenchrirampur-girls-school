@@ -1,97 +1,165 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import {
-  FaFacebookF,
-  FaTwitter,
-  FaLinkedinIn,
-  FaPhoneAlt,
-  FaEnvelope,
-  FaMapMarkerAlt,
-} from 'react-icons/fa';
+  FiMapPin,
+  FiPhone,
+  FiMail,
+  FiGlobe,
+  FiFacebook,
+  FiTwitter,
+  FiYoutube,
+  FiLoader,
+  FiBookOpen,
+} from 'react-icons/fi';
+import { useSchoolInfo } from '../../assets/context/SchoolInfoProvider';
 
 const Footer = () => {
+  const { schoolInfo, isLoading, isError } = useSchoolInfo();
+
+  if (isLoading) {
+    return (
+      <div className="bg-gray-800 text-white py-8">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col items-center justify-center py-8">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mb-4">
+              <FiLoader className="h-6 w-6 mx-auto text-white" />
+            </div>
+            <p className="text-gray-300">Loading school information...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (isError || !schoolInfo) {
+    return (
+      <div className="bg-gray-800 text-white py-8">
+        <div className="container mx-auto px-4 text-center">
+          <p className="text-gray-300">Error loading school information</p>
+        </div>
+      </div>
+    );
+  }
+
+  const currentYear = new Date().getFullYear();
+
   return (
-    <footer className="bg-green-800 text-white">
-      <div className="w-11/12 mx-auto py-10 grid grid-cols-1 md:grid-cols-3 gap-8">
-        {/* School Info */}
-        <div>
-          <h2 className="text-2xl font-bold mb-4">Chenchri School</h2>
-          <p className="text-gray-200 text-sm leading-relaxed">
-            Dedicated to providing quality education and shaping the future of our students with
-            discipline, knowledge, and innovation.
-          </p>
-        </div>
+    <motion.footer
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+      className="bg-gray-800 text-white"
+    >
+      {/* Main Footer Content */}
+      <div className="container mx-auto px-4 py-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {/* School Information */}
+          <div className="lg:col-span-2">
+            <div className="flex items-center mb-4">
+              {schoolInfo.schoolLogo && (
+                <img
+                  src={schoolInfo.schoolLogo}
+                  alt={schoolInfo.schoolName_en}
+                  className="h-12 w-12 mr-3 object-contain"
+                />
+              )}
+              <div>
+                <h3 className="text-xl font-bold">{schoolInfo.schoolName_en}</h3>
+                <p className="text-gray-300">{schoolInfo.schoolName_bn}</p>
+                স্থাপিতঃ {schoolInfo.establishedYear} ইং
+              </div>
+            </div>
 
-        {/* Quick Links */}
-        <div>
-          <h2 className="text-xl font-semibold mb-4">Quick Links</h2>
-          <ul className="space-y-2 text-gray-200 text-sm">
-            <li>
-              <a href="/" className="hover:text-white transition">
-                Home
-              </a>
-            </li>
-            <li>
-              <a href="/about" className="hover:text-white transition">
-                About Us
-              </a>
-            </li>
-            <li>
-              <a href="/admission" className="hover:text-white transition">
-                Admission
-              </a>
-            </li>
-            <li>
-              <a href="/contact" className="hover:text-white transition">
-                Contact
-              </a>
-            </li>
-          </ul>
-        </div>
+            <div className="flex items-center text-gray-300 mb-2">
+              <FiMapPin className="mr-2 flex-shrink-0" />
+              <span>{schoolInfo.address}</span>
+            </div>
+            <div className="flex items-center text-gray-300">
+              <div className="flex flex-col">
+                <span className="flex items-center gap-1">
+                  <FiBookOpen className="mr-2 flex-shrink-0" /> ইআইআইএনঃ {schoolInfo.EIIN}
+                </span>
+                <span className="flex items-center gap-1">
+                  <FiBookOpen className="mr-2 flex-shrink-0" /> এমপিও কোডঃ {schoolInfo.MPOCode}
+                </span>
+              </div>
+            </div>
+          </div>
 
-        {/* Contact Info */}
-        <div>
-          <h2 className="text-xl font-semibold mb-4">Contact Us</h2>
-          <ul className="space-y-2 text-gray-200 text-sm">
-            <li className="flex items-center gap-2">
-              <FaMapMarkerAlt /> Kaikhali, Kathalia, Jhalokathi
-            </li>
-            <li className="flex items-center gap-2">
-              <FaPhoneAlt /> +880 1234-567890
-            </li>
-            <li className="flex items-center gap-2">
-              <FaEnvelope /> info@chenchrischool.edu.bd
-            </li>
-          </ul>
+          {/* Contact Information */}
+          <div>
+            <h4 className="text-lg font-semibold mb-4 border-b border-gray-700 pb-2">
+              Contact Info
+            </h4>
+            <div className="space-y-3">
+              <div className="flex items-center text-gray-300">
+                <FiPhone className="mr-2 flex-shrink-0" />
+                <span>{schoolInfo.phone}</span>
+              </div>
+              <div className="flex items-center text-gray-300">
+                <FiMail className="mr-2 flex-shrink-0" />
+                <span>{schoolInfo.email}</span>
+              </div>
+              <div className="flex items-center text-gray-300">
+                <FiGlobe className="mr-2 flex-shrink-0" />
+                <span>{schoolInfo.website}</span>
+              </div>
+            </div>
+          </div>
 
-          {/* Social Links */}
-          <div className="flex gap-4 mt-4">
-            <a
-              href="https://facebook.com"
-              className="p-2 bg-white/20 rounded-full hover:bg-white/30 transition"
-            >
-              <FaFacebookF />
-            </a>
-            <a
-              href="https://twitter.com"
-              className="p-2 bg-white/20 rounded-full hover:bg-white/30 transition"
-            >
-              <FaTwitter />
-            </a>
-            <a
-              href="https://linkedin.com"
-              className="p-2 bg-white/20 rounded-full hover:bg-white/30 transition"
-            >
-              <FaLinkedinIn />
-            </a>
+          {/* Leadership & Social Media */}
+          <div>
+            <h4 className="text-lg font-semibold mb-4 border-b border-gray-700 pb-2">Leadership</h4>
+            <div className="space-y-3 mb-6">
+              <div>
+                <p className="font-medium">প্রধান শিক্ষক</p>
+                <p className="text-gray-300">{schoolInfo.principal}</p>
+              </div>
+              <div>
+                <p className="font-medium">সভাপতি</p>
+                <p className="text-gray-300">{schoolInfo.precident}</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
       {/* Bottom Bar */}
-      <div className="bg-green-900 text-gray-300 text-center py-3 text-sm">
-        © {new Date().getFullYear()} Chenchri School. All Rights Reserved.
+      <div className="border-t border-gray-700">
+        <div className="container mx-auto px-4 py-6">
+          <div className="flex flex-col md:flex-row justify-between items-center">
+            <p className="text-gray-300 text-sm mb-4 md:mb-0">
+              © {currentYear} {schoolInfo.schoolName_en}. All rights reserved.
+            </p>
+            <div className="flex items-center text-gray-300 text-sm justify-center flex-col">
+              <div className="flex space-x-4">
+                <a
+                  href={schoolInfo?.socialMedia?.facebook}
+                  target="_blank"
+                  className="text-gray-300 hover:text-white transition-colors"
+                >
+                  <FiFacebook className="h-6 w-6" />
+                </a>
+                <a
+                  href={schoolInfo?.socialMedia?.twitter}
+                  target="_blank"
+                  className="text-gray-300 hover:text-white transition-colors"
+                >
+                  <FiTwitter className="h-6 w-6" />
+                </a>
+                <a
+                  href={schoolInfo?.socialMedia?.youtube}
+                  target="_blank"
+                  className="text-gray-300 hover:text-white transition-colors"
+                >
+                  <FiYoutube className="h-6 w-6" />
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </footer>
+    </motion.footer>
   );
 };
 

@@ -50,7 +50,7 @@ const Navbar = () => {
     {
       title: 'শিক্ষার্থী',
       submenu: [
-        { title: 'শিক্ষার্থী প্রোফাইল', bg: 'bg-indigo-50', target: '/students/profile' },
+        { title: 'শিক্ষার্থী প্রোফাইল', bg: 'bg-indigo-50', target: '/student-profile' },
         // { title: 'অ্যাটেন্ডেন্স', bg: 'bg-indigo-100', target: '/students/attendance' },
         // { title: 'রেজাল্ট কার্ড', bg: 'bg-indigo-50', target: '/students/result-card' },
         // { title: 'শিক্ষাবৃত্তি', bg: 'bg-indigo-100', target: '/students/scholarship' },

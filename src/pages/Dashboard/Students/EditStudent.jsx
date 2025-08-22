@@ -179,6 +179,19 @@ const EditStudent = () => {
                 {errors.dob && <p className="text-red-500 text-sm">{errors.dob.message}</p>}
               </div>
 
+              {/* Bitrh Registration Number */}
+              <div className="space-y-2">
+                <label className="block text-sm font-semibold text-gray-700">
+                  Birth Registration Number <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="number"
+                  {...register('uid', { required: 'Birth Registration Number required' })}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-gray-50 focus:bg-white"
+                />
+                {errors.uid && <p className="text-red-500 text-sm">{errors.uid.message}</p>}
+              </div>
+
               {/* Blood Group */}
               <div className="space-y-2">
                 <label className="block text-sm font-semibold text-gray-700">Blood Group</label>
@@ -322,10 +335,10 @@ const EditStudent = () => {
                 <input
                   {...register('academicYear')}
                   placeholder="Enter academic year"
-                  minLength={4} maxLength={4}
+                  minLength={4}
+                  maxLength={4}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 bg-gray-50 focus:bg-white"
                 />
-              
               </div>
             </div>
           </div>

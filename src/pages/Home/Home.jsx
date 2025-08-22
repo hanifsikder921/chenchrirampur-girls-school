@@ -7,6 +7,8 @@ import NoticeBord from '../../components/NoticeBord/NoticeBord';
 import VideoGallery from './../../components/Video/VideoGallery';
 import ImageGallery from '../../components/ImageGallery/ImageGallery';
 import ImportentMenu from '../../components/ImportantMenu/ImportentMenu';
+import SchoolMap from '../../components/SchoolMap/SchoolMap';
+
 
 const Home = () => {
   return (
@@ -18,6 +20,8 @@ const Home = () => {
         <VideoGallery />
         <ImageGallery/>
         <ImportentMenu/>
+       <div className='h-5'></div>
+        <SchoolMap/>
       </div>
     </div>
   );

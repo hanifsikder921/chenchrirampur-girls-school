@@ -196,6 +196,19 @@ const AddStudents = () => {
                   {errors.dob && <p className={errorClass}>⚠️ {errors.dob.message}</p>}
                 </div>
 
+                {/* Birth Regisrtation Number */}
+                <div className="space-y-2">
+                  <label className={labelClass}>
+                    Birth Registration Number <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="number"
+                    {...register('uid', { required: 'Birth Registration Number required' })}
+                    className={inputClass}
+                  />
+                  {errors.uid && <p className={errorClass}>⚠️ {errors.uid.message}</p>}
+                </div>
+
                 {/* Blood Group */}
                 <div className="space-y-2">
                   <label className={labelClass}>Blood Group</label>
@@ -516,13 +529,13 @@ const AddStudents = () => {
 
               <div className="space-y-4">
                 <label className={labelClass}>
-                  Upload Student Photo <span className="text-red-500">*</span>
+                  Upload Student Photo 
                 </label>
 
                 {/* Upload Area */}
                 <div className="relative">
                   <input
-                    {...register('image', { required: true })}
+                    {...register('image')}
                     type="file"
                     onChange={handleImageUpload}
                     className="hidden"
@@ -541,7 +554,7 @@ const AddStudents = () => {
                   </label>
                 </div>
 
-                {errors.image && <p className={errorClass}>⚠️ Student photo is required</p>}
+                {/* {errors.image && <p className={errorClass}>⚠️ Student photo is required</p>} */}
 
                 {/* Image Preview */}
                 {imagePreview && (

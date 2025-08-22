@@ -26,13 +26,6 @@ const icons = [
   course,
 ];
 
-const makeSlug = (text) => {
-  return text
-    .replace(/\s+/g, '-')
-    .replace(/[^\u0980-\u09FF\w-]/g, '')
-    .toLowerCase();
-};
-
 const ImportentMenu = () => {
   return (
     <div className="grid md:grid-cols-2 gap-3">
@@ -51,17 +44,17 @@ const ImportentMenu = () => {
                 </div>
                 {/* Links */}
                 <div>
-                  <ul className="space-y-1 text-sm">
-                    {menu.links.map((link, i) => (
-                      <li key={i} className="flex items-center gap-2">
+                  <ul className="space-y-2 text-sm">
+                    {menu.submenu.map((sub, i) => (
+                      <li key={i} className={`flex items-center gap-2 ${sub.bg}`}>
                         <span className="text-green-800">
                           <FaPlay size={8} />
                         </span>
                         <Link
-                          to={`/${makeSlug(menu.title)}/${makeSlug(link)}`}
+                          to={sub.target}
                           className="text-gray-700 hover:font-semibold hover:underline"
                         >
-                          {link}
+                          {sub.title}
                         </Link>
                       </li>
                     ))}

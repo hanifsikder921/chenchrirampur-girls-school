@@ -40,6 +40,7 @@ import AcademicCard from '../pages/Dashboard/Marks/AcademicCard';
 import MediaManagement from '../pages/Dashboard/Setting/MediaManagement';
 import NoticePage from '../components/NoticeBord/NoticePage';
 import PublicNotice from '../components/NoticeBord/PublicNotice';
+import StudentProfile from '../components/StudentCorner/StudentProfile';
 
 
 const router = createBrowserRouter([
@@ -106,6 +107,10 @@ const router = createBrowserRouter([
       {
         path:'/public-notice',
         Component:PublicNotice
+      },
+      {
+        path:'student-profile',
+        Component:StudentProfile
       }
     ],
   },

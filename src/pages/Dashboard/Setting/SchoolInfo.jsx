@@ -12,7 +12,7 @@ import {
   FaUpload,
   FaFacebook,
   FaTwitter,
-  FaLinkedin,
+  FaYoutube,
   FaEdit,
   FaSave,
   FaImage,
@@ -82,18 +82,15 @@ const SchoolInfo = () => {
         setSchoolLogo(imageUrl);
         setLogoPreview(preview);
         setValue('schoolLogo', imageUrl);
-      } 
-      else if (type === 'principal') {
+      } else if (type === 'principal') {
         setPrincipalPhoto(imageUrl);
         setPrincipalPreview(preview);
         setValue('principalPhoto', imageUrl);
-      } 
-      else if (type === 'routin') {
+      } else if (type === 'routin') {
         setRoutinPhoto(imageUrl);
         setRoutinPreview(preview);
         setValue('classRoutin', imageUrl);
-      } 
-      else if (type === 'precident') {
+      } else if (type === 'precident') {
         setPrecidentPhoto(imageUrl);
         setPrecidentPreview(preview);
         setValue('precidentPhoto', imageUrl);
@@ -131,7 +128,7 @@ const SchoolInfo = () => {
       setPrincipalPreview(schoolData.principalPhoto);
       setPrecidentPhoto(schoolData.precidentPhoto);
       setPrecidentPreview(schoolData.precidentPhoto);
-      setRoutinPhoto(schoolData.classRoutin); 
+      setRoutinPhoto(schoolData.classRoutin);
       setRoutinPreview(schoolData.classRoutin);
     }
   }, [schoolData, setValue]);
@@ -172,13 +169,10 @@ const SchoolInfo = () => {
       classRoutin: routinPhoto || data.classRoutin || '', // ✅ এখানে classRoutin পাঠাও
     };
 
-
     // // Remove individual social media fields from main object
     // delete formattedData.facebook;
     // delete formattedData.twitter;
     // delete formattedData.linkedin;
-
-   
 
     updateMutation.mutate(formattedData);
   };
@@ -713,7 +707,6 @@ const SchoolInfo = () => {
                 placeholder="স্কুলের বর্ননা এখানে দিন"
               ></textarea>
             </div>
-            
           </motion.div>
 
           {/* Class Routine and Notice */}
@@ -722,7 +715,6 @@ const SchoolInfo = () => {
             animate={{ y: 0 }}
             className="grid grid-cols-1 md:grid-cols-2 gap-6"
           >
-       
             {/* School Logo Upload */}
             <div className="space-y-4">
               <label className="flex items-center gap-2 text-lg font-semibold text-gray-700">
@@ -768,9 +760,6 @@ const SchoolInfo = () => {
               </div>
             </div>
 
-
-
-
             <div className="space-y-2">
               <label className="text-sm font-semibold text-gray-700">স্ক্রোল নোটিশ</label>
               <textarea
@@ -814,13 +803,13 @@ const SchoolInfo = () => {
 
               <div className="space-y-2">
                 <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
-                  <FaLinkedin className="text-blue-700" />
-                  লিংকডইন
+                  <FaYoutube className="text-blue-700" />
+                  ইউটিউব
                 </label>
                 <input
-                  {...register('linkedin')}
+                  {...register('youtube')}
                   className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-                  placeholder="লিংকডইন প্রোফাইল লিংক"
+                  placeholder="ইউটিউব প্রোফাইল লিংক"
                 />
               </div>
             </div>
