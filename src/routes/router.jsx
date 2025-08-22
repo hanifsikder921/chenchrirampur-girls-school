@@ -36,6 +36,7 @@ import ComputerLab from '../components/ResourceSchool/ComputerLab';
 import Library from '../components/ResourceSchool/Library';
 import Laboratory from '../components/ResourceSchool/Laboratory';
 import SchoolInfo from '../pages/Dashboard/Setting/SchoolInfo';
+import AcademicCard from '../pages/Dashboard/Marks/AcademicCard';
 
 
 const router = createBrowserRouter([
@@ -179,6 +180,10 @@ const router = createBrowserRouter([
       {
         path: 'seat-plan',
         Component: SeatPlan,
+      },
+      {
+        path:'acdemic-card',
+        Component:AcademicCard,
       },
       {
         path: 'view-admissions',

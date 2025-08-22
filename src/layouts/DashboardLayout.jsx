@@ -11,7 +11,7 @@ import {
   FaRegAddressCard,
   FaSearchLocation,
 } from 'react-icons/fa';
-import { FaUsers } from 'react-icons/fa6';
+import { FaUsers} from 'react-icons/fa6';
 import { IoIosLogOut } from 'react-icons/io';
 import { motion } from 'framer-motion';
 import useAuth from './../assets/hooks/useAuth';
@@ -303,6 +303,18 @@ const DashboardLayout = () => {
                     <span className="text-sm">Add Exam Marks</span>
                   </div>
                 </NavLink>
+
+                <NavLink to="/dashboard/acdemic-card" className={navLinkClass}>
+                  <div className="flex items-center gap-3">
+                    <div className="w-6 h-6 rounded-md bg-orange-50 flex items-center justify-center">
+                      <span className="text-green-800 text-xs">
+                        <FaRegAddressCard />
+                      </span>
+                    </div>
+                    <span className="text-sm">Result Card</span>
+                  </div>
+                </NavLink>
+
                 <NavLink to="/dashboard/view-marks" className={navLinkClass}>
                   <div className="flex items-center gap-3">
                     <div className="w-6 h-6 rounded-md bg-orange-50 flex items-center justify-center">
