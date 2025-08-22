@@ -15,8 +15,12 @@ import { useQuery } from '@tanstack/react-query';
 import { GrUserFemale } from 'react-icons/gr';
 import { GiNurseMale } from 'react-icons/gi';
 import { LiaLayerGroupSolid, LiaBirthdayCakeSolid } from 'react-icons/lia';
+import { useSchoolInfo } from '../../assets/context/SchoolInfoProvider';
 
 const SchoolResult = () => {
+  const { schoolInfo } = useSchoolInfo();
+
+
   const modalContentRef = React.useRef();
   const axios = useAxios();
   const [selectedClass, setSelectedClass] = useState('');
@@ -287,7 +291,7 @@ const SchoolResult = () => {
               {/* Header Section */}
               <div className="md:bg-gradient-to-r md:from-blue-600 md:to-indigo-700 text-white md:p-6 text-center">
                 <h2 className="text-2xl font-bold mb-2 text-black md:text-white">
-                  চেঁচরীরামপুর বালিকা মাধ্যমিক বিদ্যালয়
+                  {schoolInfo?.schoolName_bn}
                 </h2>
                 <p className="opacity-90 text-gray-800 md:text-white">একাডেমিক রিপোর্ট কার্ড</p>
                 <div className="mt-2 flex justify-center">
@@ -444,7 +448,6 @@ const SchoolResult = () => {
                   </table>
                 </div>
               </div>
-
             </motion.div>
           )}
         </AnimatePresence>

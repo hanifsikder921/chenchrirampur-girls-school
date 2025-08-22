@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { useSchoolInfo } from '../../assets/context/SchoolInfoProvider';
 
 const ComputerLab = () => {
   const [activeTab, setActiveTab] = useState('overview');
+    const { schoolInfo, isLoading, isError } = useSchoolInfo();
+    
+      if (isLoading) return <p>Loading...</p>;
+      if (isError) return <p>Error loading school info</p>;
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -30,10 +35,14 @@ const ComputerLab = () => {
     { name: 'চেয়ার', quantity: 33, icon: '🪑' },
     { name: 'টেবিল', quantity: 17, icon: '🪟' },
     { name: 'প্রিন্টার', quantity: 1, icon: '🖨️' },
-    { name: 'স্ক্যানার', quantity: 1, icon: '📷' },
+    { name: 'স্ক্যানার', quantity: 1, icon: '🏿' },
     { name: 'সিসি ক্যামেরা', quantity: 1, icon: '📹' },
     { name: 'আলমারি', quantity: 1, icon: '🗄️' },
     { name: '৫৫ ইঞ্চি মনিটর', quantity: 1, icon: '📺' },
+    { name: 'রাউটার', quantity: 1, icon: '🛜' },
+    { name: 'রাউটার অনু', quantity: 1, icon: '📡 ' },
+    { name: 'ওয়েব ক্যাম', quantity: 1, icon: '📷' },
+    { name: 'অগ্নিনির্বাপক', quantity: 1, icon: '💥' },
   ];
 
   return (
@@ -52,7 +61,7 @@ const ComputerLab = () => {
             transition={{ delay: 0.2, duration: 0.5 }}
             className="text-4xl font-bold mb-2"
           >
-            চেঁচরীরামপুর বালিকা মাধ্যমিক বিদ্যালয়
+            {schoolInfo?.schoolName_bn}
           </motion.h1>
           <motion.h2
             initial={{ opacity: 0, y: -10 }}
@@ -121,19 +130,19 @@ const ComputerLab = () => {
                   <ul className="space-y-2">
                     <li className="flex justify-between border-b border-blue-100 py-2">
                       <span className="font-medium">বিদ্যালয়ের নাম:</span>
-                      <span>চেঁচরীরামপুর বালিকা মাধ্যমিক বিদ্যালয়</span>
+                      <span>{schoolInfo?.schoolName_bn}</span>
                     </li>
                     <li className="flex justify-between border-b border-blue-100 py-2">
                       <span className="font-medium">ইউআইআইএন:</span>
-                      <span>১০১৭৩৬</span>
+                      <span>{schoolInfo?.EIIN}</span>
                     </li>
                     <li className="flex justify-between border-b border-blue-100 py-2">
                       <span className="font-medium">প্রতিষ্ঠার সন:</span>
-                      <span>১৯৭৩ ইং</span>
+                      <span>{schoolInfo?.establishedYear} ইং</span>
                     </li>
                     <li className="flex justify-between border-b border-blue-100 py-2">
                       <span className="font-medium">এমপিও কোড:</span>
-                      <span>৫৩০২০৪১৩০৩</span>
+                      <span>{schoolInfo.MPOCode}</span>
                     </li>
                   </ul>
                 </div>
@@ -288,7 +297,7 @@ const ComputerLab = () => {
 
         {/* Footer */}
         <div className="bg-gray-800 text-white text-center p-4">
-          <p>চেঁচরীরামপুর বালিকা মাধ্যমিক বিদ্যালয় © {new Date().getFullYear()}</p>
+          <p>{schoolInfo?.schoolName_bn} © {new Date().getFullYear()}</p>
           <p>ডিজিটাল বাংলাদেশ বিনির্মাণে অগ্রগামী</p>
         </div>
       </motion.div>

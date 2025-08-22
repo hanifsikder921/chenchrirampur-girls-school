@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { useSchoolInfo } from '../../assets/context/SchoolInfoProvider';
 
 const Library = () => {
   const [activeTab, setActiveTab] = useState('overview');
   const [selectedItem, setSelectedItem] = useState(null);
+     const { schoolInfo, isLoading, isError } = useSchoolInfo();
+
+     if (isLoading) return <p>Loading...</p>;
+     if (isError) return <p>Error loading school info</p>;
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -110,7 +115,7 @@ const Library = () => {
             transition={{ delay: 0.2, duration: 0.5 }}
             className="text-4xl font-bold mb-2"
           >
-            চেঁচরীরামপুর বালিকা মাধ্যমিক বিদ্যালয়
+            {schoolInfo.schoolName_bn}
           </motion.h1>
           <motion.h2
             initial={{ opacity: 0, y: -10 }}
@@ -179,19 +184,19 @@ const Library = () => {
                   <ul className="space-y-2">
                     <li className="flex justify-between border-b border-green-100 py-2">
                       <span className="font-medium">বিদ্যালয়ের নাম:</span>
-                      <span>চেঁচরীরামপুর বালিকা মাধ্যমিক বিদ্যালয়</span>
+                      <span>{schoolInfo?.schoolName_bn}</span>
                     </li>
                     <li className="flex justify-between border-b border-green-100 py-2">
                       <span className="font-medium">ইউআইআইএন:</span>
-                      <span>১০১৭৩৬</span>
+                      <span>{schoolInfo?.EIIN}</span>
                     </li>
                     <li className="flex justify-between border-b border-green-100 py-2">
                       <span className="font-medium">প্রতিষ্ঠার সন:</span>
-                      <span>১৯৭৩ ইং</span>
+                      <span>{schoolInfo?.establishedYear} ইং</span>
                     </li>
                     <li className="flex justify-between border-b border-green-100 py-2">
                       <span className="font-medium">এমপিও কোড:</span>
-                      <span>৫৩০২০৪১৩০৩</span>
+                      <span>{schoolInfo?.MPOCode}</span>
                     </li>
                   </ul>
                 </div>
@@ -220,11 +225,11 @@ const Library = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <p className="font-medium">ইমেইল:</p>
-                    <p>chenchrirampurgirls@gmail.com</p>
+                    <p>{schoolInfo?.email}</p>
                   </div>
                   <div>
-                    <p className="font-medium">ওয়েবসাইট:</p>
-                    <p>https://crghs.edu.bd/</p>
+                    <p className="font-medium">মোবাইল</p>
+                    <p>{schoolInfo?.phone}</p>
                   </div>
                 </div>
               </motion.div>
@@ -434,7 +439,7 @@ const Library = () => {
 
         {/* Footer */}
         <div className="bg-gray-800 text-white text-center p-4">
-          <p>চেঁচরীরামপুর বালিকা মাধ্যমিক বিদ্যালয় © {new Date().getFullYear()}</p>
+          <p>{schoolInfo?.schoolName_bn} © {new Date().getFullYear()}</p>
           <p>জ্ঞানার্জনে আমাদের অঙ্গীকার</p>
         </div>
       </motion.div>

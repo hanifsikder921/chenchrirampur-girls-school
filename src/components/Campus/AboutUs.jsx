@@ -1,8 +1,13 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { FaSchool, FaMapMarkerAlt, FaCalendarAlt } from 'react-icons/fa';
+import { useSchoolInfo } from '../../assets/context/SchoolInfoProvider';
 
 const AboutUs = () => {
+    const { schoolInfo, isLoading, isError } = useSchoolInfo();
+  
+    if (isLoading) return <p>Loading...</p>;
+    if (isError) return <p>Error loading school info</p>;
   return (
     <div className="w-11/12 mx-auto py-10">
       {/* শিরোনাম */}
@@ -25,23 +30,19 @@ const AboutUs = () => {
         {/* স্কুলের নাম */}
         <div className="flex items-center mb-5">
           <FaSchool className="text-blue-600 text-2xl mr-3" />
-          <h2 className="text-xl md:text-2xl font-semibold">
-            চেঁচরীরামপুর বালিকা মাধ্যমিক বিদ্যালয়
-          </h2>
+          <h2 className="text-xl md:text-2xl font-semibold">{schoolInfo?.schoolName_bn}</h2>
         </div>
 
         {/* ঠিকানা */}
         <div className="flex items-start mb-4">
           <FaMapMarkerAlt className="text-green-600 text-xl mr-3 mt-1" />
-          <p className="text-base md:text-lg">
-            ঠিকানা: কৈখালী বাজার, উপজেলা: কাঠালিয়া, জেলা: ঝালকাঠি।
-          </p>
+          <p className="text-base md:text-lg">{schoolInfo?.address}</p>
         </div>
 
         {/* প্রতিষ্ঠা সাল */}
         <div className="flex items-start mb-4">
           <FaCalendarAlt className="text-orange-500 text-xl mr-3 mt-1" />
-          <p className="text-base md:text-lg">স্থাপিত: ১৯৭৩ ইং</p>
+          <p className="text-base md:text-lg">স্থাপিত: {schoolInfo?.establishedYear} ইং</p>
         </div>
 
         {/* বর্ণনা */}
@@ -51,12 +52,7 @@ const AboutUs = () => {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3, duration: 1 }}
         >
-          চেঁচরীরামপুর বালিকা মাধ্যমিক বিদ্যালয় ঝালকাঠি জেলার কাঠালিয়া উপজেলায় অবস্থিত একটি
-          সুপ্রাচীন ও স্বনামধন্য শিক্ষা প্রতিষ্ঠান। ১৯৭৩ সালে প্রতিষ্ঠিত হওয়ার পর থেকে এই বিদ্যালয়
-          এলাকার নারীদের শিক্ষার প্রসারে গুরুত্বপূর্ণ ভূমিকা পালন করে আসছে। মানসম্মত শিক্ষা,
-          সুশৃঙ্খল পরিবেশ এবং আধুনিক পাঠদানের মাধ্যমে বিদ্যালয়টি শিক্ষার্থীদের শুধু পাঠ্যজ্ঞান নয়,
-          নৈতিক মূল্যবোধ ও সামাজিক দায়বদ্ধতায়ও গড়ে তুলছে। কৈখালী বাজারের প্রাণকেন্দ্রে অবস্থিত হওয়ায়
-          এটি সহজে যাতায়াতযোগ্য এবং এলাকার অন্যতম গুরুত্বপূর্ণ শিক্ষাঙ্গন।
+          {schoolInfo?.aboutUs}
         </motion.p>
       </motion.div>
     </div>

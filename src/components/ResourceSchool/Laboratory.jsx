@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { useSchoolInfo } from '../../assets/context/SchoolInfoProvider';
 
 const ScienceLab = () => {
   const [activeTab, setActiveTab] = useState('physics');
   const [selectedItem, setSelectedItem] = useState(null);
+    const { schoolInfo, isLoading, isError } = useSchoolInfo();
+    
+      if (isLoading) return <p>Loading...</p>;
+      if (isError) return <p>Error loading school info</p>;
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -35,7 +40,7 @@ const ScienceLab = () => {
         comment: 'দৈর্ঘ্য পরিমাপের জন্য',
         icon: '📏',
       },
-      { id: 2, name: 'জু গজ', quantity: '০১ টি', comment: 'ছোট দৈর্ঘ্য পরিমাপ', icon: '📐' },
+      { id: 2, name: 'স্ক্র গজ', quantity: '০১ টি', comment: 'ছোট দৈর্ঘ্য পরিমাপ', icon: '📐' },
       {
         id: 3,
         name: 'আয়তকার কাঁচ ফলক',
@@ -141,7 +146,7 @@ const ScienceLab = () => {
             transition={{ delay: 0.2, duration: 0.5 }}
             className="text-4xl font-bold mb-2"
           >
-            চেঁচরীরামপুর বালিকা মাধ্যমিক বিদ্যালয়
+            {schoolInfo?.schoolName_bn}
           </motion.h1>
           <motion.h2
             initial={{ opacity: 0, y: -10 }}
@@ -338,7 +343,7 @@ const ScienceLab = () => {
 
         {/* Footer */}
         <div className="bg-gray-800 text-white text-center p-4">
-          <p>চেঁচরীরামপুর বালিকা মাধ্যমিক বিদ্যালয় © {new Date().getFullYear()}</p>
+          <p>{schoolInfo?.schoolName_bn} © {new Date().getFullYear()}</p>
           <p>বিজ্ঞান চর্চায় আমরা অগ্রগামী</p>
         </div>
       </motion.div>

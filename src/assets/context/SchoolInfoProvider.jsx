@@ -2,10 +2,8 @@ import { createContext, useContext } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import useAxios from '../hooks/useAxios';
 
-// Context তৈরি
 const SchoolInfoContext = createContext(null);
 
-// Provider
 export const SchoolInfoProvider = ({ children }) => {
   const axios = useAxios();
 

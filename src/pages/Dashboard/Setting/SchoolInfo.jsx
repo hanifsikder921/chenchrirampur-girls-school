@@ -131,6 +131,8 @@ const SchoolInfo = () => {
       setPrincipalPreview(schoolData.principalPhoto);
       setPrecidentPhoto(schoolData.precidentPhoto);
       setPrecidentPreview(schoolData.precidentPhoto);
+      setRoutinPreview(schoolData.routinPhoto);
+      setRoutinPhoto(schoolData.routinPhoto);
     }
   }, [schoolData, setValue]);
 
@@ -153,6 +155,7 @@ const SchoolInfo = () => {
       schoolLogo: schoolLogo || data.schoolLogo || '',
       principalPhoto: principalPhoto || data.principalPhoto || '',
       precidentPhoto: precidentPhoto || data.precidentPhoto || '',
+      routinPhoto: routinPhoto || data.routinPhoto || '',
     };
 
     // Remove individual social media fields from main object
@@ -576,12 +579,12 @@ const SchoolInfo = () => {
             <div className="space-y-2">
               <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
                 <FaUser className="text-blue-600" />
-                সহকারী প্রধান
+                সভাপতি
               </label>
               <input
-                {...register('assistantHead')}
+                {...register('precident')}
                 className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-                placeholder="সহকারী প্রধানের নাম"
+                placeholder="সভাপতির নাম"
               />
             </div>
           </motion.div>
@@ -685,6 +688,17 @@ const SchoolInfo = () => {
                 placeholder="স্কুলের দৃষ্টিভঙ্গি"
               ></textarea>
             </div>
+
+            <div className="space-y-2">
+              <label className="text-sm font-semibold text-gray-700">আমাদের সম্পর্কে</label>
+              <textarea
+                {...register('aboutUs')}
+                rows="4"
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                placeholder="স্কুলের বর্ননা এখানে দিন"
+              ></textarea>
+            </div>
+            
           </motion.div>
 
           {/* Class Routine and Notice */}
