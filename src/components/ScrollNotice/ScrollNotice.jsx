@@ -19,7 +19,7 @@ export default function ScrollText() {
       <motion.div
         animate={{ x: isHover ? 0 : ['100%', '-100%'] }}
         transition={{
-          duration: 10,
+          duration: 20,
           repeat: Infinity,
           ease: 'linear',
         }}

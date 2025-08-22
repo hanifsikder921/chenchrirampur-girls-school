@@ -38,6 +38,8 @@ import Laboratory from '../components/ResourceSchool/Laboratory';
 import SchoolInfo from '../pages/Dashboard/Setting/SchoolInfo';
 import AcademicCard from '../pages/Dashboard/Marks/AcademicCard';
 import MediaManagement from '../pages/Dashboard/Setting/MediaManagement';
+import NoticePage from '../components/NoticeBord/NoticePage';
+import PublicNotice from '../components/NoticeBord/PublicNotice';
 
 
 const router = createBrowserRouter([
@@ -101,6 +103,10 @@ const router = createBrowserRouter([
         path: '/laboratory',
         Component: Laboratory,
       },
+      {
+        path:'/public-notice',
+        Component:PublicNotice
+      }
     ],
   },
 
@@ -198,6 +204,10 @@ const router = createBrowserRouter([
         path: 'media-management',
         Component:MediaManagement
       },
+      {
+        path:'notice-management',
+        Component:NoticePage
+      }
     ],
   },
 

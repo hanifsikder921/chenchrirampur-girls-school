@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { IoHome, IoChevronDown, IoMenu } from 'react-icons/io5';
 import { NavLink } from 'react-router';
+import useAuth from '../../assets/hooks/useAuth';
 
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { user } = useAuth();
 
   const menuItems = [
     {
@@ -27,14 +29,12 @@ const Navbar = () => {
       submenu: [
         { title: 'ষষ্ঠ থেকে দশম শ্রেণী', bg: 'bg-purple-50', target: '/sixtoTen' },
         { title: 'ক্লাস রুটিন', bg: 'bg-purple-100', target: '/class-routine' },
-
-       
       ],
     },
     {
       title: 'ব্যাবস্থাপনা',
       submenu: [
-        { title: 'অ্যাডমিন প্যানেল', bg: 'bg-red-50', target: '/login' },
+        { title: 'অ্যাডমিন প্যানেল', bg: 'bg-red-50', target: user ? '/dashboard/overview' : '/login' },
         { title: ' শিক্ষক ও কর্মচারী ', bg: 'bg-yellow-100', target: '/staff' },
       ],
     },

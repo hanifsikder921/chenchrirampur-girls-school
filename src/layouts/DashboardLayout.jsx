@@ -410,12 +410,21 @@ const DashboardLayout = () => {
                     <span className="text-sm">Media Mangement</span>
                   </div>
                 </NavLink>
+
                 <NavLink to="/dashboard/school-info" className={navLinkClass}>
                   <div className="flex items-center gap-3">
                     <div className="w-6 h-6 rounded-md bg-gray-50 flex items-center justify-center">
                       <span className="text-gray-600 text-xs">ℹ️</span>
                     </div>
                     <span className="text-sm">School Info Update</span>
+                  </div>
+                </NavLink>
+                <NavLink to="/dashboard/notice-management" className={navLinkClass}>
+                  <div className="flex items-center gap-3">
+                    <div className="w-6 h-6 rounded-md bg-gray-50 flex items-center justify-center">
+                      <span className="text-gray-600 text-xs">📢</span>
+                    </div>
+                    <span className="text-sm">Notice Management</span>
                   </div>
                 </NavLink>
               </div>
