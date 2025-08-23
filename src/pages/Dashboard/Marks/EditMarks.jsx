@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
-import SubjectJSON from '../../../assets/link/subjectName.json';
+// import SubjectJSON from '../../../assets/link/subjectName.json';
 import useAxios from '../../../assets/hooks/useAxios';
 import { useNavigate, useParams } from 'react-router';
 import { useQuery } from '@tanstack/react-query';
@@ -11,6 +11,17 @@ const MySwal = withReactContent(Swal);
 
 const EditMarks = () => {
   const axios = useAxios();
+
+
+  const { data: subjectData } = useQuery({
+    queryKey: ['subjectJson'],
+    queryFn: async () => {
+      const res = await axios.get('/subjectJson');
+      return res.data;
+    },
+  });
+
+  const SubjectJSON = subjectData?.[0];
   const { id } = useParams();
   const navigate = useNavigate();
   const { register, handleSubmit, setValue, watch } = useForm();
@@ -134,7 +145,8 @@ const EditMarks = () => {
     const commonSubjects = SubjectJSON.classes[selectedClass]?.common_subjects || [];
 
     // Get group subjects for the selected class
-    const groupSubjects = SubjectJSON.classes[selectedClass]?.groups?.[selectedGroup]?.subjects || [];
+    const groupSubjects =
+      SubjectJSON.classes[selectedClass]?.groups?.[selectedGroup]?.subjects || [];
 
     // Find the mark for the additional subject
     let additionalMark = 100; // default
@@ -178,7 +190,7 @@ const EditMarks = () => {
 
       // Load class data first
       handleClassChange(existingMarks.classesName);
-      
+
       // If there's a group, load group data
       if (existingMarks.group) {
         setTimeout(() => {
@@ -438,7 +450,10 @@ const EditMarks = () => {
                   <tbody className="bg-white divide-y divide-gray-200">
                     {marksData.map((sub, index) => {
                       const obtained = watchMarks[sub.name] || 0;
-                      const grade = obtained && obtained <= sub.mark ? getGrade(Number(obtained), sub.mark) : '';
+                      const grade =
+                        obtained && obtained <= sub.mark
+                          ? getGrade(Number(obtained), sub.mark)
+                          : '';
                       return (
                         <tr key={index} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
                           <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
@@ -454,17 +469,11 @@ const EditMarks = () => {
                                 className="w-24 px-2 py-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                                 {...register(sub.name)}
                                 onChange={(e) =>
-                                  handleMarksChange(
-                                    sub.name,
-                                    sub.mark,
-                                    Number(e.target.value)
-                                  )
+                                  handleMarksChange(sub.name, sub.mark, Number(e.target.value))
                                 }
                               />
                               {warnings[sub.name] && (
-                                <span className="text-xs text-red-600">
-                                  {warnings[sub.name]}
-                                </span>
+                                <span className="text-xs text-red-600">{warnings[sub.name]}</span>
                               )}
                             </div>
                           </td>

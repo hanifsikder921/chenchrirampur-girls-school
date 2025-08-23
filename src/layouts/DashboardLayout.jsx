@@ -33,7 +33,7 @@ const DashboardLayout = () => {
   const navigate = useNavigate();
   const { schoolInfo } = useSchoolInfo();
 
-  console.log(role);
+
 
   const { data } = useQuery({
     queryKey: ['allteachers'],
@@ -56,9 +56,7 @@ const DashboardLayout = () => {
     return teacherEmail === userEmail;
   });
 
-  console.log('Teacher Info:', teachersInfo);
-  console.log('User Email:', user?.email);
-  console.log('All Teachers:', teachers);
+
 
   if (roleLoading) {
     return <Loading />;

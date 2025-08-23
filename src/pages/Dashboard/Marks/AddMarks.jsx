@@ -2,13 +2,25 @@ import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
-import SubjectJSON from '../../../assets/link/subjectName.json';
+// import SubjectJSON from '../../../assets/link/subjectName.json';
 import useAxios from '../../../assets/hooks/useAxios';
+import { useQuery } from '@tanstack/react-query';
 
 const MySwal = withReactContent(Swal);
 
 const AddMarks = () => {
   const axios = useAxios();
+
+  const { data: subjectData } = useQuery({
+    queryKey: ['subjectJson'],
+    queryFn: async () => {
+      const res = await axios.get('/subjectJson');
+      return res.data;
+    },
+  });
+
+  const SubjectJSON = subjectData?.[0];
+
   const { register, handleSubmit, setValue, watch, reset } = useForm();
   const [selectedClass, setSelectedClass] = useState('');
   const [selectedGroup, setSelectedGroup] = useState('');
@@ -458,8 +470,8 @@ const AddMarks = () => {
             )}
 
             {/* Additional Subject for Science */}
-            {selectedClass === '9' && selectedGroup === 'science' && (
-              <div className="md:col-span-2">
+            {(selectedClass === '9' || selectedClass === '10') && selectedGroup === 'science' && (
+              <div className="md:col-span-1">
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Additional Subject
                 </label>
@@ -469,7 +481,7 @@ const AddMarks = () => {
                   onChange={(e) => handleAdditionalSubjectChange(e.target.value)}
                 >
                   <option value="">Select Additional Subject</option>
-                  {SubjectJSON.classes['9']?.additional?.subjects?.map((sub, i) => (
+                  {SubjectJSON.classes[selectedClass]?.additional?.subjects?.map((sub, i) => (
                     <option key={i} value={sub.name}>
                       {sub.name}
                     </option>
