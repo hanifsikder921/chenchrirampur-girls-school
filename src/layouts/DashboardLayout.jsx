@@ -507,7 +507,7 @@ const DashboardLayout = () => {
                     <FaChevronDown className="text-gray-400 group-hover:text-yellow-600 transition-all duration-300 group-open:rotate-180" />
                   </summary>
                   <div className="ml-4 mt-2 space-y-1 border-l-2 border-gray-100 pl-4">
-                    <NavLink to="/dashboard/class-report" className={navLinkClass}>
+                    <NavLink to="/dashboard/assign-mark" className={navLinkClass}>
                       <div className="flex items-center gap-3">
                         <div className="w-6 h-6 rounded-md bg-yellow-50 flex items-center justify-center">
                           <span className="text-yellow-600 text-xs">🖊️</span>

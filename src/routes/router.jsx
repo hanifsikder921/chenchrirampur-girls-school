@@ -46,6 +46,7 @@ import StudentReport from '../components/ReportPage/StudentReport';
 import Forbidden from '../components/Forbidden/Forbidden';
 import SubjectMangement from '../pages/Dashboard/Setting/SubjectMangement';
 import TeachirProfile from '../pages/Dashboard/TeachirProfile';
+import AssignMark from '../pages/Dashboard/TeacherRole/AssignMark';
 
 
 const router = createBrowserRouter([
@@ -237,6 +238,10 @@ const router = createBrowserRouter([
       {
         path:'techer-profile',
         Component:TeachirProfile
+      },
+      {
+        path:'assign-mark',
+        Component:AssignMark
       }
     ],
   },
