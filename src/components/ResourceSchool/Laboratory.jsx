@@ -5,10 +5,10 @@ import { useSchoolInfo } from '../../assets/context/SchoolInfoProvider';
 const ScienceLab = () => {
   const [activeTab, setActiveTab] = useState('physics');
   const [selectedItem, setSelectedItem] = useState(null);
-    const { schoolInfo, isLoading, isError } = useSchoolInfo();
-    
-      if (isLoading) return <p>Loading...</p>;
-      if (isError) return <p>Error loading school info</p>;
+  const { schoolInfo, isLoading, isError } = useSchoolInfo();
+
+  if (isLoading) return <p>Loading...</p>;
+  if (isError) return <p>Error loading school info</p>;
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -343,7 +343,9 @@ const ScienceLab = () => {
 
         {/* Footer */}
         <div className="bg-gray-800 text-white text-center p-4">
-          <p>{schoolInfo?.schoolName_bn} © {new Date().getFullYear()}</p>
+          <p>
+            {schoolInfo?.schoolName_bn} © {new Date().getFullYear()}
+          </p>
           <p>বিজ্ঞান চর্চায় আমরা অগ্রগামী</p>
         </div>
       </motion.div>

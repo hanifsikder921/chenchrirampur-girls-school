@@ -1,9 +1,13 @@
 import React from 'react';
 import { Link, Outlet } from 'react-router';
 import { IoArrowBack } from 'react-icons/io5';
-import AuthImage from '../../src/assets/images/logo.png';
+import { useSchoolInfo } from '../assets/context/SchoolInfoProvider';
 
 const AuthenticationLayout = () => {
+  const { schoolInfo, isLoading, isError } = useSchoolInfo();
+  if (isLoading) return <p>Loading...</p>;
+  if (isError) return <p>Error loading school info</p>;
+
   return (
     <div className="min-h-screen  flex flex-col">
       {/* Header with back button */}
@@ -27,16 +31,14 @@ const AuthenticationLayout = () => {
             <section className="hidden md:flex md:w-1/2  bg-green-800 items-center justify-center p-8">
               <div className="max-w-md">
                 <img
-                  src={AuthImage}
+                  src={schoolInfo?.schoolLogo}
                   alt="Authentication"
                   className=" w-25 mx-auto h-auto object-contain"
                 />
                 <h2 className="text-white text-2xl font-bold mt-6 text-center">
-                  চেঁচরীরামপুর বালিকা মাধ্যমিক বিদ্যালয়
+                  {schoolInfo?.schoolName_bn}
                 </h2>
-                <p className="text-green-100 mt-2 text-center">
-                  
-                </p>
+                <p className="text-green-100 mt-2 text-center"></p>
               </div>
             </section>
             {/* Form section */}
@@ -50,7 +52,7 @@ const AuthenticationLayout = () => {
       {/* Footer */}
       <footer className="bg-white py-4 border-t">
         <div className="container mx-auto px-4 text-center text-gray-500 text-sm">
-          © {new Date().getFullYear()} chenchri Rampur girls school. All rights reserved.
+          © {new Date().getFullYear()} {schoolInfo?.schoolName_en}. All rights reserved.
         </div>
       </footer>
     </div>

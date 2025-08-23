@@ -43,6 +43,8 @@ import PublicNotice from '../components/NoticeBord/PublicNotice';
 import StudentProfile from '../components/StudentCorner/StudentProfile';
 import ClassReport from '../components/ReportPage/ClassReport';
 import StudentReport from '../components/ReportPage/StudentReport';
+import Forbidden from '../components/Forbidden/Forbidden';
+import SubjectMangement from '../pages/Dashboard/Setting/SubjectMangement';
 
 
 const router = createBrowserRouter([
@@ -220,8 +222,16 @@ const router = createBrowserRouter([
         Component: ClassReport,
       },
       {
-        path:'student-report',
-        Component:StudentReport
+        path: 'student-report',
+        Component: StudentReport,
+      },
+      {
+        path: 'forbidden',
+        Component:Forbidden
+      },
+      {
+        path:'subject-management',
+        Component:SubjectMangement
       }
     ],
   },

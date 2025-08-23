@@ -47,10 +47,10 @@ const AddMarks = () => {
         });
       }
     } catch (error) {
-      setStudentName('')
-      setStudentFatherName('')
-      setStudentMotherName('')
-      setStudentdob('')
+      setStudentName('');
+      setStudentFatherName('');
+      setStudentMotherName('');
+      setStudentdob('');
     } finally {
       setIsLoadingName(false);
     }
@@ -123,8 +123,11 @@ const AddMarks = () => {
     setWarnings({});
     setRollNumber('');
     setStudentName('');
+
     if (cls === '6' || cls === '7' || cls === '8') {
-      setMarksData(SubjectJSON.classes.common_6_7_8_subjects);
+      // For classes 6, 7, 8 - get subjects directly
+      const classSubjects = SubjectJSON.classes[cls]?.subjects || [];
+      setMarksData(classSubjects);
     } else if (cls === '9' || cls === '10') {
       setMarksData([]); // wait for group selection
     }
@@ -132,35 +135,50 @@ const AddMarks = () => {
 
   const handleGroupChange = (grp) => {
     setSelectedGroup(grp);
-    if (grp === 'science') {
-      setAdditionalSubject('');
-      setMarksData([
-        ...SubjectJSON.classes.common_9_10_subjects,
-        ...SubjectJSON.classes['9'].groups.science.subjects,
-      ]);
-    } else if (grp === 'humanities') {
-      setAdditionalSubject('Agriculture Studies');
-      setMarksData([
-        ...SubjectJSON.classes.common_9_10_subjects,
-        ...SubjectJSON.classes['9'].groups.humanities.subjects,
-        { name: 'Agriculture Studies', mark: 100 },
-      ]);
-    } else if (grp === 'business_studies') {
-      setAdditionalSubject('Agriculture Studies');
-      setMarksData([
-        ...SubjectJSON.classes.common_9_10_subjects,
-        ...SubjectJSON.classes['9'].groups.business_studies.subjects,
-        { name: 'Agriculture Studies', mark: 100 },
-      ]);
+
+    if (selectedClass === '9' || selectedClass === '10') {
+      // Get common subjects directly
+      const commonSubjects = SubjectJSON.classes[selectedClass]?.common_subjects || [];
+
+      // Get group subjects for the selected class
+      const groupSubjects = SubjectJSON.classes[selectedClass]?.groups?.[grp]?.subjects || [];
+
+      if (grp === 'science') {
+        setAdditionalSubject('');
+        setMarksData([...commonSubjects, ...groupSubjects]);
+      } else if (grp === 'humanities' || grp === 'business_studies') {
+        setAdditionalSubject('Agriculture Studies');
+        setMarksData([
+          ...commonSubjects,
+          ...groupSubjects,
+          { name: 'Agriculture Studies', mark: 100 },
+        ]);
+      }
     }
   };
 
   const handleAdditionalSubjectChange = (subj) => {
     setAdditionalSubject(subj);
-    setMarksData((prev) => [
-      ...prev,
-      { name: subj, mark: subj === 'Agriculture Studies' ? 100 : 100 },
-    ]);
+
+    // Get common subjects directly
+    const commonSubjects = SubjectJSON.classes[selectedClass]?.common_subjects || [];
+
+    // Get group subjects for the selected class
+    const groupSubjects =
+      SubjectJSON.classes[selectedClass]?.groups?.[selectedGroup]?.subjects || [];
+
+    // Find the mark for the additional subject
+    let additionalMark = 100; // default
+    if (SubjectJSON.classes['9']?.additional?.subjects) {
+      const foundSubject = SubjectJSON.classes['9'].additional.subjects.find(
+        (s) => s.name === subj
+      );
+      if (foundSubject) {
+        additionalMark = foundSubject.mark;
+      }
+    }
+
+    setMarksData([...commonSubjects, ...groupSubjects, { name: subj, mark: additionalMark }]);
   };
 
   const handleMarksChange = (subjectName, fullMark, value) => {
@@ -208,7 +226,7 @@ const AddMarks = () => {
       roll: rollNumber,
       studentName,
       fatherName: studentFatherName,
-      motherName:studentMotherName,
+      motherName: studentMotherName,
       dob: studentdob,
       subjects: result,
       cgpa: calculateCGPA(),
@@ -359,7 +377,9 @@ const AddMarks = () => {
             )}
             {selectedClass && (
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Date Of Birth</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Date Of Birth
+                </label>
                 <div className="relative">
                   <input
                     type="text"
@@ -380,7 +400,7 @@ const AddMarks = () => {
             {/* ======================Student Father name */}
             {selectedClass && (
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Faher Name</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Father Name</label>
                 <div className="relative">
                   <input
                     type="text"
@@ -401,13 +421,13 @@ const AddMarks = () => {
             {/* ======================Student Mother name */}
             {selectedClass && (
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Mother Name Name</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Mother Name</label>
                 <div className="relative">
                   <input
                     type="text"
                     className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm bg-gray-100 cursor-not-allowed focus:outline-none"
                     value={studentMotherName}
-                    placeholder={isLoadingName ? 'Loading...' : 'Auto-filled Mother Nmae'}
+                    placeholder={isLoadingName ? 'Loading...' : 'Auto-filled Mother Name'}
                     disabled
                     readOnly
                   />
@@ -419,7 +439,6 @@ const AddMarks = () => {
                 </div>
               </div>
             )}
-            
 
             {/* Group Selection for Class 9 & 10 */}
             {(selectedClass === '9' || selectedClass === '10') && (
@@ -439,7 +458,7 @@ const AddMarks = () => {
             )}
 
             {/* Additional Subject for Science */}
-            {selectedGroup === 'science' && (
+            {selectedClass === '9' && selectedGroup === 'science' && (
               <div className="md:col-span-2">
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Additional Subject
@@ -450,11 +469,11 @@ const AddMarks = () => {
                   onChange={(e) => handleAdditionalSubjectChange(e.target.value)}
                 >
                   <option value="">Select Additional Subject</option>
-                  {SubjectJSON.classes['9'].additional.subjects.map((sub, i) => (
+                  {SubjectJSON.classes['9']?.additional?.subjects?.map((sub, i) => (
                     <option key={i} value={sub.name}>
                       {sub.name}
                     </option>
-                  ))}
+                  )) || []}
                 </select>
               </div>
             )}
@@ -544,7 +563,7 @@ const AddMarks = () => {
                                     : grade === 'C'
                                     ? 'bg-orange-50 text-orange-700'
                                     : grade === 'D'
-                                    ? 'bg-purple-50 text-purple-700'
+                                    ? 'bg-purple-50 text-purple-70'
                                     : 'bg-red-100 text-red-800'
                                 }`}
                               >

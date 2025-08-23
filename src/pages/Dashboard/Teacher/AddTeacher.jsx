@@ -66,6 +66,8 @@ const AddTeacher = () => {
     'N/A',
   ];
 
+    const roles = ['employee', 'teacher', 'admin'];
+
   const handleImageUpload = async (e) => {
     const image = e.target.files[0];
     const formData = new FormData();
@@ -245,7 +247,7 @@ const AddTeacher = () => {
                 <h2 className="text-xl font-bold text-gray-800">Professional Information</h2>
               </div>
 
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* Designation */}
                 <div className="space-y-2">
                   <label className={labelClass}>Designation</label>
@@ -281,6 +283,33 @@ const AddTeacher = () => {
                     placeholder="Enter index / staff ID"
                     className={inputClass}
                   />
+                </div>
+
+                {/* Email ID */}
+                <div className="space-y-2">
+                  <label className="block text-sm font-semibold text-gray-700">Email</label>
+                  <input
+                    {...register('email')}
+                    placeholder="Enter Email Address"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-gray-50 focus:bg-white"
+                  />
+                </div>
+
+                {/* Role */}
+                <div className="space-y-2 md:col-span-2">
+                  <label className="block text-sm font-semibold text-gray-700">
+                    Select Role <span className="text-red-500 text-sm">(select Carefully)</span>
+                  </label>
+                  <select
+                    {...register('role')}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-gray-50 focus:bg-white"
+                  >
+                    {roles.map((status) => (
+                      <option key={status} value={status}>
+                        {status.charAt(0).toUpperCase() + status.slice(1)}
+                      </option>
+                    ))}
+                  </select>
                 </div>
               </div>
             </div>

@@ -97,6 +97,7 @@ const EditTeacher = () => {
   ];
   const genders = ['Male', 'Female', 'Other'];
   const statuses = ['active', 'inactive'];
+  const roles = ['employee', 'teacher','admin'];
 
   if (isTeacherLoading) {
     return (
@@ -250,7 +251,6 @@ const EditTeacher = () => {
                   ))}
                 </select>
               </div>
-
               {/* Subject */}
               <div className="space-y-2">
                 <label className="block text-sm font-semibold text-gray-700">Subject</label>
@@ -260,7 +260,6 @@ const EditTeacher = () => {
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-gray-50 focus:bg-white"
                 />
               </div>
-
               {/* Index No */}
               <div className="space-y-2">
                 <label className="block text-sm font-semibold text-gray-700">Index Number</label>
@@ -270,7 +269,15 @@ const EditTeacher = () => {
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-gray-50 focus:bg-white"
                 />
               </div>
-
+              {/* Email ID */}
+              <div className="space-y-2">
+                <label className="block text-sm font-semibold text-gray-700">Email</label>
+                <input
+                  {...register('email')}
+                  placeholder="Enter Email Address"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-gray-50 focus:bg-white"
+                />
+              </div>
               {/* Status */}
               <div className="space-y-2">
                 <label className="block text-sm font-semibold text-gray-700">
@@ -281,6 +288,22 @@ const EditTeacher = () => {
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-gray-50 focus:bg-white"
                 >
                   {statuses.map((status) => (
+                    <option key={status} value={status}>
+                      {status.charAt(0).toUpperCase() + status.slice(1)}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              {/* Role */}
+              <div className="space-y-2">
+                <label className="block text-sm font-semibold text-gray-700">
+                  Select Role <span className='text-red-500 text-sm'>(select Carefully)</span>
+                </label>
+                <select
+                  {...register('role')}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-gray-50 focus:bg-white"
+                >
+                  {roles.map((status) => (
                     <option key={status} value={status}>
                       {status.charAt(0).toUpperCase() + status.slice(1)}
                     </option>

@@ -23,9 +23,9 @@ const EditMarks = () => {
   const [examYear, setExamYear] = useState('2025');
   const [rollNumber, setRollNumber] = useState('');
   const [studentName, setStudentName] = useState('');
-   const [studentFatherName, setStudentFatherName] = useState('');
-    const [studentMotherName, setStudentMotherName] = useState('');
-    const [studentdob, setStudentdob] = useState('');  
+  const [studentFatherName, setStudentFatherName] = useState('');
+  const [studentMotherName, setStudentMotherName] = useState('');
+  const [studentdob, setStudentdob] = useState('');
 
   // Fetch existing marks
   const { data: existingMarks, isLoading } = useQuery({
@@ -73,9 +73,9 @@ const EditMarks = () => {
     let failCount = 0;
     const points = marksData
       .map((sub) => {
-        const obtained = Number(watchMarks[sub.subject] || 0);
-        if (obtained > sub.fullMark) return null;
-        const grade = getGrade(obtained, sub.fullMark);
+        const obtained = Number(watchMarks[sub.name] || 0);
+        if (obtained > sub.mark) return null;
+        const grade = getGrade(obtained, sub.mark);
         if (grade === 'F') failCount += 1;
         return getGradePoint(grade);
       })
@@ -93,41 +93,61 @@ const EditMarks = () => {
     setSelectedGroup('');
     setAdditionalSubject('');
     setWarnings({});
+
     if (cls === '6' || cls === '7' || cls === '8') {
-      setMarksData(SubjectJSON.classes.common_6_7_8_subjects);
+      // For classes 6, 7, 8 - get subjects directly
+      const classSubjects = SubjectJSON.classes[cls]?.subjects || [];
+      setMarksData(classSubjects);
     } else if (cls === '9' || cls === '10') {
-      setMarksData([]);
+      setMarksData([]); // wait for group selection
     }
   };
 
   const handleGroupChange = (grp) => {
     setSelectedGroup(grp);
-    if (grp === 'science') {
-      setAdditionalSubject('');
-      setMarksData([
-        ...SubjectJSON.classes.common_9_10_subjects,
-        ...SubjectJSON.classes['9'].groups.science.subjects,
-      ]);
-    } else if (grp === 'humanities') {
-      setAdditionalSubject('Agriculture Studies');
-      setMarksData([
-        ...SubjectJSON.classes.common_9_10_subjects,
-        ...SubjectJSON.classes['9'].groups.humanities.subjects,
-        { subject: 'Agriculture Studies', fullMark: 100 },
-      ]);
-    } else if (grp === 'business_studies') {
-      setAdditionalSubject('Agriculture Studies');
-      setMarksData([
-        ...SubjectJSON.classes.common_9_10_subjects,
-        ...SubjectJSON.classes['9'].groups.business_studies.subjects,
-        { subject: 'Agriculture Studies', fullMark: 100 },
-      ]);
+
+    if (selectedClass === '9' || selectedClass === '10') {
+      // Get common subjects directly
+      const commonSubjects = SubjectJSON.classes[selectedClass]?.common_subjects || [];
+
+      // Get group subjects for the selected class
+      const groupSubjects = SubjectJSON.classes[selectedClass]?.groups?.[grp]?.subjects || [];
+
+      if (grp === 'science') {
+        setAdditionalSubject('');
+        setMarksData([...commonSubjects, ...groupSubjects]);
+      } else if (grp === 'humanities' || grp === 'business_studies') {
+        setAdditionalSubject('Agriculture Studies');
+        setMarksData([
+          ...commonSubjects,
+          ...groupSubjects,
+          { name: 'Agriculture Studies', mark: 100 },
+        ]);
+      }
     }
   };
 
   const handleAdditionalSubjectChange = (subj) => {
     setAdditionalSubject(subj);
-    setMarksData((prev) => [...prev, { subject: subj, fullMark: 100 }]);
+
+    // Get common subjects directly
+    const commonSubjects = SubjectJSON.classes[selectedClass]?.common_subjects || [];
+
+    // Get group subjects for the selected class
+    const groupSubjects = SubjectJSON.classes[selectedClass]?.groups?.[selectedGroup]?.subjects || [];
+
+    // Find the mark for the additional subject
+    let additionalMark = 100; // default
+    if (SubjectJSON.classes['9']?.additional?.subjects) {
+      const foundSubject = SubjectJSON.classes['9'].additional.subjects.find(
+        (s) => s.name === subj
+      );
+      if (foundSubject) {
+        additionalMark = foundSubject.mark;
+      }
+    }
+
+    setMarksData([...commonSubjects, ...groupSubjects, { name: subj, mark: additionalMark }]);
   };
 
   const handleMarksChange = (subjectName, fullMark, value) => {
@@ -156,19 +176,29 @@ const EditMarks = () => {
       setStudentMotherName(existingMarks.motherName);
       setStudentdob(existingMarks.dob);
 
+      // Load class data first
       handleClassChange(existingMarks.classesName);
-      if (existingMarks.group) handleGroupChange(existingMarks.group);
+      
+      // If there's a group, load group data
+      if (existingMarks.group) {
+        setTimeout(() => {
+          handleGroupChange(existingMarks.group);
+        }, 100);
+      }
 
-      existingMarks.subjects.forEach((sub) => {
-        setValue(sub.subject, sub.obtained);
-      });
+      // Set form values and marks data from existing marks
+      setTimeout(() => {
+        existingMarks.subjects.forEach((sub) => {
+          setValue(sub.subject, sub.obtained);
+        });
 
-      setMarksData(
-        existingMarks.subjects.map((sub) => ({
-          subject: sub.subject,
-          fullMark: sub.fullMark,
-        }))
-      );
+        // Convert existing subjects to marksData format
+        const convertedMarksData = existingMarks.subjects.map((sub) => ({
+          name: sub.subject,
+          mark: sub.fullMark,
+        }));
+        setMarksData(convertedMarksData);
+      }, 200);
     }
   }, [existingMarks, setValue]);
 
@@ -182,10 +212,10 @@ const EditMarks = () => {
     }
 
     const subjects = marksData.map((sub) => ({
-      subject: sub.subject,
-      fullMark: sub.fullMark,
-      obtained: Number(data[sub.subject] || 0),
-      grade: getGrade(Number(data[sub.subject] || 0), sub.fullMark),
+      subject: sub.name,
+      fullMark: sub.mark,
+      obtained: Number(data[sub.name] || 0),
+      grade: getGrade(Number(data[sub.name] || 0), sub.mark),
     }));
 
     const payload = {
@@ -195,6 +225,9 @@ const EditMarks = () => {
       group: selectedGroup,
       roll: rollNumber,
       studentName,
+      fatherName: studentFatherName,
+      motherName: studentMotherName,
+      dob: studentdob,
       subjects,
       cgpa: calculateCGPA(),
       date: new Date().toISOString(),
@@ -404,33 +437,33 @@ const EditMarks = () => {
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200">
                     {marksData.map((sub, index) => {
-                      const obtained = watchMarks[sub.subject] || 0;
-                      const grade = obtained ? getGrade(Number(obtained), sub.fullMark) : '';
+                      const obtained = watchMarks[sub.name] || 0;
+                      const grade = obtained && obtained <= sub.mark ? getGrade(Number(obtained), sub.mark) : '';
                       return (
                         <tr key={index} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
                           <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                            {sub.subject}
+                            {sub.name}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            {sub.fullMark}
+                            {sub.mark}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap">
                             <div className="flex items-center space-x-2">
                               <input
                                 type="number"
                                 className="w-24 px-2 py-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                                {...register(sub.subject)}
+                                {...register(sub.name)}
                                 onChange={(e) =>
                                   handleMarksChange(
-                                    sub.subject,
-                                    sub.fullMark,
+                                    sub.name,
+                                    sub.mark,
                                     Number(e.target.value)
                                   )
                                 }
                               />
-                              {warnings[sub.subject] && (
+                              {warnings[sub.name] && (
                                 <span className="text-xs text-red-600">
-                                  {warnings[sub.subject]}
+                                  {warnings[sub.name]}
                                 </span>
                               )}
                             </div>

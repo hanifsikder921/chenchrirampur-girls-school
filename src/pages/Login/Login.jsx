@@ -5,13 +5,16 @@ import { FaUser, FaLock, FaEye, FaEyeSlash, FaSpinner } from 'react-icons/fa';
 import { useLocation, useNavigate } from 'react-router';
 import { AuthContext } from '../../assets/context/AuthContext';
 
+
 const Login = () => {
-  
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const location = useLocation();
   const { signIn } = useContext(AuthContext);
   const navigate = useNavigate();
+
+
+
 
   const {
     register,
