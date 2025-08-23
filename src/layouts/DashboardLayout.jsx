@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink, Outlet, useNavigate } from 'react-router';
+import { Link, NavLink, Outlet, useNavigate } from 'react-router';
 import {
   FaHome,
   FaUserEdit,
@@ -10,6 +10,7 @@ import {
   FaBars,
   FaRegAddressCard,
   FaSearchLocation,
+  FaUserCheck
 } from 'react-icons/fa';
 import { FaUsers } from 'react-icons/fa6';
 import { IoIosLogOut } from 'react-icons/io';
@@ -482,7 +483,40 @@ const DashboardLayout = () => {
 
             {!roleLoading && role === 'teacher' && (
               <>
-                <p>this is techer panel</p>
+                <NavLink
+                  to="/dashboard/techer-profile"
+                  className="flex items-center gap-3 px-4 py-3 w-full cursor-pointer rounded-xl font-medium transition-all duration-300 group hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 hover:shadow-sm"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-lg bg-red-100 flex items-center justify-center group-hover:bg-gray-200 transition-colors">
+                      <span className="text-red-600 text-xs ">
+                        <FaUserCheck className="text-red-600 text-sm" />
+                      </span>
+                    </div>
+                    <span className="text-sm">Profile</span>
+                  </div>
+                </NavLink>
+                <details className="group">
+                  <summary className={summaryClass}>
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-lg bg-yellow-100 flex items-center justify-center group-hover:bg-yellow-200 transition-colors">
+                        <FaStar className="text-yellow-600 text-sm" />
+                      </div>
+                      <span>Exam Management</span>
+                    </div>
+                    <FaChevronDown className="text-gray-400 group-hover:text-yellow-600 transition-all duration-300 group-open:rotate-180" />
+                  </summary>
+                  <div className="ml-4 mt-2 space-y-1 border-l-2 border-gray-100 pl-4">
+                    <NavLink to="/dashboard/class-report" className={navLinkClass}>
+                      <div className="flex items-center gap-3">
+                        <div className="w-6 h-6 rounded-md bg-yellow-50 flex items-center justify-center">
+                          <span className="text-yellow-600 text-xs">🖊️</span>
+                        </div>
+                        <span className="text-sm">Add Mark</span>
+                      </div>
+                    </NavLink>
+                  </div>
+                </details>
               </>
             )}
             {/* Logout */}

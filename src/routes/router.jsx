@@ -45,6 +45,7 @@ import ClassReport from '../components/ReportPage/ClassReport';
 import StudentReport from '../components/ReportPage/StudentReport';
 import Forbidden from '../components/Forbidden/Forbidden';
 import SubjectMangement from '../pages/Dashboard/Setting/SubjectMangement';
+import TeachirProfile from '../pages/Dashboard/TeachirProfile';
 
 
 const router = createBrowserRouter([
@@ -232,6 +233,10 @@ const router = createBrowserRouter([
       {
         path:'subject-management',
         Component:SubjectMangement
+      },
+      {
+        path:'techer-profile',
+        Component:TeachirProfile
       }
     ],
   },
