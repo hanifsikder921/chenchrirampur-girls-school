@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
-import useAxios from './../../../assets/hooks/useAxios';
+// import useAxios from './../../../assets/hooks/useAxios';
 import useAuth from './../../../assets/hooks/useAuth';
 import {
   IoPersonAddOutline,
@@ -13,11 +13,12 @@ import {
   IoSchoolOutline,
   IoIdCardOutline,
 } from 'react-icons/io5';
+import useAxiosSecure from '../../../assets/hooks/useAxiosSecure';
 
 const MySwal = withReactContent(Swal);
 
 const AddTeacher = () => {
-  const axios = useAxios();
+  const axios = useAxiosSecure();
   const { user } = useAuth();
   const [teacherImage, setTeacherImage] = useState('');
   const [imagePreview, setImagePreview] = useState('');

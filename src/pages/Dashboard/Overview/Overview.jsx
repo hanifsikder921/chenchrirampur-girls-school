@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import useAxios from '../../../assets/hooks/useAxios';
+// import useAxios from '../../../assets/hooks/useAxios';
+import useAxiosSecure from '../../../assets/hooks/useAxiosSecure';
 
 const Overview = () => {
-  const axios = useAxios();
+  const axios = useAxiosSecure();
   const [stats, setStats] = useState({
     teachers: { total: 0, male: 0, female: 0 },
     staff: { total: 0, male: 0, female: 0 },

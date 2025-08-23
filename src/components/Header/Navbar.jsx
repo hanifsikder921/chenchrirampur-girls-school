@@ -34,7 +34,7 @@ const Navbar = () => {
     {
       title: 'ব্যাবস্থাপনা',
       submenu: [
-        { title: 'অ্যাডমিন প্যানেল', bg: 'bg-red-50', target: user ? '/dashboard/overview' : '/login' },
+        { title: 'অ্যাডমিন প্যানেল', bg: 'bg-red-50', target: '/login' },
         { title: ' শিক্ষক ও কর্মচারী ', bg: 'bg-yellow-100', target: '/staff' },
       ],
     },

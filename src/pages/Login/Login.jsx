@@ -21,7 +21,7 @@ const Login = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const from = location.state?.from?.pathname || '/dashboard/overview';
+  const from = location.state?.from?.pathname || '/dashboard/techer-profile';
   const onSubmit = async (data) => {
     setIsLoading(true);
     setTimeout(() => {

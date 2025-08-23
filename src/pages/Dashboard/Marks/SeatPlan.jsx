@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import useAxios from '../../../assets/hooks/useAxios';
+// import useAxios from '../../../assets/hooks/useAxios';
 import { FaPrint, FaSpinner, FaDownload } from 'react-icons/fa';
+import useAxiosSecure from '../../../assets/hooks/useAxiosSecure';
 
 const SeatPlan = () => {
-  const axios = useAxios();
+  const axios = useAxiosSecure();
   const [selectedClass, setSelectedClass] = useState('');
   const [examType, setExamType] = useState('');
   const [examYear, setExamYear] = useState('');

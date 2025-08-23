@@ -11,12 +11,13 @@ import {
   IoImageOutline,
   IoDocumentTextOutline,
 } from 'react-icons/io5';
-import useAxios from '../../../assets/hooks/useAxios';
+// import useAxios from '../../../assets/hooks/useAxios';
+import useAxiosSecure from '../../../assets/hooks/useAxiosSecure';
 
 const EditTeacher = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const axios = useAxios();
+  const axios = useAxiosSecure();
   const queryClient = useQueryClient();
   const [teacherImage, setTeacherImage] = useState('');
   const [imagePreview, setImagePreview] = useState('');

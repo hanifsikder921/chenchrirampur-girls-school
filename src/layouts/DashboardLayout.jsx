@@ -63,6 +63,7 @@ const DashboardLayout = () => {
     return <Loading />;
   }
 
+
   const handleLogout = () => {
     Swal.fire({
       title: 'Are you sure?',
@@ -157,9 +158,11 @@ const DashboardLayout = () => {
           </div>
           <div className="flex-none">
             <div className="w-10 h-10  rounded-full flex items-center justify-center">
-              <span className="text-white font-semibold text-sm">
-                <img src={teachersInfo?.image} alt="User Avatar" className="rounded-full" />
-              </span>
+              <img
+                src={teachersInfo?.image}
+                alt="User Avatar"
+                className="rounded-full w-full h-full"
+              />
             </div>
           </div>
         </div>
@@ -197,12 +200,12 @@ const DashboardLayout = () => {
           {/* User Info */}
           <div className="p-4 border-b border-gray-100 md:flex hidden">
             <div className="flex items-center gap-3 p-3 bg-gradient-to-r from-gray-50 to-blue-50 rounded-xl">
-              <div className="w-10 h-10  rounded-full flex items-center justify-center">
-                <span className="text-white font-semibold text-sm">
-                  {/* ============================================================================ */}
-
-                  <img src={teachersInfo?.image} alt="User Avatar" className="rounded-full" />
-                </span>
+              <div className="w-12 h-12  rounded-full flex items-center justify-center">
+                <img
+                  src={teachersInfo?.image}
+                  alt="User Avatar"
+                  className="rounded-full w-full h-full"
+                />
               </div>
               <div>
                 <p className="font-semibold text-gray-800">{teachersInfo?.fullName || 'Admin'}</p>
@@ -213,6 +216,19 @@ const DashboardLayout = () => {
 
           {/* Navigation Menu */}
           <nav className="p-4 space-y-2">
+            <NavLink
+              to="/dashboard/techer-profile"
+              className="flex items-center gap-3 px-4 py-3 w-full cursor-pointer rounded-xl font-medium transition-all duration-300 group hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 hover:shadow-sm"
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-lg bg-red-100 flex items-center justify-center group-hover:bg-gray-200 transition-colors">
+                  <span className="text-red-600 text-xs ">
+                    <FaUserCheck className="text-red-600 text-sm" />
+                  </span>
+                </div>
+                <span className="text-sm">Profile</span>
+              </div>
+            </NavLink>
             {!roleLoading && role === 'admin' && (
               <>
                 {/* Overview */}
@@ -483,19 +499,6 @@ const DashboardLayout = () => {
 
             {!roleLoading && role === 'teacher' && (
               <>
-                <NavLink
-                  to="/dashboard/techer-profile"
-                  className="flex items-center gap-3 px-4 py-3 w-full cursor-pointer rounded-xl font-medium transition-all duration-300 group hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 hover:shadow-sm"
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-lg bg-red-100 flex items-center justify-center group-hover:bg-gray-200 transition-colors">
-                      <span className="text-red-600 text-xs ">
-                        <FaUserCheck className="text-red-600 text-sm" />
-                      </span>
-                    </div>
-                    <span className="text-sm">Profile</span>
-                  </div>
-                </NavLink>
                 <details className="group">
                   <summary className={summaryClass}>
                     <div className="flex items-center gap-3">

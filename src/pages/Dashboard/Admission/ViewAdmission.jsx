@@ -3,11 +3,12 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import { FaEye, FaTrash, FaSearch, FaSync, FaFilter } from 'react-icons/fa';
 import Swal from 'sweetalert2';
-import useAxios from '../../../assets/hooks/useAxios';
+// import useAxios from '../../../assets/hooks/useAxios';
 import { MdDownloadDone } from 'react-icons/md';
+import useAxiosSecure from './../../../assets/hooks/useAxiosSecure';
 
 const ViewAdmission = () => {
-  const axios = useAxios();
+  const axios = useAxiosSecure();
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
   const [classFilter, setClassFilter] = useState('all');

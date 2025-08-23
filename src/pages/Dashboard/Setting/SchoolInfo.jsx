@@ -22,9 +22,10 @@ import {
 
 import Swal from 'sweetalert2';
 import useAxios from '../../../assets/hooks/useAxios';
+import useAxiosSecure from '../../../assets/hooks/useAxiosSecure';
 
 const SchoolInfo = () => {
-  const axios = useAxios();
+  const axios = useAxiosSecure();
   const queryClient = useQueryClient();
   const [schoolLogo, setSchoolLogo] = useState('');
   const [logoPreview, setLogoPreview] = useState('');

@@ -236,7 +236,7 @@ const AdmitCard = () => {
 
               <div className="signature">
                 <div className="signature-line"></div>
-                <div style={{ fontSize: '14px', color: '#374151' }}>প্রধান শিক্ষকের স্বাক্ষর</div>
+                <div style={{ fontSize: '14px', color: '#374151' }}>  শিক্ষকের স্বাক্ষর</div>
               </div>
             </div>
           ))}
@@ -491,7 +491,7 @@ const AdmitCard = () => {
                   <div className="flex justify-end mt-8">
                     <div className="text-right">
                       <div className="w-48 border-b border-gray-400 mb-2"></div>
-                      <p className="text-sm text-gray-700">প্রধান শিক্ষকের স্বাক্ষর</p>
+                      <p className="text-sm text-gray-700"> শিক্ষকের স্বাক্ষর</p>
                     </div>
                   </div>
                 </div>

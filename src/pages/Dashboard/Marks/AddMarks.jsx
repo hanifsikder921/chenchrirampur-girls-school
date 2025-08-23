@@ -3,13 +3,14 @@ import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 // import SubjectJSON from '../../../assets/link/subjectName.json';
-import useAxios from '../../../assets/hooks/useAxios';
+// import useAxios from '../../../assets/hooks/useAxios';
 import { useQuery } from '@tanstack/react-query';
+import useAxiosSecure from '../../../assets/hooks/useAxiosSecure';
 
 const MySwal = withReactContent(Swal);
 
 const AddMarks = () => {
-  const axios = useAxios();
+  const axios = useAxiosSecure();
 
   const { data: subjectData } = useQuery({
     queryKey: ['subjectJson'],

@@ -3,11 +3,12 @@ import useAxios from './../../../assets/hooks/useAxios';
 import { useQuery } from '@tanstack/react-query';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
+import useAxiosSecure from '../../../assets/hooks/useAxiosSecure';
 
 const MySwal = withReactContent(Swal);
 
 const SubjectManagement = () => {
-  const axios = useAxios();
+  const axios = useAxiosSecure();
   const [selectedTeacher, setSelectedTeacher] = useState(null);
   const [assignedSubjects, setAssignedSubjects] = useState({});
 

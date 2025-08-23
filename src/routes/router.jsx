@@ -47,6 +47,7 @@ import Forbidden from '../components/Forbidden/Forbidden';
 import SubjectMangement from '../pages/Dashboard/Setting/SubjectMangement';
 import TeachirProfile from '../pages/Dashboard/TeachirProfile';
 import AssignMark from '../pages/Dashboard/TeacherRole/AssignMark';
+import AdminRoute from './AdminRoute';
 
 
 const router = createBrowserRouter([
@@ -120,6 +121,10 @@ const router = createBrowserRouter([
       },
     ],
   },
+  {
+    path: 'forbidden',
+    Component: Forbidden,
+  },
 
   {
     path: '/',
@@ -145,104 +150,168 @@ const router = createBrowserRouter([
     children: [
       {
         path: 'overview',
-        Component: Overview,
+        element: (
+          <AdminRoute>
+            <Overview />
+          </AdminRoute>
+        ),
+     
       },
       {
         path: 'add-student',
-        Component: AddStudents,
+        element:<AdminRoute>
+          <AddStudents/>
+        </AdminRoute>
+        
       },
       {
         path: 'manage-students',
-        Component: ViewStudents,
+        element:<AdminRoute>
+          <ViewStudents/>
+        </AdminRoute>
+        // Component: ViewStudents,
       },
       {
         path: 'edit-student/:id',
-        Component: EditStudent,
+        element:<AdminRoute>
+          <EditStudent/>
+        </AdminRoute>
+        // Component: EditStudent,
       },
       {
         path: 'student-migration',
-        Component: StudentMigration,
+        element:<AdminRoute>
+          <StudentMigration/>
+        </AdminRoute>
+        // Component: StudentMigration,
       },
       {
         path: 'add-marks',
-        Component: AddMarks,
+        element:<AdminRoute>
+          <AddMarks/>
+        </AdminRoute>
+        // Component: AddMarks,
       },
       {
         path: 'view-marks',
-        Component: ViewMarks,
+        element:<AdminRoute>
+          <ViewMarks/>
+        </AdminRoute>
+        // Component: ViewMarks,
       },
       {
         path: 'edit-marks/:id',
-        Component: EditMarks,
+        element:<AdminRoute>
+          <EditMarks/>
+        </AdminRoute>
+        // Component: EditMarks,
       },
       {
         path: 'add-teacher',
-        Component: AddTeacher,
+        element:<AdminRoute>
+          <AddTeacher/>
+        </AdminRoute>
+        // Component: AddTeacher,
       },
       {
         path: 'manage-teachers',
-        Component: ViewTeacher,
+        element:<AdminRoute>
+          <ViewTeacher/>
+        </AdminRoute>
+        // Component: ViewTeacher,
       },
       {
         path: 'edit-teacher/:id',
-        Component: EditTeacher,
+        element:<AdminRoute>
+          <EditTeacher/>
+        </AdminRoute>
+        // Component: EditTeacher,
       },
       {
         path: 'admit-card',
-        Component: AdmitCard,
+        element:<AdminRoute>
+          <AdmitCard/>
+        </AdminRoute>
+        // Component: AdmitCard,
       },
       {
         path: 'result-statistic',
-        Component: ResultStatistic,
+        element:<AdminRoute>
+          <ResultStatistic/>
+        </AdminRoute>
+        // Component: ResultStatistic,
       },
       {
         path: 'seat-plan',
-        Component: SeatPlan,
+        element:<AdminRoute>
+          <SeatPlan/>
+        </AdminRoute>
+        // Component: SeatPlan,
       },
       {
         path: 'acdemic-card',
-        Component: AcademicCard,
+        element:<AdminRoute>
+          <AcademicCard/>
+        </AdminRoute>
+        // Component: AcademicCard,
       },
       {
         path: 'view-admissions',
-        Component: ViewAdmission,
+        element:<AdminRoute>
+          <ViewAdmission/>
+        </AdminRoute>
+        // Component: ViewAdmission,
       },
       {
         path: 'school-info',
-        Component: SchoolInfo,
+        element:<AdminRoute>
+          <SchoolInfo/>
+        </AdminRoute>
+        // Component: SchoolInfo,
       },
       {
         path: 'media-management',
-        Component: MediaManagement,
+        element:<AdminRoute>
+          <MediaManagement/>
+        </AdminRoute>
+        // Component: MediaManagement,
       },
       {
         path: 'notice-management',
-        Component: NoticePage,
+        element:<AdminRoute>
+          <NoticePage/>
+        </AdminRoute>
+        // Component: NoticePage,
       },
       {
         path: 'class-report',
-        Component: ClassReport,
+        element:<AdminRoute>
+          <ClassReport/>
+        </AdminRoute>
+        // Component: ClassReport,
       },
       {
         path: 'student-report',
-        Component: StudentReport,
+        element:<AdminRoute>
+          <StudentReport/>
+        </AdminRoute>
+        // Component: StudentReport,
       },
       {
-        path: 'forbidden',
-        Component:Forbidden
+        path: 'subject-management',
+        element:<AdminRoute>
+          <SubjectMangement/>
+        </AdminRoute>
+        // Component: SubjectMangement,
       },
       {
-        path:'subject-management',
-        Component:SubjectMangement
+        path: 'techer-profile',
+        Component: TeachirProfile,
       },
       {
-        path:'techer-profile',
-        Component:TeachirProfile
+        path: 'assign-mark',
+        Component: AssignMark,
       },
-      {
-        path:'assign-mark',
-        Component:AssignMark
-      }
     ],
   },
 

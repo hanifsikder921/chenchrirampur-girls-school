@@ -4,9 +4,10 @@ import { FaEdit, FaTrash, FaSearch, FaPlus, FaUsers, FaFilter, FaEye } from 'rea
 import { IoPersonOutline, IoSchoolOutline, IoGridOutline } from 'react-icons/io5';
 import Swal from 'sweetalert2';
 import { Link } from 'react-router';
-import useAxios from '../../../assets/hooks/useAxios';
+// import useAxios from '../../../assets/hooks/useAxios';
 import MaleIcon from '../../../assets/images/man.png';
 import FemaleIcon from '../../../assets/images/woman.png';
+import useAxiosSecure from '../../../assets/hooks/useAxiosSecure';
 
 const ViewStudents = () => {
   const queryClient = useQueryClient();
@@ -15,7 +16,7 @@ const ViewStudents = () => {
   const [sectionFilter, setSectionFilter] = useState('');
   const [rollFilter, setRollFilter] = useState('');
   const [page, setPage] = useState(1);
-  const axios = useAxios();
+  const axios = useAxiosSecure();
 
   // Fetch Students with proper error handling
   const { data, isLoading, isError, error } = useQuery({

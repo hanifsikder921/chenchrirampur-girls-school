@@ -11,12 +11,13 @@ import {
   IoDocumentTextOutline,
   IoImageOutline,
 } from 'react-icons/io5';
-import useAxios from '../../../assets/hooks/useAxios';
+// import useAxios from '../../../assets/hooks/useAxios';
+import useAxiosSecure from './../../../assets/hooks/useAxiosSecure';
 
 const EditStudent = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const axios = useAxios();
+  const axios = useAxiosSecure();
   const queryClient = useQueryClient();
   const [studentImage, setStudentImage] = useState('');
   const [imagePreview, setImagePreview] = useState('');
@@ -82,7 +83,8 @@ const EditStudent = () => {
 
     const imagUploadUrl = `https://api.imgbb.com/1/upload?key=${
       import.meta.env.VITE_image_upload_key
-    }`;
+    }`
+;
     const res = await axios.post(imagUploadUrl, formData);
     setStudentImage(res.data.data.url);
     setImagePreview(URL.createObjectURL(image));

@@ -1,12 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import { motion } from 'framer-motion';
-import useAxios from '../../assets/hooks/useAxios';
+// import useAxios from '../../assets/hooks/useAxios';
 import useAuth from '../../assets/hooks/useAuth';
+import useAxiosSecure from './../../assets/hooks/useAxiosSecure';
 
 const TeacherProfile = () => {
   const { user, loading, logoutUser } = useAuth();
-  const axios = useAxios();
+  const axios = useAxiosSecure();
 
   const { data, isLoading, error } = useQuery({
     queryKey: ['allteachers'],

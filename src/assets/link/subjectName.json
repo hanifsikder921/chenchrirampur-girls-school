@@ -72,8 +72,8 @@
           "subjects": [
             { "name": "Accounting", "clsName": "cls_9_accounting", "mark": 100 },
             { "name": "Finance and Banking", "clsName": "cls_9_finance", "mark": 100 },
-            { "name": "Business Entrepreneurship", "clsName": "cls_9_business", "mark": 100 },
-            { "name": "Science", "clsName": "cls_9_science", "mark": 100 }
+            { "name": "Business Entrepreneurship", "clsName": "cls_9_business", "mark": 100 }
+           
           ]
         }
       },
@@ -98,14 +98,16 @@
           "subjects": [
             { "name": "Physics", "clsName": "cls_10_physics", "mark": 100 },
             { "name": "Chemistry", "clsName": "cls_10_chemistry", "mark": 100 },
-            { "name": "Biology", "clsName": "cls_10_biology", "mark": 100 }
+            { "name": "Biology", "clsName": "cls_10_biology", "mark": 100 },
+             { "name": "Bangladesh and Global Studies", "clsName": "cls_10_bgs", "mark": 100 }
           ]
         },
         "humanities": {
           "subjects": [
             { "name": "Geography and Environment", "clsName": "cls_10_geography", "mark": 100 },
             { "name": "History", "clsName": "cls_10_history", "mark": 100 },
-            { "name": "Civics and Citizenship", "clsName": "cls_10_civics", "mark": 100 }
+            { "name": "Civics and Citizenship", "clsName": "cls_10_civics", "mark": 100 },
+             { "name": "Science", "clsName": "cls_10_science", "mark": 100 }
           ]
         },
         "business_studies": {
@@ -113,8 +115,15 @@
             { "name": "Accounting", "clsName": "cls_10_accounting", "mark": 100 },
             { "name": "Finance and Banking", "clsName": "cls_10_finance", "mark": 100 },
             { "name": "Business Entrepreneurship", "clsName": "cls_10_business", "mark": 100 }
+             
           ]
         }
+      },
+       "additional": {
+        "subjects": [
+          { "name": "Agriculture Studies", "clsName": "cls_10_agriculture", "mark": 100 },
+          { "name": "Higher Mathematics", "clsName": "cls_10_higher_math", "mark": 100 }
+        ]
       }
     }
   }
