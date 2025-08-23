@@ -5,14 +5,16 @@ import withReactContent from 'sweetalert2-react-content';
 
 import { useQuery } from '@tanstack/react-query';
 import useAxios from '../../../assets/hooks/useAxios';
+import useAuth from '../../../assets/hooks/useAuth';
 
 const MySwal = withReactContent(Swal);
 
 const AssignMark = () => {
   const axios = useAxios();
+  const {user}=useAuth()
 
-  // Get teacher data from context/localStorage (assuming teacher email is available)
-  const teacherEmail = 'nurulaminhowlader625@gmail.com'; // Replace with actual logged teacher email
+
+  const teacherEmail = user?.email; 
 
   // Get subject data
   const { data: subjectData } = useQuery({
